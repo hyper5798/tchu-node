@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<!--<meta http-equiv="refresh" content="300; url=/">-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%= title%></title>
+<%- include include_style.ejs %>
+</head>
+
+<body>
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="\"><span>計算中心</span>智慧電表</a>
+				<!--<a class="navbar-brand" href="\">動態數據圖表</a>
+				<a class="navbar-brand" href="\control">報表查詢</a> -->
+				<% if(user){ %>
+					<ul class="user-menu">
+						<li class="dropdown pull-right">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fa fa-user"></span>
+								<% if(user.name){ %>
+									<%= user.name %>
+								<% } %>
+							<span class="caret"></span></a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="/changeSelfPwd"><span class="fa fa-lock"></span> 變更密碼</a></li>
+								<li><a href="/account"><span class="fa fa-user"></span>  帳號管理</a></li>
+								<li><a href="/zone"><span class="fa fa-clone"></span>分區管理</a></li>
+								<li><a href="/device"><span class="fa fa-tachometer"></span>裝置管理</a></li>
+								<li><a href="/map"><span class="fa fa-eye"></span>  裝置類型管理</a></li>
+								<li><a href="/logout"><span class="fa fa-hand-paper-o"></span> 登出</a></li>
+							</ul>
+						</li>
+				    </ul>
+				<% } %>
+
+			</div>
+		</div><!-- /.container-fluid -->
+	</nav>
+
+	<!--<div id="sidebar-collapse" class="col-sm-2 col-lg-2 sidebar">
+		<ul class="nav menu">
+		<% if(title ==='Index'){ %>
+			<li class="active">
+		<% }else{ %>
+			<li>
+		<% } %>
+			<a href="/"><span class="fa fa-info-circle"></span>  電表資訊</a></li>
+		<% if(title ==='Dashboard'){ %>
+			<li class="active">
+		<% }else{ %>
+			<li>
+		<% } %>
+				<a href="/dashboard"><span class="fa fa-tachometer"></span>  儀錶板</a></li>	
+		<% if(title ==='Report'){ %>
+			<li class="active">
+		<% }else{ %>
+			<li>
+		<% } %>
+			<a href="/report"><span class="fa fa-binoculars"></span>  報表查詢</a></li>
+		</ul>
+
+	</div>-->
+
+<!-- main start -->
+<div class="col-sm-12 col-lg-12">
+
+
+	<div class="col-sm-12 col-lg-12">
+		<div class="row">
+		  <div id="app">
