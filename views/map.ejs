@@ -29,20 +29,20 @@
                         </div>
                         <div class="panel-body">
                             
-                            <div class="col-md-3 column">
+                            <div class="col-xs-6 col-md-3 column">
                                     <label class="control-label"  for="username">裝置類型</label>
                                     <div class="controls">
                                         <input v-if="!hasMap" type="text" id="postType" name="postType" v-model="target.deviceType">
                                         <input v-else type="text" id="postType" name="postType" v-model="target.deviceType" readonly="readonly">
                                     </div>
                             </div>
-                            <div class="col-md-3 column">
+                            <div class="col-xs-6 col-md-3 column">
                                 <label class="control-label" for="password">類型名稱</label>
                                 <div class="controls">
                                             <input type="text" id="typeName" name="typeName" v-model="target.typeName" >
                                 </div>
                             </div>
-                            <div class="col-md-6 column">
+                            <div class="col-xs-12 col-md-6 column">
                                 <br>
                                 <span v-if="hasMap">
                                         <button  v-if="!isEditMode" type="button" name="add" class="btn btn-info btn-sm" onClick="editMap()">	
