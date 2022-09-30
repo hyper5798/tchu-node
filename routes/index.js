@@ -19,6 +19,7 @@ module.exports = function(app) {
 	app.get('/gauge', function (req, res) {
 		var query = require('url').parse(req.url,true).query;
 		var tag = parseInt(query.tag);
+		var field = parseInt(query.field);
 		var gauge = 'gauge';
 		if(tag < 3) {
 			gauge = 'gauge_google';
@@ -27,7 +28,8 @@ module.exports = function(app) {
 		}
 
 		res.render(gauge, { title: 'Gauge',
-			tag: tag
+			tag: tag,
+			field: field
 		});
 	});
 

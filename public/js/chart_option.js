@@ -23,7 +23,8 @@ var google_o2_options = {
   };
 
 
-var gauge_option1 = {
+//溫度
+var gauge_option3 = {
 	series: [
 	  {
 		type: 'gauge',
@@ -67,9 +68,19 @@ var gauge_option1 = {
 		  distance: 20,
 		  fontSize: 20
 		},
+		title : {
+			offsetCenter: [0, '60%'],       // x, y，单位px
+			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+				fontWeight: 'bolder',
+				fontSize: 15,
+				fontStyle: 'italic',
+				color: 'auto'
+			}
+		},
 		detail: {
+		  offsetCenter: [0, '40%'],
 		  valueAnimation: true,
-		  formatter: '{value} ℃',
+		  formatter: '{value}',
 		  color: 'auto',
 		  fontSize: 20
 		},
@@ -82,15 +93,15 @@ var gauge_option1 = {
 	]
   };
 
-  var gauge_option2 = {
+  var gauge_option4 = {
 	series: [
 	  {
 		  name:'速度',
 		  type:'gauge',
 		  min:0,
-		  max:40,
+		  max:4000,
 		  radius : '90%',
-		  splitNumber:10,
+		  splitNumber:5,
 		  axisLine: {            // 坐标轴线
 			  lineStyle: {       // 圓框寬度
 				  width: 10,
@@ -113,52 +124,41 @@ var gauge_option1 = {
 				  color: 'blue'
 			  }
 		  },
+		  axisLabel: {
+			color: 'auto',
+			distance: 10,
+			fontSize: 10
+		  },
 		  title : {
-			  textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-				  fontWeight: 'bolder',
-				  fontSize: 15,
-				  fontStyle: 'italic'
-			  }
-		  },
-		  detail : {
-			  textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-				  fontWeight: 'bolder'
-			  }
-		  },
-		  data:[{value: 24, name: '℃'}]
-	  }
-	]
-  };
-
-  var gauge_option3 = {
-	tooltip: {
-	  formatter: '{a} <br/>{b} : {c}%'
-	},
-	series: [
-	  {
-		name: 'Pressure',
-		type: 'gauge',
-		radius : '100%',
-		detail: {
-		  formatter: '{value}'
+			offsetCenter: [0, '9/%'],       // x, y，单位px
+			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+				fontWeight: 'bolder',
+				fontSize: 15,
+				fontStyle: 'italic',
+				color: 'auto'
+			}
 		},
-		data: [
-		  {
-			value: 50,
-			name: 'SCORE'
-		  }
-		]
+		detail : {
+			offsetCenter: [0, '70%'],
+			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+				fontWeight: 'bolder',
+				fontSize: 20,
+				color: 'auto'
+			}
+		},
+		  data:[{value: 2400, name: 'mg/l'}]
 	  }
 	]
   };
 
-  var gauge_option4 = {
+  //電導率
+  var gauge_option5 = {
 	series: [
 		{
-		name:'速度',
+		name:'電導率',
 		type:'gauge',
 		min:0,
-		max:40,
+		max:2000,
 		radius : '95%',
 		splitNumber:10,
 		axisLine: {            // 坐标轴线
@@ -178,38 +178,48 @@ var gauge_option1 = {
 				color: 'gray'
 			}
 		},
+		axisLabel: {
+			color: 'auto',
+			distance: 10,
+			fontSize: 10
+		  },
 		title : {
-			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-				fontWeight: 'bolder',
-				fontSize: 10,
-				fontStyle: 'italic'
-			}
-		},
-		detail : {
+			offsetCenter: [0, '90%'],       // x, y，单位px
 			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
 				fontWeight: 'bolder',
 				fontSize: 15,
+				fontStyle: 'italic',
+				color: '#FFFFFF'
 			}
 		},
-		data:[{value: 40, name: 'mg/l'}]
+		detail : {
+			offsetCenter: [0, '70%'],
+			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+				fontWeight: 'bolder',
+				fontSize: 25,
+				color: '#FFFFFF'
+			}
+		},
+		data:[{value: 400, name: 'mg/l'}]
 	}]
 };
 
-var gauge_option5 = {
+//左斜氨氮
+var gauge_option6 = {
 	series: [
 	{
-		name:'轉速',
+		name:'氨氮',
 		type:'gauge',
 		//center : ['25%', '55%'],    // 默认全局居中 第一參數:x軸，第二參數:Y軸
 		radius : '90%',
 		min:0,
-		max:7,
+		max:1,
 		startAngle:225,
 		endAngle:45,
-		splitNumber:7,
+		splitNumber:5,
 		axisLine: {            // 坐标轴线
 			lineStyle: {       // 属性lineStyle控制线条样式
-			color: [[0.2, '#ff4500'],[0.8, '#48b'],[1, '#228b22']], 
+			color: [[0.2, '#228b22'],[0.5, '#f06e1f'],[1, '#fa1603']], 
 				width: 8
 			}
 		},
@@ -231,26 +241,34 @@ var gauge_option5 = {
 		pointer: {
 			width:5
 		},
+		axisLabel: {
+			color: 'auto',
+			distance: 10,
+			fontSize: 10
+		  },
 		title : {
 			fontSize: 10,
-			offsetCenter: [0, '15%'],       // x, y，单位px
+			offsetCenter: [20, '60%'],       // x, y，单位px
 			textStyle: {
-				color: '#FFFFFF'
+				color: 'auto',
+				fontSize: 15,
 				}
 		},
 		detail : {
+			offsetCenter: [20, '40%'],
 			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
 				fontWeight: 'bolder',
-				fontSize: 15,
-				color: '#FFFFFF'
+				fontSize: 25,
+				color: 'auto'
 			}
 		},
-		data:[{value: 1.5, name: 'ppm'}]
+		data:[{value: 0.3, name: 'mg/l'}]
 	}]
 	
 };
 
-var gauge_option6 = {
+//右斜PH
+var gauge_option7 = {
 	series: [
 	{
 	name:'轉速',
@@ -264,7 +282,7 @@ var gauge_option6 = {
 	splitNumber:7,
 	axisLine: {            // 坐标轴线
 		lineStyle: {       // 属性lineStyle控制线条样式
-		color: [[0.2, '#ff4500'],[0.8, '#48b'],[1, '#228b22']], 
+		color: [[0.2, '#ff4500'],[0.8, '#228b22'],[1, '#ff4500']], 
 			width: 8
 		}
 	},
@@ -283,23 +301,100 @@ var gauge_option6 = {
 	pointer: {
 		width:5
 	},
+	axisLabel: {
+		color: 'auto',
+		distance: 10,
+		fontSize: 10
+	  },
 	title : {
 		fontSize: 10,
-		offsetCenter: [0, '15%'],       // x, y，单位px
+		offsetCenter: [-20, '60%'],       // x, y，单位px
 		textStyle: {
-			color: '#FFFFFF'
+			color: 'auto',
+			fontSize: 15,
 			}
 	},
 	detail : {
-		fontSize: 15,
+		offsetCenter: [-20, '40%'],
 		textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
 			fontWeight: 'bolder',
-			color: '#FFFFFF'
+			fontSize: 25,
+			color: 'auto'
 		}
 	},
 	data:[{value: 6.7, name: 'ph'}]
 }]
 };
+
+var gauge_option8 = {
+	tooltip: {
+	  formatter: '{a} <br/>{b} : {c}%'
+	},
+	series: [
+	  {
+		name: 'Pressure',
+		type: 'gauge',
+		radius : '100%',
+		detail: {
+		  formatter: '{value}'
+		},
+		data: [
+		  {
+			value: 50,
+			name: 'SCORE'
+		  }
+		]
+	  }
+	]
+  };
+
+function getGaugeFieldOption(options, field) {
+	let option = options['series'][0];
+	let data = option.data;
+    if(field === 1) {//溫度
+		option.min = 0;
+		option.max = 40;
+		option.splitNumber = 4;
+		option.data[0]['name'] = '℃';
+	} else if(field === 2){//溶解氧
+		option.min = 0;
+		option.max = 20;
+		option.splitNumber = 5;
+		option.data[0]['name'] = 'mg/L';
+	}  else if(field === 3){//氨氮
+		option.min = 0;
+		option.max = 1;
+		option.splitNumber = 5;
+		option.data[0]['name'] = 'mg/L';
+	}  else if(field === 4){//電導率
+		option.min = 0;
+		option.max = 4000;
+		option.splitNumber = 4;
+		option.data[0]['name'] = 'mg/L';
+	}  else if(field === 5){//PH
+		option.min = 0;
+		option.max = 14;
+		option.splitNumber = 7;
+		option.data[0]['name'] = 'PH';
+	}
+	return options
+}
+
+function getGaugeFieldUnit(field) {
+	var unit = '℃';
+    if(field === 1) {//溫度
+		unit = '℃';
+	} else if(field === 2){//溶解氧
+		unit = 'mg/L';
+	}  else if(field === 3){//氨氮
+		unit = 'mg/L';
+	}  else if(field === 4){//電導率
+		unit = 'mg/L';
+	}  else if(field === 5){//PH
+		unit = 'PH';
+	}
+	return unit;
+}
 
 let lineOption = {
     xAxis: {

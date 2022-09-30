@@ -21,11 +21,11 @@ function updateData(msg) {
 var app = new Vue({
   el: '#app',
   data: {
-    url1: "http://localhost:8080/gauge?tag=1",
-    url2: "http://localhost:8080/gauge?tag=2",
-    url3: "http://localhost:8080/gauge?tag=6",
-    url4: "http://localhost:8080/gauge?tag=5",
-    url5: "http://localhost:8080/gauge?tag=7",
+    url1: "http://localhost:8080/gauge?tag=1&field=1",
+    url2: "http://localhost:8080/gauge?tag=2&field=2",
+    url3: "http://localhost:8080/gauge?tag=6&field=3",
+    url4: "http://localhost:8080/gauge?tag=5&field=4",
+    url5: "http://localhost:8080/gauge?tag=7&field=5",
     url11: "http://localhost:8080/chart?tag=7",
   },
   methods: {

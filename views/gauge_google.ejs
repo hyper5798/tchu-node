@@ -4,6 +4,7 @@
    <script type="text/javascript">
       google.charts.load('current', {'packages':['gauge']});
       var tag = <%= tag %>  ;
+      var field = <%= field %>  ;
       var data = null;
       var chart = null;
       var options = {
@@ -17,7 +18,7 @@
           minorTicks: 5
         };
 
-      if(tag === 2) {
+      if(field === 2) {
         options = {
           min:0,max:20,
           width: 240, height: 180,
@@ -26,6 +27,37 @@
           greenColor:'#7AF018',
           yellowFrom:0, yellowTo: 5,
           yellowColor:'#18F0E0',
+          minorTicks: 5
+        };
+      } else if(field === 3) {
+        options = {
+          min:0,max:1,
+          width: 240, height: 180,
+          redFrom: 0.5, redTo: 1,
+          greenFrom:0,greenTo:0.2,
+          greenColor:'#2ECC71',
+          yellowFrom:0.2, yellowTo: 0.5,
+          yellowColor:'#F39C12',
+          minorTicks: 5
+        };
+      }  else if(field === 4) {
+        options = {
+          min:0,max:4000,
+          width: 240, height: 180,
+          redFrom: 3500, redTo: 4000,
+          yellowFrom:3000, yellowTo: 3500,
+          yellowColor:'#F39C12',
+          minorTicks: 5
+        };
+      }  else if(field === 5) {
+        options = {
+          min:0,max:14,
+          width: 240, height: 180,
+          redFrom: 11, redTo: 14,
+          greenFrom:3,greenTo:11,
+          greenColor:'#2ECC71',
+          yellowFrom:0, yellowTo: 3,
+          yellowColor:'#F39C12',
           minorTicks: 5
         };
       } 
