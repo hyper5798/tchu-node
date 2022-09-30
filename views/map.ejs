@@ -13,16 +13,16 @@
                         <div class="panel-heading">
                                 <div class="row">
                                         <div class="col-md-4 column">
-                                                <h4>裝置</h4>
-                                        </div>
-                                        <div class="col-md-6 column">
-                                                測試資料 : <input type="text" v-model="testData" size="50">
-                                        </div>
-                                        <div class="col-md-2 column">
+                                                <label style="font-size: 20px; margin-right: 10px;">裝置</label> 
+                                                
                                                 <button  type="button" class="btn btn-primary btn-sm" onClick="parseData()">	
                                                     <span class="fa fa-pencil "></span>   測試
                                                 </button>
                                         </div>
+                                        <div class="col-md-6 column">
+                                                測試資料 : <input type="text" v-model="testData" size="50">
+                                        </div>
+                                       
                                 </div>
 
                             
@@ -65,34 +65,34 @@
                                     <table id ="myTable" class="table table-striped table-hover">
                                         <thead>
                                             <tr>
-                                                <th>欄位</th>
-                                                <th>啟始前一位</th>
-                                                <th>結束位置</th>
-                                                <th>公式</th>
-                                                <th>欄位名稱</th>
+                                                <th width="10%">欄位</th>
+                                                <th width="15%">啟始前一位</th>
+                                                <th width="10%">結束</th>
+                                                <th width="20%">公式</th>
+                                                <th width="20%">欄位名稱</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr v-for="(item, index) in target.list">
                                                 <td>
-                                                    <input v-if="isEditMode" name="field" v-model="item[0]">
+                                                    <input v-if="isEditMode" name="field" v-model="item[0]" size="10">
                                                     <span v-else >{{item[0]}}</span>
                                                 </td>
                                                 <td>
-                                                    <input v-if="isEditMode" name="start" v-model="item[1]" type="number">
+                                                    <input v-if="isEditMode" name="start" v-model="item[1]" size="2">
                                                     <span v-else >{{item[1]}}</span>
                                                 </td>
                                                 <td>
-                                                    <input v-if="isEditMode" name="end" v-model="item[2]" type="number">
+                                                    <input v-if="isEditMode" name="end" v-model="item[2]" size="2">
                                                     <span v-else >{{item[2]}}</span>
                                                 </td>
                                                 <td>
-                                                    <input v-if="isEditMode" name="method" v-model="item[3]">
+                                                    <input v-if="isEditMode" name="method" v-model="item[3]" size="20">
                                                     <span v-else >{{item[3]}}</span>
                                                 </td>
                                                 <td>
-                                                    <input v-if="isEditMode" name="fieldName" v-model="item[4]">
+                                                    <input v-if="isEditMode" name="fieldName" v-model="item[4]" size="10">
                                                     <span v-else >{{item[4]}}</span>
                                                 </td>
                                                 <td>
@@ -120,8 +120,8 @@
                             <th>裝置名稱</th>
                             <th>創建日期</th>
                             <th>創建人員</th>
-                            <th>更新人員</th>
-                            <th>更新日期</th>
+                            <!--<th>更新人員</th>
+                            <th>更新日期</th>-->
                             <th></th>
                         </tr>
                     </thead>
@@ -144,12 +144,12 @@
                                     <td>
                                             <%= maps[i].createUser %>
                                     </td>
-                                    <td>
+                                    <!--<td>
                                             <%= maps[i].updateTime %>
                                     </td>
                                     <td>
                                             <%= maps[i].updateUser %>
-                                    </td>
+                                    </td>-->
                                     <td>
                                         <button type="button" name="del" class="btn btn-danger btn-sm" onClick="delCheck('<%= maps[i].deviceType %>')">
                                                 <span class="fa fa-remove"></span> 刪除
