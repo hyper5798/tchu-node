@@ -63,16 +63,16 @@
 				<table id ="table1" class="table table-striped table-hover">
 					<thead>
 						<tr>
-							<th>
+							<th width="20%">
 								裝置識別碼
 							</th>
-							<th>
+							<th width="20%">
 								裝置名稱
 							</th>
-							<th>
+							<!--<th>
 								是否啟用
-							</th>
-							<th>
+							</th>-->
+							<th width="60%">
 							</th>
 						</tr>
 					</thead>
@@ -84,7 +84,7 @@
 								<td>
 									<input  type="text" v-model="device.device_name" :disabled="editPoint!=index">
 								</td>
-								<td>
+								<!--<td>
 								    <select v-model="device.device_status" :disabled="editPoint!=index">
 							            <option v-for="option in options" v-bind:value="option.value" :key="option.value">
 							              {{ option.text }}
@@ -93,7 +93,7 @@
 								</td>
 								<td>
 									{{device.updateTime}}
-								</td>
+								</td>-->
 								<td>
 									<button v-if="editPoint!=index" type="button" name="edit" class="btn btn-primary btn-sm" @click="editCheck(index)">
 										 編輯
