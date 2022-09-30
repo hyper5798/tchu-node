@@ -54,13 +54,13 @@
 				<table id ="table1" class="table table-striped table-hover">
 					<thead>
 						<tr>
-							<th>
+							<th width="15%">
 								分區名稱
 							</th>
-							<th>
+							<th width="50%">
 								已加入裝置
 							</th>
-							<th>
+							<th width="35%">
 							</th>
 						</tr>
 					</thead>
@@ -70,7 +70,7 @@
 									{{zone.name}}
 								</td>
 								<td>
-									<input  type="text" v-model="zone.nameList" size="100" @click="addDevice('edit')" :disabled="editPoint!=index">
+									<input  type="text" v-model="zone.nameList" size="30" @click="addDevice('edit')" :disabled="editPoint!=index">
 								</td>
 								<td>
 									<button v-if="editPoint!=index" type="button" name="edit" class="btn btn-primary btn-sm" @click="editCheck(index)">
