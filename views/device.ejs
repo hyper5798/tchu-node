@@ -69,9 +69,9 @@
 							<th width="20%">
 								裝置名稱
 							</th>
-							<!--<th>
-								是否啟用
-							</th>-->
+							<th>
+								裝置類型
+							</th>
 							<th width="60%">
 							</th>
 						</tr>
@@ -84,16 +84,14 @@
 								<td>
 									<input  type="text" v-model="device.device_name" :disabled="editPoint!=index">
 								</td>
-								<!--<td>
-								    <select v-model="device.device_status" :disabled="editPoint!=index">
-							            <option v-for="option in options" v-bind:value="option.value" :key="option.value">
-							              {{ option.text }}
+								<td>
+								    <select v-model="device.fport" :disabled="editPoint!=index">
+							            <option v-for="map in maps" v-bind:value="map.deviceType" :key="map.deviceType">
+							              {{ map.typeName }}
 							            </option>
 							         </select>
 								</td>
-								<td>
-									{{device.updateTime}}
-								</td>-->
+								
 								<td>
 									<button v-if="editPoint!=index" type="button" name="edit" class="btn btn-primary btn-sm" @click="editCheck(index)">
 										 編輯
@@ -111,6 +109,7 @@
              </div>
 		</div> <!-- column-->
 		<input id="devices" name="devices" type="hidden" value="<%= JSON.stringify(devices) %>">
+		<input id="maps" name="maps" type="hidden" value="<%= JSON.stringify(maps) %>">
 		<input id="userName" name="userName" type="hidden" value="<%= user.name %>">
 
 		<!-- （Modal） -->

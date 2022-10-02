@@ -1,4 +1,5 @@
 var devices = JSON.parse(document.getElementById("devices").value);
+var maps = JSON.parse(document.getElementById("maps").value);
 var userName = document.getElementById("userName").value;
 var host ,port;
 var empty = {
@@ -19,6 +20,7 @@ var app = new Vue({
     isNew: false,
     newTarget: empty,
     alertMsg: '',
+    maps: maps,
     options: [
     { text: '啟用', value: 3 },
       { text: '禁用', value: 0 }

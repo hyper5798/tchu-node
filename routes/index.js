@@ -7,8 +7,10 @@ var util =  require('../models/util.js');
 var sessionPath = './public/data/session.json';
 var mysessionPath = './public/data/mysession.json';
 var profilePath = './public/data/profile.json';
-var autoPath = './public/data/auto.json';
+var zonePath = './public/data/zone.json';
 var deviceListPath = './public/data/deviceList.json';
+var mapPath = './public/data/map.json';
+var setPath = './public/data/set.json';
 var dataPath = './public/data/data.json';
 var finalPath = './public/data/final.json';
 var async = require('async');
@@ -19,11 +21,11 @@ module.exports = function(app) {
 	app.get('/gauge', function (req, res) {
 		var query = require('url').parse(req.url,true).query;
 		var tag = parseInt(query.tag);
-		var field = parseInt(query.field);
+		var field = query.field;
 		var gauge = 'gauge';
-		if(tag < 3) {
+		if(tag === 1) {
 			gauge = 'gauge_google';
-		} else if(tag >= 3){
+		} else {
 			gauge = 'gauge';
 		}
 
@@ -81,35 +83,103 @@ app.get('/', checkLogin);
   app.get('/dashboard', checkLogin);
   app.get('/dashboard', function (req, res) {
 	
-	var profileObj;
+	var maps,defaultOption={},zoneName={};
 	try {
-		profileObj = JsonFileTools.getJsonFromFile(profilePath);
-		if (profileObj == null) {
-			profileObj = {};
-			JsonFileTools.saveJsonToFile(profilePath, profileObj);
+		maps = JsonFileTools.getJsonFromFile(mapPath);
+		set = JsonFileTools.getJsonFromFile(setPath);
+
+		colors = getColors();
+        
+		maps.forEach(map => {
+			let keys = Object.keys(map.fieldName);
+			for(let i=0;i<keys.length;i++) {
+				let key = keys[i];
+				defaultOption[key] = getFieldOption(key);
+			}
+		});
+		if (maps == null) {
+			return res.redirect('/map');
 		}
+		
 	} catch (error) {
-		profileObj = {};
-		JsonFileTools.saveJsonToFile(profilePath, profileObj);
+		return res.redirect('/map');
 	}
-	//res.render('dashboard', { title: 'Dashboard'});
+
 	getData(req.session.user.name, function(err, data){
 		if(err) {
-			res.render('dashboard', { title: 'Dashboard',
+			res.render('index', { title: 'Index',
 				user:req.session.user,
-				sensorList: [],
-				zoneList: [],
-				profile: profileObj
-			});
-		} else {
-            res.render('dashboard', { title: 'Dashboard',
-				user:req.session.user,
-				sensorList: data.sensorList,
-				zoneList: data.zoneList,
-				profile: profileObj
+				zoneObj: {},
+				set: set, 
+				zoneName:{},
+				defaultOption: defaultOption,
+				colors:colors
 			});
 		}
+
+		var mapObj={}, macObj={},zoneObj = {};
+		var devices = data.sensorList;
+		var zones = data.zoneList;
+
+		function getDeviceField(list) {
+			let myObj = {};
+			
+			list.forEach( mac => {
+				let device =  macObj[mac];
+				let type_field = mapObj[device.fport];
+				let name = device.device_name;
+				myObj[mac] = {"name": name,"field": type_field};
+
+			});
+			return myObj;
+		}
+
+		//mapObj['18'] = {"voltage": "電壓", "temperture": "溫度", "o2": "溶解氧"}
+		maps.forEach(map => {
+			mapObj[map.deviceType] = map.fieldName;
+		});
+		//macObj['mac'] = device;
+		devices.forEach(device => {
+			macObj[device.device_mac] = device;
+		});
+
+		let defauOption = {};
+		let check = true;
+		zones.forEach(zone => {
+			zoneObj[zone._id] = getDeviceField(zone.deviceList);
+			zoneName[zone._id] = zone.name;
+		});
+
+		if(set===null) {
+			set={};
+			zones.forEach(zone => {
+				set[zone._id] = JSON.parse(JSON.stringify(defaultOption));
+			});
+			JsonFileTools.saveJsonToFile(setPath, set);
+		}
+		
+
+		res.render('dashboard', { title: 'Dashboard',
+			user:req.session.user,
+			zoneObj : zoneObj,
+			set: set, 
+			zoneName:zoneName,
+			defaultOption: defaultOption,
+			colors:colors
+		});
+		
 	});
+	
+	
+	
+  });
+
+  app.post('/dashboard', function (req, res) {
+	var setString = req.body.setString;
+	console.log(setString);
+	var set = JSON.parse(setString);
+	JsonFileTools.saveJsonToFile(setPath, set);
+	res.redirect('/dashboard');
   });
 
   app.get('/report', checkLogin);
@@ -281,6 +351,7 @@ app.get('/', checkLogin);
 			if(err) {
                 return res.redirect('/login');//返回登入頁
 			}
+			JsonFileTools.saveJsonToFile(mapPath, result);
             return res.render('map', { title: 'Map',
 				user:req.session.user,
 				target:null,//current map
@@ -416,6 +487,15 @@ app.get('/', checkLogin);
 
 	app.get('/device', checkLogin);
 	app.get('/device', function (req, res) {
+        var maps;
+		try {
+			maps = JsonFileTools.getJsonFromFile(mapPath);
+			if (maps == null) {
+				return res.redirect('/map');
+			}
+		} catch (error) {
+			return res.redirect('/map');
+		}
 
 		console.log('render to account.ejs');
 		var refresh = req.flash('refresh').toString();
@@ -423,13 +503,18 @@ app.get('/', checkLogin);
 		var successMessae,errorMessae;
 
 		myapi.getDeviceList(myuser.name, function(err, devices){
+			
 			if(err){
 				errorMessae = err;
+			} else {
+				JsonFileTools.saveJsonToFile(deviceListPath, devices);
 			}
+			
 
 			res.render('device', { title: 'Device', // user/account
 				user:myuser,//current user : administrator
 				devices: devices,//All users
+				maps:maps,
 				error: errorMessae,
 				success: successMessae
 			});
@@ -474,6 +559,7 @@ app.get('/', checkLogin);
 				// console.log(results);   // results = [result1, result2, result3]
 				var sensorList = results[0];
 				var zoneList = results[1];//map list
+				JsonFileTools.saveJsonToFile(zonePath, zoneList);
 				res.render('zone', { title: 'Zone', // user/account
 					user:myuser,//current user : administrator
 					devices: sensorList,//All devices
@@ -579,4 +665,103 @@ function getCloudData(name, callback) {
 			return callback(null, data);
 		}
 	});
+}
+
+function getFieldOption(field) {
+	
+	var options = {
+			tag:1,unit:'℃',
+			field:field,
+			min:0,max:40,
+			area1:0,color1: 'blue',
+			area2:50,color2: 'green',
+			area3:70,color3: 'red',
+			width: 240, height: 180,
+			redFrom: 28, redTo: 40,
+			greenFrom:20,greenTo:28,
+			greenColor:'#7AF018',
+			yellowFrom:0, yellowTo: 20,
+			yellowColor:'#18F0E0',
+			minorTicks: 5
+	};
+
+	if(field === "o2") {
+		options = {
+			tag:1,unit:'mg/L',
+			field:field,
+			min:0,max:20,
+			area1:0,color1: 'blue',
+			area2:25,color2: 'green',
+			area3:50,color3: 'red',
+			width: 240, height: 180,
+			redFrom: 10, redTo: 20,
+			greenFrom:5,greenTo:10,
+			greenColor:'#7AF018',
+			yellowFrom:0, yellowTo: 5,
+			yellowColor:'#18F0E0',
+			minorTicks: 5
+		};
+	} else if(field === "nh") {
+		options = {
+			tag:6,unit:'mg/L',
+			field:field,
+			min:0,max:1,
+			area1:0,color1: 'green',
+			area2:20,color2: 'orange',
+			area3:50,color3: 'red',
+			width: 240, height: 180,
+			redFrom: 0.5, redTo: 1,
+			greenFrom:0,greenTo:0.2,
+			greenColor:'#2ECC71',
+			yellowFrom:0.2, yellowTo: 0.5,
+			yellowColor:'#F39C12',
+			minorTicks: 5
+		};
+	}  else if(field === "ec") {
+		options = {
+			tag:5,unit:'μS/cm',
+			field:field,
+			min:0,max:4000,
+			area1:0,color1: 'gray',
+			area2:75,color2: 'orange',
+			area3:85,color3: 'red',
+			width: 240, height: 180,
+			redFrom: 3500, redTo: 4000,
+			yellowFrom:3000, yellowTo: 3500,
+			yellowColor:'#F39C12',
+			minorTicks: 5
+		};
+	}  else if(field === "ph") {
+		options = {
+			tag:7,unit:'PH值',
+			field:field,
+			min:0,max:14,
+			area1:0,color1: 'orange',
+			area2:25,color2: 'green',
+			area3:75,color3: 'red',
+			width: 240, height: 180,
+			redFrom: 11, redTo: 14,
+			greenFrom:3,greenTo:11,
+			greenColor:'#2ECC71',
+			yellowFrom:0, yellowTo: 3,
+			yellowColor:'#F39C12',
+			minorTicks: 5
+		};
+	} 
+	return options
+}
+
+function getColors(field) {
+	return {
+		"red": {"color":"#E62E00", "style": {"background-color":"#E62E00"}},
+		"orange": {"color":"#F39C12", "style":{"background-color":"#F39C12"}},
+		"yellow": {"color":"#E6E600", "style": {"background-color":"#E6E600"}},
+		"green": {"color":"#2ECC71","style":  {"background-color":"#2ECC71"}},
+		"blue": {"color":"#18F0E0","style": {"background-color":"#18F0E0"}},
+		"indigo": {"color":"#3333CC","style": {"background-color":"#3333CC"}},
+		"purple": {"color":"#9900CC","style": {"background-color":"#9900CC"}},
+		"black": {"color":"#000000","style": {"background-color":"#000000"}},
+		"purple": {"color":"#9900CC","style": {"background-color":"#9900CC"}},
+		"gray": {"color":"#A6A6A6","style": {"background-color":"#A6A6A6"}},
+	}
 }

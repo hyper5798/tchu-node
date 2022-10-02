@@ -1,3 +1,16 @@
+var zoneObj =  JSON.parse(document.getElementById("zoneObj").value);
+var zoneName =  JSON.parse(document.getElementById("zoneName").value);
+var set =  JSON.parse(document.getElementById("set").value);
+var defaultOption =  JSON.parse(document.getElementById("defaultOption").value);
+var colors =  JSON.parse(document.getElementById("colors").value);
+
+var keys = Object.keys(zoneObj);
+for(let i=0; i<keys.length;i++) {
+  let key = keys[i];
+  let zone = [key];
+  console.log(zone);
+}
+
 function updateValue(value) {
     $("#iframe1")[0].contentWindow.changeValue(value);
     $("#iframe2")[0].contentWindow.changeValue(value);
@@ -18,14 +31,34 @@ function updateData(msg) {
   }
 }
 
+function editGuage() {
+  $('#myModal').modal('hide');
+  $('#myModal2').modal('show');
+}
+
 var app = new Vue({
   el: '#app',
   data: {
-    url1: "http://localhost:8080/gauge?tag=1&field=1",
-    url2: "http://localhost:8080/gauge?tag=2&field=2",
-    url3: "http://localhost:8080/gauge?tag=6&field=3",
-    url4: "http://localhost:8080/gauge?tag=5&field=4",
-    url5: "http://localhost:8080/gauge?tag=7&field=5",
+    tab:1,
+    mode:1,
+    gaugeIndex:1,
+    areaIndex: 1,
+    colorKey: 'red',
+    option: defaultOption['temperature'],
+    zoneObj: zoneObj,
+    set:set,
+    setString: '',
+    zoneName:zoneName,
+    colors:colors,
+    color: colors['red'],
+    optionImage: '/icons/gauge/1.png',
+    selectImage: '/icons/gauge/1.png',
+    
+    url1: "http://localhost:8080/gauge?tag=6&field=temperature",
+    url2: "http://localhost:8080/gauge?tag=3&field=o2",
+    url3: "http://localhost:8080/gauge?tag=4&field=ph",
+    url4: "http://localhost:8080/gauge?tag=5&field=ec",
+    url5: "http://localhost:8080/gauge?tag=6&field=ph",
     url11: "http://localhost:8080/chart?tag=7",
   },
   methods: {
@@ -36,6 +69,49 @@ var app = new Vue({
       }
       this.url = "http://localhost:8080/gauge?tag="+value;;
 
+    },
+    editSet(key, key2) {
+      //alert(key+ '-> '+ key2);
+      let option = set[key][key2];
+      this.option = option;
+      //alert(JSON.stringify(this.option));
+      this.tab=2;
+    },
+    selectGauge(inx) {
+      this.gaugeIndex = inx;
+      this.selectImage = '/icons/gauge/'+inx+'.png';
+    },
+    changeGauge() {
+      
+      this.optionImage= '/icons/gauge/'+this.gaugeIndex+'.png';
+      this.option.tag = this.gaugeIndex;
+      this.mode = 1;
+    }, 
+    editColorArea(inx) {
+      this.areaIndex = inx;
+      this.mode = 3;
+    },
+    selectColor(key) {
+
+      this.colorKey = key;
+      this.color = this.colors[key];
+      
+    } ,
+    changeColor() {
+      if(this.areaIndex === 1) {
+        this.option.color1 = this.colorKey;
+      } else  if(this.areaIndex === 2) {
+        this.option.color2 = this.colorKey;
+      }  else  if(this.areaIndex === 3) {
+        this.option.color3 = this.colorKey;
+      }
+      this.mode = 1;
+    },
+    toSubmit() {//Update set
+      this.setString = JSON.stringify(this.set);
+      setTimeout(function () {
+        document.getElementById("updateOptions").submit();
+      }, 50);
     }
   }
 })

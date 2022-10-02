@@ -309,7 +309,7 @@ function updateDevice (name, form, callback) {
     var url = settings.api_server + settings.api_device;
     var obj = JsonFileTools.getJsonFromFile(sessionPath);
     var mySession = obj[name];
-    var json = {d: form.device_mac, name:form.device_name, status:form.device_status};
+    var json = {d: form.device_mac, name:form.device_name, fport:form.fport, status:form.device_status};
     json.token = mySession.token;
     sendPutRequest(url, json, function(err, result) {
         if(err) {

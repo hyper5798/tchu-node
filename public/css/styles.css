@@ -987,12 +987,36 @@ input[type=checkbox] {
 	margin-top: 10px;
 }
 
+.BG-Option {
+	width: auto;
+	height: auto;
+	border-radius: 6px;
+	background-color: #D5D8DC;
+	padding: 11px 16px 12px 12px;
+	margin-top: 10px;
+}
+
+.block-title {
+	margin-bottom: 0;
+	padding-left: 15px;
+	padding-top: 2px;
+	color: rgb(227, 252, 137);
+	font-weight: bold;
+	font-size: 20px;
+  }
+
+  .block-body{
+	width: 100%;
+	height: auto;
+  }
+
 .card-header {
 	margin-bottom: 0;
+	height: 35px;
 	padding-top: 2px;
-	padding-left: 5px;
-	background-color: #000000;
-	color: rgb(227, 252, 137);
+	padding-left: 10px;
+	background-color: #616064;
+	color:#ffffffd8; 
 	font-size: 16px;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 	
@@ -1002,6 +1026,14 @@ input[type=checkbox] {
 	width: 100%;
 	height: 200px;
 	border: 1px solid #eee;
+	overflow: hidden;
+	color:#ffffffd8; 
+  }
+
+  .card-body1{
+	width: 100%;
+	height: 200px;
+	background-color: #616064;
   }
 
   .card-body2{
@@ -1017,8 +1049,8 @@ input[type=checkbox] {
 	align-items: center; /* ★ */
 	padding-left: 5px;
 	color: yellow;
-	font-size: 16px;
-	
+	font-size: 20px;
+	font-weight: bold;
   }
 
   .battery-image {
@@ -1032,6 +1064,20 @@ input[type=checkbox] {
 	width: 50%;
 	height: 180px;
 	background-color: gray;
+  }
+
+  .option-image{
+	width: 140px;
+	background-color: black;
+  }
+
+  .color-block{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 80px;
+	height: 80px;
+	margin-left: 10px;	
+	color: #FFFFFF;
   }
 
   iframe {

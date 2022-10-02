@@ -35,7 +35,7 @@
 
   <script type="text/javascript">
 	var tag = <%= tag %>  ;
-	var field = <%= field %>  ;
+	var field = "<%= field %>";
     var dom = document.getElementById('container');
     var myChart = echarts.init(dom, null, {
       renderer: 'canvas',
@@ -45,16 +45,16 @@
     
     var option;
 	
-	if(tag===3) {
+	if(tag===2) {
+		option = gauge_option2;
+	} else if(tag===3) {
 		option = gauge_option3;
-	} else if(tag===4) {
-		option = gauge_option4;
 	}  else if(tag===4) {
-		option = gauge_option3;
+		option = gauge_option4;
 	} else if(tag===5) {
 		option = gauge_option5;
 	}  else if(tag===6) {
-		option = gauge_option6;
+		option = get_option6();
 	} else if(tag===7) {
 		option = gauge_option7;
 	}  else if(tag===8) {

@@ -11,7 +11,7 @@ var google_temperature_options = {
   };
 
   
-var google_o2_options = {
+/*var google_o2_options = {
 	min:0,max:20,
 	width: 240, height: 180,
 	redFrom: 10, redTo: 20,
@@ -20,11 +20,11 @@ var google_o2_options = {
 	yellowFrom:0, yellowTo: 4,
 	yellowColor:'#18F0E0',
 	minorTicks: 5
-  };
+  };*/
 
 
 //溫度
-var gauge_option3 = {
+var gauge_option2 = {
 	series: [
 	  {
 		type: 'gauge',
@@ -93,7 +93,7 @@ var gauge_option3 = {
 	]
   };
 
-  var gauge_option4 = {
+  var gauge_option3 = {
 	series: [
 	  {
 		  name:'速度',
@@ -130,7 +130,7 @@ var gauge_option3 = {
 			fontSize: 10
 		  },
 		  title : {
-			offsetCenter: [0, '9/%'],       // x, y，单位px
+			offsetCenter: [0, '90%'],       // x, y，单位px
 			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
 				fontWeight: 'bolder',
 				fontSize: 15,
@@ -152,7 +152,7 @@ var gauge_option3 = {
   };
 
   //電導率
-  var gauge_option5 = {
+  var gauge_option4 = {
 	series: [
 		{
 		name:'電導率',
@@ -205,7 +205,7 @@ var gauge_option3 = {
 };
 
 //左斜氨氮
-var gauge_option6 = {
+var gauge_option5 = {
 	series: [
 	{
 		name:'氨氮',
@@ -267,8 +267,80 @@ var gauge_option6 = {
 	
 };
 
+function getDefaultSetting(field) {
+	var setting = {};
+	if(field === 'temperature') {//temperature
+		setting = {
+			min:0, max:40,
+			splitNumber:5,
+		}
+	}
+}
+
 //右斜PH
-var gauge_option7 = {
+function get_option6() {
+	var set = {
+		name:'轉速',
+		type:'gauge',
+		//center : ['25%', '55%'],    // 默认全局居中 第一參數:x軸，第二參數:Y軸
+		radius : '90%',
+		min:0,
+		max:14,
+		startAngle:135,
+		endAngle:-45,
+		splitNumber:7,
+		axisLine: {            // 坐标轴线
+			lineStyle: {       // 属性lineStyle控制线条样式
+			color: [[0.2, '#ff4500'],[0.8, '#228b22'],[1, '#ff4500']], 
+				width: 8
+			}
+		},
+		axisTick: {            // 坐标轴小标记
+			length :12,        // 属性length控制线长
+			lineStyle: {       // 属性lineStyle控制线条样式
+				color: 'auto'
+			}
+		},
+		splitLine: {           // 分隔线
+			length :20,         // 属性length控制线长
+			lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+				color: 'auto'
+			}
+		},
+		pointer: {
+			width:5
+		},
+		axisLabel: {
+			color: 'auto',
+			distance: 10,
+			fontSize: 10
+		},
+		title : {
+			fontSize: 10,
+			offsetCenter: [-20, '60%'],       // x, y，单位px
+			textStyle: {
+				color: 'auto',
+				fontSize: 15,
+			}
+		},
+		detail : {
+			offsetCenter: [-20, '40%'],
+			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+				fontWeight: 'bolder',
+				fontSize: 25,
+				color: 'auto'
+			}
+		},
+		data:[{value: 6.7, name: 'ph'}]
+	};
+
+	return {
+		series: [set]
+	};
+}
+
+
+var gauge_option6 = {
 	series: [
 	{
 	name:'轉速',
