@@ -3,7 +3,7 @@
    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
    <script type="text/javascript">
       google.charts.load('current', {'packages':['gauge']});
-      var tag = <%= tag %>  ;
+      var gauge = <%= gauge %>  ;
       var field = "<%= field %>"  ;
       var data = null;
       var chart = null;
@@ -11,7 +11,7 @@
 
       function getGoogleGaugeOption(field) {
         var options = {
-          tag:1,
+          gauge:1,
           min:0,max:40,
           width: 240, height: 180,
           redFrom: 28, redTo: 40,
@@ -23,7 +23,7 @@
         };
 
         if(field === "o2") {
-          tag:1,
+          gauge:1,
           options = {
             min:0,max:20,
             width: 240, height: 180,
@@ -36,7 +36,7 @@
           };
         } else if(field === "nh") {
           options = {
-            tag:6,
+            gauge:6,
             min:0,max:1,
             width: 240, height: 180,
             redFrom: 0.5, redTo: 1,
@@ -48,7 +48,7 @@
           };
         }  else if(field === "ec") {
           options = {
-            tag:5,
+            gauge:5,
             min:0,max:4000,
             width: 240, height: 180,
             redFrom: 3500, redTo: 4000,
@@ -58,7 +58,7 @@
           };
         }  else if(field === "ph") {
           options = {
-            tag:7,
+            gauge:7,
             min:0,max:14,
             width: 240, height: 180,
             redFrom: 11, redTo: 14,

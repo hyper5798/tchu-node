@@ -20,28 +20,28 @@ module.exports = function(app) {
 
 	app.get('/gauge', function (req, res) {
 		var query = require('url').parse(req.url,true).query;
-		var tag = parseInt(query.tag);
+		var gauge = parseInt(query.gauge);
 		var field = query.field;
-		var gauge = 'gauge';
-		if(tag === 1) {
-			gauge = 'gauge_google';
+		var target = 'gauge';
+		if(gauge === 1) {
+			target = 'gauge_google';
 		} else {
-			gauge = 'gauge';
+			target = 'gauge';
 		}
 
-		res.render(gauge, { title: 'Gauge',
-			tag: tag,
+		res.render(target, { title: 'Gauge',
+			gauge: gauge,
 			field: field
 		});
 	});
 
 	app.get('/chart', function (req, res) {
 		var query = require('url').parse(req.url,true).query;
-		var tag = parseInt(query.tag);
+		var gauge = parseInt(query.gauge);
 		var gauge = 'gauge';
 
 		res.render('chart', { title: 'Chart',
-			tag: tag
+			gauge: gauge
 		});
 	});
 
@@ -670,7 +670,7 @@ function getCloudData(name, callback) {
 function getFieldOption(field) {
 	
 	var options = {
-			tag:1,unit:'℃',
+			gauge:1,unit:'℃',
 			field:field,
 			min:0,max:40,
 			area1:0,color1: 'blue',
@@ -687,7 +687,7 @@ function getFieldOption(field) {
 
 	if(field === "o2") {
 		options = {
-			tag:1,unit:'mg/L',
+			gauge:1,unit:'mg/L',
 			field:field,
 			min:0,max:20,
 			area1:0,color1: 'blue',
@@ -703,7 +703,7 @@ function getFieldOption(field) {
 		};
 	} else if(field === "nh") {
 		options = {
-			tag:6,unit:'mg/L',
+			gauge:6,unit:'mg/L',
 			field:field,
 			min:0,max:1,
 			area1:0,color1: 'green',
@@ -719,7 +719,7 @@ function getFieldOption(field) {
 		};
 	}  else if(field === "ec") {
 		options = {
-			tag:5,unit:'μS/cm',
+			gauge:5,unit:'μS/cm',
 			field:field,
 			min:0,max:4000,
 			area1:0,color1: 'gray',
@@ -733,7 +733,7 @@ function getFieldOption(field) {
 		};
 	}  else if(field === "ph") {
 		options = {
-			tag:7,unit:'PH值',
+			gauge:7,unit:'PH值',
 			field:field,
 			min:0,max:14,
 			area1:0,color1: 'orange',

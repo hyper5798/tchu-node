@@ -954,7 +954,7 @@ input[type=checkbox] {
 	width: auto;
 	height: auto;
 	border-radius: 6px;
-	background-color: #ffffffd8;
+	background-color: #ebe5e5d8;
 	padding: 11px 16px 12px 12px;
 	margin-top: 10px;
 }
@@ -972,7 +972,7 @@ input[type=checkbox] {
 	width: auto;
 	height: 200px;
 	border-radius: 6px;
-	background-color: #ffffffd8;
+	background-color: #c7c1c1d8;
 	padding: 11px 16px 12px 17px;
 	margin-bottom: 10px;
 	margin-top: 10px;
@@ -982,7 +982,7 @@ input[type=checkbox] {
 	width: auto;
 	height: 2000px;
 	border-radius: 6px;
-	background-color: #000000;
+	background-color: rgb(222, 224, 226);
 	padding: 11px 16px 12px 12px;
 	margin-top: 10px;
 }
@@ -1000,7 +1000,7 @@ input[type=checkbox] {
 	margin-bottom: 0;
 	padding-left: 15px;
 	padding-top: 2px;
-	color: rgb(227, 252, 137);
+	color:#000000;
 	font-weight: bold;
 	font-size: 20px;
   }
@@ -1026,6 +1026,7 @@ input[type=checkbox] {
 	width: 100%;
 	height: 200px;
 	border: 1px solid #eee;
+	background-color: #eaf1e9;
 	overflow: hidden;
 	color:#ffffffd8; 
   }
@@ -1033,12 +1034,16 @@ input[type=checkbox] {
   .card-body1{
 	width: 100%;
 	height: 200px;
-	background-color: #616064;
+	border: 1px solid #eee;
+	background-color: #cbcad8;
+	overflow: hidden;
+	color:#ffffffd8; 
   }
 
   .card-body2{
 	width: 100%;
 	height: 300px;
+	background-color: #f9f9fa;
 	border: 1px solid #eee;
   }
 
@@ -1048,7 +1053,7 @@ input[type=checkbox] {
 	display: flex; /* ★ */
 	align-items: center; /* ★ */
 	padding-left: 5px;
-	color: yellow;
+	color: #000000;
 	font-size: 20px;
 	font-weight: bold;
   }
@@ -1080,6 +1085,15 @@ input[type=checkbox] {
 	color: #FFFFFF;
   }
 
+  .color-block2{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 80px;
+	height: 40px;
+	margin-left: 10px;	
+	color: #FFFFFF;
+  }
+
   iframe {
 	display:block;
     width: 200px;
@@ -1089,6 +1103,11 @@ input[type=checkbox] {
 	
 	overflow: hidden;
   }
+
+  .float-right {
+	float: right !important;
+  }
+  
 
 .Meter0{
 	width: auto;
@@ -1144,7 +1163,153 @@ input[type=checkbox] {
     font-size: 50px;
   }
 
+  .m-0 {
+	margin: 0 !important;
+  }
+  
+  .mt-0,
+  .my-0 {
+	margin-top: 0 !important;
+  }
+  
+  .mr-0,
+  .mx-0 {
+	margin-right: 0 !important;
+  }
+  
+  .mb-0,
+  .my-0 {
+	margin-bottom: 0 !important;
+  }
+  
+  .ml-0,
+  .mx-0 {
+	margin-left: 0 !important;
+  }
+  
+  .m-1 {
+	margin: 0.25rem !important;
+  }
+  
+  .mt-1,
+  .my-1 {
+	margin-top: 0.25rem !important;
+  }
+  
+  .mr-1,
+  .mx-1 {
+	margin-right: 0.25rem !important;
+  }
+  
+  .mb-1,
+  .my-1 {
+	margin-bottom: 0.25rem !important;
+  }
+  
+  .ml-1,
+  .mx-1 {
+	margin-left: 0.25rem !important;
+  }
+  
+  .m-2 {
+	margin: 0.5rem !important;
+  }
+  
+  .mt-2,
+  .my-2 {
+	margin-top: 0.5rem !important;
+  }
+  
+  .mr-2,
+  .mx-2 {
+	margin-right: 0.5rem !important;
+  }
+  
+  .mb-2,
+  .my-2 {
+	margin-bottom: 0.5rem !important;
+  }
+  
+  .ml-2,
+  .mx-2 {
+	margin-left: 0.5rem !important;
+  }
+  
+  .m-3 {
+	margin: 1rem !important;
+  }
+  
+  .mt-3,
+  .my-3 {
+	margin-top: 1rem !important;
+  }
+  
+  .mr-3,
+  .mx-3 {
+	margin-right: 1rem !important;
+  }
+  
+  .mb-3,
+  .my-3 {
+	margin-bottom: 1rem !important;
+  }
+  
+  .ml-3,
+  .mx-3 {
+	margin-left: 1rem !important;
+  }
+  
+  .m-4 {
+	margin: 1.5rem !important;
+  }
+  
+  .mt-4,
+  .my-4 {
+	margin-top: 1.5rem !important;
+  }
+  
+  .mr-4,
+  .mx-4 {
+	margin-right: 1.5rem !important;
+  }
+  
+  .mb-4,
+  .my-4 {
+	margin-bottom: 1.5rem !important;
+  }
+  
+  .ml-4,
+  .mx-4 {
+	margin-left: 1.5rem !important;
+  }
+  
+  .m-5 {
+	margin: 3rem !important;
+  }
+  
+  .mt-5,
+  .my-5 {
+	margin-top: 3rem !important;
+  }
+  
+  .mr-5,
+  .mx-5 {
+	margin-right: 3rem !important;
+  }
+  
+  .mb-5,
+  .my-5 {
+	margin-bottom: 3rem !important;
+  }
+  
+  .ml-5,
+  .mx-5 {
+	margin-left: 3rem !important;
+  }
 
+  [v-cloak] {
+	display: none;
+  }
 /* logo出现动画 */
 @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
 @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);

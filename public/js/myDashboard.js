@@ -3,32 +3,42 @@ var zoneName =  JSON.parse(document.getElementById("zoneName").value);
 var set =  JSON.parse(document.getElementById("set").value);
 var defaultOption =  JSON.parse(document.getElementById("defaultOption").value);
 var colors =  JSON.parse(document.getElementById("colors").value);
+console.log('set:');
+console.log(JSON.stringify(set));
 
+//key:zone id
 var keys = Object.keys(zoneObj);
 for(let i=0; i<keys.length;i++) {
   let key = keys[i];
-  let zone = [key];
-  console.log(zone);
+  let zone = zoneObj[key];
+  console.log('zone:');
+  console.log(JSON.stringify(zone));
 }
 
-function updateValue(value) {
-    $("#iframe1")[0].contentWindow.changeValue(value);
+function updateGaugeValue(id, value) {
+    /*$(id)[0].contentWindow.changeValue(value);
     $("#iframe2")[0].contentWindow.changeValue(value);
     $("#iframe3")[0].contentWindow.changeValue(value);
     $("#iframe4")[0].contentWindow.changeValue(value);
-    $("#iframe5")[0].contentWindow.changeValue(value);
+    $("#iframe5")[0].contentWindow.changeValue(value);*/
+    $(id)[0].contentWindow.changeValue(value);
 
 }
 
 
 function updateData(msg) {
-  let mac = msg.macAddr;
-  let info = msg.information;
-  
-  if(info.hasOwnProperty('temperature')) {
-      let temperature = info.temperature;
-      updateValue(temperature);
-  }
+  var mac = msg.macAddr;
+  var info = msg.information;
+  let keys = Object.keys(info);
+  keys.forEach(field => {
+    
+    let id =  "#"+mac+"_"+field;
+    if(field !== 'voltage') {
+      updateGaugeValue(id, info[field]);
+    }
+  });
+
+
 }
 
 function editGuage() {
@@ -54,26 +64,33 @@ var app = new Vue({
     optionImage: '/icons/gauge/1.png',
     selectImage: '/icons/gauge/1.png',
     
-    url1: "http://localhost:8080/gauge?tag=6&field=temperature",
-    url2: "http://localhost:8080/gauge?tag=3&field=o2",
-    url3: "http://localhost:8080/gauge?tag=4&field=ph",
-    url4: "http://localhost:8080/gauge?tag=5&field=ec",
-    url5: "http://localhost:8080/gauge?tag=6&field=ph",
-    url11: "http://localhost:8080/chart?tag=7",
+    url1: "http://localhost:8080/gauge?gauge=6&field=temperature",
+    url2: "http://localhost:8080/gauge?gauge=3&field=o2",
+    url3: "http://localhost:8080/gauge?gauge=4&field=ph",
+    url4: "http://localhost:8080/gauge?gauge=5&field=ec",
+    url5: "http://localhost:8080/gauge?gauge=6&field=ph",
+    url11: "http://localhost:8080/chart?gauge=7",
   },
   methods: {
+    getId(mac, field) {
+      return mac+"_"+field;
+    },
+    getUrl(mac, field, gauge) {
+      return "http://localhost:8080/gauge?mac="+mac+"&field="+field+"&gauge="+gauge;
+    },
     change() {
       var value = document.getElementById('input2').value;
       if(value && typeof(value)==='string') {
         value = parseInt(value);
       }
-      this.url = "http://localhost:8080/gauge?tag="+value;;
+      this.url = "http://localhost:8080/gauge?gauge"+value;;
 
     },
     editSet(key, key2) {
       //alert(key+ '-> '+ key2);
       let option = set[key][key2];
       this.option = option;
+      this.optionImage = '/icons/gauge/'+this.option.gauge+'.png';
       //alert(JSON.stringify(this.option));
       this.tab=2;
     },
@@ -84,11 +101,18 @@ var app = new Vue({
     changeGauge() {
       
       this.optionImage= '/icons/gauge/'+this.gaugeIndex+'.png';
-      this.option.tag = this.gaugeIndex;
+      this.option.gauge = this.gaugeIndex;
       this.mode = 1;
     }, 
     editColorArea(inx) {
       this.areaIndex = inx;
+      if(inx===1) {
+        this.color = this.colors[this.option.color1];
+      } else if(inx===2) {
+        this.color = this.colors[this.option.color2];
+      } else if(inx===3) {
+        this.color = this.colors[this.option.color3];
+      }
       this.mode = 3;
     },
     selectColor(key) {
