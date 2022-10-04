@@ -703,7 +703,7 @@ function getFieldOption(field) {
 		};
 	} else if(field === "nh") {
 		options = {
-			gauge:6,unit:'mg/L',
+			gauge:5,unit:'mg/L',
 			field:field,
 			min:0,max:1,
 			area1:0,color1: 'green',
@@ -719,7 +719,7 @@ function getFieldOption(field) {
 		};
 	}  else if(field === "ec") {
 		options = {
-			gauge:5,unit:'μS/cm',
+			gauge:4,unit:'μS/cm',
 			field:field,
 			min:0,max:4000,
 			area1:0,color1: 'gray',
@@ -733,7 +733,7 @@ function getFieldOption(field) {
 		};
 	}  else if(field === "ph") {
 		options = {
-			gauge:7,unit:'PH值',
+			gauge:6,unit:'PH值',
 			field:field,
 			min:0,max:14,
 			area1:0,color1: 'orange',

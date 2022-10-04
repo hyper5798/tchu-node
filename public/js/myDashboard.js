@@ -53,6 +53,7 @@ var app = new Vue({
     mode:1,
     gaugeIndex:1,
     areaIndex: 1,
+    isGaugeSet: false,
     colorKey: 'red',
     option: defaultOption['temperature'],
     zoneObj: zoneObj,
