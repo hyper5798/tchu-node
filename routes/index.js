@@ -773,5 +773,6 @@ function getColors(field) {
 		"black": {"color":"#000000","style": {"background-color":"#000000"}},
 		"purple": {"color":"#9900CC","style": {"background-color":"#9900CC"}},
 		"gray": {"color":"#A6A6A6","style": {"background-color":"#A6A6A6"}},
+		"light": {"color":"#F2F2F2","style": {"background-color":"#F2F2F2"}},
 	}
 }
