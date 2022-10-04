@@ -76,8 +76,8 @@ var app = new Vue({
     getId(mac, field) {
       return mac+"_"+field;
     },
-    getUrl(mac, field, gauge) {
-      return "http://localhost:8080/gauge?mac="+mac+"&field="+field+"&gauge="+gauge;
+    getUrl(zoneId, field) {
+      return "http://localhost:8080/gauge?zoneId="+zoneId+"&field="+field;
     },
     change() {
       var value = document.getElementById('input2').value;

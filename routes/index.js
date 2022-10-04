@@ -19,18 +19,25 @@ var axios = require('axios');
 module.exports = function(app) {
 
 	app.get('/gauge', function (req, res) {
+		var set = JsonFileTools.getJsonFromFile(setPath);
+		var colors = getColors();
 		var query = require('url').parse(req.url,true).query;
-		var gauge = parseInt(query.gauge);
+		var zoneId = query.zoneId;
 		var field = query.field;
+        var optionSet = set[zoneId][field];
+
+
 		var target = 'gauge';
-		if(gauge === 1) {
+		if(optionSet.gauge === 1) {
 			target = 'gauge_google';
 		} else {
 			target = 'gauge';
 		}
 
 		res.render(target, { title: 'Gauge',
-			gauge: gauge,
+			gauge: optionSet.gauge,
+			optionSet: optionSet,
+			colors:colors,
 			field: field
 		});
 	});
@@ -244,6 +251,9 @@ app.get('/', checkLogin);
 			try {
 				sessionObj = JsonFileTools.getJsonFromFile(mysessionPath);
 			} catch (error) {
+				sessionObj = {};
+			}
+			if(sessionObj === null) {
 				sessionObj = {};
 			}
             sessionObj[result.name] = result;

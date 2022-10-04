@@ -992,7 +992,7 @@ input[type=checkbox] {
 	height: 800px;
 	
 	border-radius: 6px;
-	background-color: #D5D8DC;
+	background-color: rgb(208, 214, 221);
 	padding: 11px 16px 12px 12px;
 	margin-top: 10px;
 }
@@ -1028,16 +1028,16 @@ input[type=checkbox] {
 	width: 100%;
 	height: 200px;
 	border: 1px solid #949393;
-	background-color: #e6dfd8;
+	background-color: #d0d0e1;
 	overflow: hidden;
-	color:#ffffffd8; 
+	color:#ffffffd8;
   }
 
   .card-body1{
 	width: 100%;
 	height: 200px;
 	border: 1px solid #949393;
-	background-color: #cbcad8;
+	background-color: #cccccc;
 	overflow: hidden;
 	color:#ffffffd8; 
   }

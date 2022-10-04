@@ -7,7 +7,8 @@
   <meta charset="utf-8">
 </head>
 <body style="height: 100%; margin: 0">
-
+  <input id="colors" type="hidden" value="<%= JSON.stringify(colors) %>">
+  <input id="optionSet" type="hidden" value="<%= JSON.stringify(optionSet) %>">
   <div id="container" style="height: 100%"></div>
   <script type="text/javascript" src="js/chart_option.js" ></script>
   <script type="text/javascript" src="vendor/echarts/echarts5.3.3.min.js" ></script>
@@ -34,8 +35,9 @@
   -->
 
   <script type="text/javascript">
-	var gauge = <%= gauge %>  ;
 	var field = "<%= field %>";
+    var colors = JSON.parse(document.getElementById("colors").value);
+    var optionSet = JSON.parse(document.getElementById("optionSet").value);
     var dom = document.getElementById('container');
     var myChart = echarts.init(dom, null, {
       renderer: 'canvas',
@@ -45,21 +47,17 @@
     
     var option;
 	
-	if(gauge===2) {
-		option = gauge_option2;
-	} else if(gauge===3) {
-		option = gauge_option3;
-	}  else if(gauge===4) {
-		option = gauge_option4;
-	} else if(gauge===5) {
-		option = gauge_option5;
-	}  else if(gauge===6) {
-		option = get_option6();
-	} else if(gauge===7) {
-		option = gauge_option7;
-	}  else if(gauge===8) {
-		option = gauge_option8;
-	}	
+	if(optionSet.gauge===2) {
+		option = get_option2(optionSet, colors);
+	} else if(optionSet.gauge===3) {
+		option = get_option3(optionSet, colors);
+	}  else if(optionSet.gauge===4) {
+		option = get_option4(optionSet, colors);
+	} else if(optionSet.gauge===5) {
+		option = get_option5(optionSet, colors);
+	}  else if(optionSet.gauge===6) {
+		option = get_option6(optionSet, colors);
+	} 	
 
 	if(field && field>0) {
 		option = getGaugeFieldOption(option, field);

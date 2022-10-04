@@ -93,6 +93,68 @@ var gauge_option2 = {
 	]
   };
 
+  function get_option2(set, colors) {
+	var set ={
+		type: 'gauge',
+		min: set.min,
+		max: set.max,
+		radius : '95%',
+		splitNumber:5,
+		axisLine: {
+		  lineStyle: {
+			width: 20,
+			color: [[ set.area2/100, colors[optionSet.color1].color],[ set.area3/100, colors[optionSet.color2].color],[1, colors[optionSet.color3].color]]
+		  }
+		},
+		pointer: {
+		  itemStyle: {
+			color: 'auto'
+		  }
+		},
+		axisTick: {
+		  distance: -20,
+		  length: 8,
+		  lineStyle: {
+			color: '#fff',
+			width: 2
+		  }
+		},
+		splitLine: {
+		  distance: -20,
+		  length: 20,
+		  lineStyle: {
+			color: '#fff',
+			width: 4
+		  }
+		},
+		axisLabel: {
+		  color: 'auto',
+		  distance: 20,
+		  fontSize: 20
+		},
+		title : {
+			offsetCenter: [0, '60%'],       // x, y，单位px
+			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+				fontWeight: 'bolder',
+				fontSize: 15,
+				fontStyle: 'italic',
+				color: 'auto'
+			}
+		},
+		detail: {
+		  offsetCenter: [0, '40%'],
+		  valueAnimation: true,
+		  formatter: '{value}',
+		  color: 'auto',
+		  fontSize: 20
+		},
+		data:[{value: 24, name: set.unit}]
+	  };
+	return {
+		series: [set]
+	};
+}
+
   var gauge_option3 = {
 	series: [
 	  {
@@ -151,6 +213,61 @@ var gauge_option2 = {
 	]
   };
 
+  function get_option3(set, colors) {
+	var set ={
+		name:'速度',
+		type:'gauge',
+		min: set.min,
+		max: set.max,
+		radius : '90%',
+		splitNumber:5,
+		axisLine: {            // 坐标轴线
+			lineStyle: {       // 圓框寬度
+				width: 10,
+				color: [[ set.area2/100, colors[optionSet.color1].color],[ set.area3/100, colors[optionSet.color2].color],[1, colors[optionSet.color3].color]]
+			}
+		},
+		axisTick: {            // 坐标轴小标记
+			length :5,        // 属性length控制线长
+			lineStyle: {       // 属性lineStyle控制线条样式
+				color: 'blue'
+			}
+		},
+		splitLine: {           // 分隔线
+			length :10,         // 属性length控制线长
+			lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+				color: 'blue'
+			}
+		},
+		axisLabel: {
+		  color: 'auto',
+		  distance: 10,
+		  fontSize: 10
+		},
+		title : {
+		  offsetCenter: [0, '90%'],       // x, y，单位px
+		  textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+			  fontWeight: 'bolder',
+			  fontSize: 15,
+			  fontStyle: 'italic',
+			  color: 'auto'
+		  }
+	  },
+	  detail : {
+		  offsetCenter: [0, '70%'],
+		  textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+			  fontWeight: 'bolder',
+			  fontSize: 20,
+			  color: 'auto'
+		  }
+	  },
+		data:[{value: 2400, name: set.unit}]
+	};
+	return {
+		series: [set]
+	};
+}
+
   //電導率
   var gauge_option4 = {
 	series: [
@@ -200,9 +317,64 @@ var gauge_option2 = {
 				color: '#FFFFFF'
 			}
 		},
-		data:[{value: 400, name: 'mg/l'}]
+		data:[{value: 400, name: 'μS/cm'}]
 	}]
 };
+
+function get_option4(set, colors) {
+	var set ={
+		name:'電導率',
+		type:'gauge',
+		min: set.min,
+		max: set.max,
+		radius : '95%',
+		splitNumber:10,
+		axisLine: {            // 坐标轴线
+			lineStyle: {       // 属性lineStyle控制线条样式
+				color: [[ set.area2/100, colors[optionSet.color1].color],[ set.area3/100, colors[optionSet.color2].color],[1, colors[optionSet.color3].color]], 
+				width: 10
+			}
+		},
+		axisTick: {            // 坐标轴小标记
+			length :8,        // 属性length控制线长
+			lineStyle: {       // 属性lineStyle控制线条样式
+				color: 'blue'
+			}
+		},
+		splitLine: {           // 分隔线
+			length :15,         // 属性length控制线长
+			lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+				color: 'gray'
+			}
+		},
+		axisLabel: {
+			color: 'auto',
+			distance: 10,
+			fontSize: 10
+		  },
+		title : {
+			offsetCenter: [0, '90%'],       // x, y，单位px
+			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+				fontWeight: 'bolder',
+				fontSize: 15,
+				fontStyle: 'italic',
+				color: '#FFFFFF'
+			}
+		},
+		detail : {
+			offsetCenter: [0, '70%'],
+			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+				fontWeight: 'bolder',
+				fontSize: 25,
+				color: '#FFFFFF'
+			}
+		},
+		data:[{value: 400, name: set.unit}]
+	};
+	return {
+		series: [set]
+	};
+}
 
 //左斜氨氮
 var gauge_option5 = {
@@ -262,10 +434,73 @@ var gauge_option5 = {
 				color: 'auto'
 			}
 		},
-		data:[{value: 0.3, name: 'mg/l'}]
+		data:[{value: 0.3, name:'mg/L'}]
 	}]
 	
 };
+
+function get_option5(set, colors) {
+	var set ={
+		name:'氨氮',
+		type:'gauge',
+		//center : ['25%', '55%'],    // 默认全局居中 第一參數:x軸，第二參數:Y軸
+		radius : '90%',
+		min: set.min,
+		max: set.max,
+		startAngle:225,
+		endAngle:45,
+		splitNumber:5,
+		axisLine: {            // 坐标轴线
+			lineStyle: {       // 属性lineStyle控制线条样式
+				color: [[ set.area2/100, colors[optionSet.color1].color],[ set.area3/100, colors[optionSet.color2].color],[1, colors[optionSet.color3].color]], 
+				width: 8
+			}
+		},
+		axisTick: {            // 坐标轴小标记
+			length :12,        // 属性length控制线长
+			lineStyle: {       // 属性lineStyle控制线条样式
+				color: 'auto'
+			},
+			textStyle: {
+				color: '#FFFFFF'
+				}
+		},
+		splitLine: {           // 分隔线
+			length :15,         // 属性length控制线长
+			lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+				color: 'auto'
+			}
+		},
+		pointer: {
+			width:5
+		},
+		axisLabel: {
+			color: 'auto',
+			distance: 10,
+			fontSize: 10
+		  },
+		title : {
+			fontSize: 10,
+			offsetCenter: [20, '60%'],       // x, y，单位px
+			textStyle: {
+				color: 'auto',
+				fontSize: 15,
+				}
+		},
+		detail : {
+			offsetCenter: [20, '40%'],
+			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+				fontWeight: 'bolder',
+				fontSize: 25,
+				color: 'auto'
+			}
+		},
+		data:[{value: 0.3, name: set.unit}]
+	};
+	return {
+		series: [set]
+	};
+}
 
 function getDefaultSetting(field) {
 	var setting = {};
@@ -278,20 +513,20 @@ function getDefaultSetting(field) {
 }
 
 //右斜PH
-function get_option6() {
+function get_option6(set, colors) {
 	var set = {
 		name:'轉速',
 		type:'gauge',
 		//center : ['25%', '55%'],    // 默认全局居中 第一參數:x軸，第二參數:Y軸
 		radius : '90%',
-		min:0,
-		max:14,
+		min: set.min,
+		max: set.max,
 		startAngle:135,
 		endAngle:-45,
 		splitNumber:7,
 		axisLine: {            // 坐标轴线
-			lineStyle: {       // 属性lineStyle控制线条样式
-			color: [[0.2, '#ff4500'],[0.8, '#228b22'],[1, '#ff4500']], 
+			lineStyle: {       // 属性maxlineStyle控制线条样式
+			color: [[ set.area2/100, colors[optionSet.color1].color],[ set.area3/100, colors[optionSet.color2].color],[1, colors[optionSet.color3].color]], 
 				width: 8
 			}
 		},
@@ -331,7 +566,7 @@ function get_option6() {
 				color: 'auto'
 			}
 		},
-		data:[{value: 6.7, name: 'ph'}]
+		data:[{value: 6.7, name: set.unit}]
 	};
 
 	return {
