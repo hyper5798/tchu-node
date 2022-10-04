@@ -55,6 +55,8 @@ var app = new Vue({
     areaIndex: 1,
     isGaugeSet: false,
     colorKey: 'red',
+    zoneKey: 1,
+    fieldKey: 'temperature',
     option: defaultOption['temperature'],
     zoneObj: zoneObj,
     set:set,
@@ -87,10 +89,14 @@ var app = new Vue({
       this.url = "http://localhost:8080/gauge?gauge"+value;;
 
     },
-    editSet(key, key2) {
-      //alert(key+ '-> '+ key2);
-      let option = set[key][key2];
-      this.option = option;
+    reset() {
+      this.option = defaultOption[this.option.field];
+    },
+    editSet(zoneId, field) {
+      this.zoneKey = zoneId;
+      this.fieldKey = field;
+      //alert(zoneId+ '-> '+ field);
+      this.option = set[zoneId][field];
       this.optionImage = '/icons/gauge/'+this.option.gauge+'.png';
       //alert(JSON.stringify(this.option));
       this.tab=2;
@@ -133,6 +139,7 @@ var app = new Vue({
       this.mode = 1;
     },
     toSubmit() {//Update set
+      this.set[this.zoneKey][this.fieldKey] = this.option;
       this.setString = JSON.stringify(this.set);
       setTimeout(function () {
         document.getElementById("updateOptions").submit();

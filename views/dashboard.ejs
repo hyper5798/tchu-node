@@ -128,9 +128,11 @@
 		</button>
 
 		<span v-if = "mode==1" class="modal-title" id="myModalLabel">
-			
 			<span style="color:white; font-size: 20px;">設定儀表</span>
 			<img :src="optionImage" width="40px" >
+			<span class="float-right mr-5"> 
+				<button type="button" class="btn btn-outline-primary" @click="reset();">恢復初始值</button> 
+			</span>
 		</span>
 		<span v-if = "mode==2" class="modal-title" id="myModalLabel">
 			<span style="color:white; font-size: 20px;">選擇樣式</span>
