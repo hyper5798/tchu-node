@@ -1,13 +1,15 @@
 <%- include page/header2 %>
 
-<div v-if="tab==1" class="mt-3">
-	<button v-if="!isGaugeSet" type="button" class="btn btn-outline-dark" @click="isGaugeSet=true;" >儀表設定</button>
-	<button v-if="isGaugeSet" type="button" class="btn btn-dark" @click="isGaugeSet=false;">取消設定</button>
-</div> 
+<% if(user.role=='superAdmin') {%>
+	<div v-if="tab==1" class="mt-3">
+		<button v-if="!isGaugeSet" type="button" class="btn btn-outline-dark" @click="isGaugeSet=true;" >儀表設定</button>
+		<button v-if="isGaugeSet" type="button" class="btn btn-dark" @click="isGaugeSet=false;">取消設定</button>
+	</div> 
+<% } %>
 
-<div v-show="tab==1" class="BG-Dashboard">
+<div v-show="tab==1">
 
-		<div v-cloak v-for="(zone, zoneId, index) in zoneObj" >
+		<div v-for="(zone, zoneId, index) in zoneObj" >
 			<div class="block-title col-xs-12 col-md-12 col-lg-12">
 				<span >
 					{{ zoneName[zoneId] }}
@@ -20,7 +22,7 @@
 					<div>
 						 <!--{{ item.name }}  {{ mac }}-->
 						<div v-for="(fieldName, fieldKey, index2) in item.field" >
-							<div v-if="fieldKey!='voltage'" class="col-xs-6 col-md-4 col-lg-2">
+							<div v-if="fieldKey!='voltage'" class="col-xs-6 col-md-4 col-lg-2 mb-2">
 								<div  class="card-header">
 									{{ fieldName }} <!--{{ fieldKey }}--> 
 									<span class="float-right">
@@ -49,14 +51,14 @@
 								<div v-if="index==0" class="card-body">
 									<div class="battery-block">
 										
-											<image class="battery-image" src="/icons/battery/battery-3.png"></image>
+											<image class="battery-image" src="/icons/battery/b3.png"></image>
 										
 											8V
 										
 									</div>
 									<div class="battery-block">
 										
-											<image class="battery-image" src="/icons/battery/battery-1.png"></image>
+											<image class="battery-image" src="/icons/battery/b1.png"></image>
 										
 										
 											5V
@@ -66,14 +68,14 @@
 								<div v-if="index==1" class="card-body1">
 									<div class="battery-block">
 										
-											<image class="battery-image" src="/icons/battery/battery-3.png"></image>
+											<image class="battery-image" src="/icons/battery/b3.png"></image>
 										
 											8V
 										
 									</div>
 									<div class="battery-block">
 										
-											<image class="battery-image" src="/icons/battery/battery-1.png"></image>
+											<image class="battery-image" src="/icons/battery/b1.png"></image>
 										
 										
 											5V
@@ -117,15 +119,14 @@
 		</div>
 
 		
-   </div>
-   <div v-if="tab==2" class="BG-Option">
+</div>
+<div v-if="tab==2" class="BG-Option">
 	<div class="modal-header " style="background-color:#357ebd;">
 		<button type="button" class="close"
 		data-dismiss="modal" aria-hidden="true">
 			&times;
 		</button>
 
-		
 		<span v-if = "mode==1" class="modal-title" id="myModalLabel">
 			
 			<span style="color:white; font-size: 20px;">設定儀表</span>
@@ -247,13 +248,12 @@
 		</div>
 	</div>
 	
-   </div>
-   <input id="zoneObj" type="hidden" value="<%= JSON.stringify(zoneObj) %>">
-   <input id="set" type="hidden" value="<%= JSON.stringify(set) %>">
-   <input id="defaultOption" type="hidden" value="<%= JSON.stringify(defaultOption) %>"> 
-   <input id="zoneName" type="hidden" value="<%= JSON.stringify(zoneName) %>">
-   <input id="colors" type="hidden" value="<%= JSON.stringify(colors) %>">
-   
-		
+</div>
+
+<input id="zoneObj" type="hidden" value="<%= JSON.stringify(zoneObj) %>">
+<input id="set" type="hidden" value="<%= JSON.stringify(set) %>">
+<input id="defaultOption" type="hidden" value="<%= JSON.stringify(defaultOption) %>"> 
+<input id="zoneName" type="hidden" value="<%= JSON.stringify(zoneName) %>">
+<input id="colors" type="hidden" value="<%= JSON.stringify(colors) %>">
 
 <%- include page/footer %>

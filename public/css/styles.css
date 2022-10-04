@@ -980,7 +980,7 @@ input[type=checkbox] {
 
 .BG-Dashboard {
 	width: auto;
-	height: 2000px;
+	height: auto;
 	border-radius: 6px;
 	background-color: rgb(222, 224, 226);
 	padding: 11px 16px 12px 12px;
@@ -1011,6 +1011,7 @@ input[type=checkbox] {
 	height: auto;
   }
 
+
 .card-header {
 	margin-bottom: 0;
 	height: 35px;
@@ -1026,8 +1027,8 @@ input[type=checkbox] {
   .card-body{
 	width: 100%;
 	height: 200px;
-	border: 1px solid #eee;
-	background-color: #eaf1e9;
+	border: 1px solid #949393;
+	background-color: #e6dfd8;
 	overflow: hidden;
 	color:#ffffffd8; 
   }
@@ -1035,7 +1036,7 @@ input[type=checkbox] {
   .card-body1{
 	width: 100%;
 	height: 200px;
-	border: 1px solid #eee;
+	border: 1px solid #949393;
 	background-color: #cbcad8;
 	overflow: hidden;
 	color:#ffffffd8; 
@@ -1044,8 +1045,8 @@ input[type=checkbox] {
   .card-body2{
 	width: 100%;
 	height: 300px;
+	border: 1px solid #949393;
 	background-color: #f9f9fa;
-	border: 1px solid #eee;
   }
 
   .battery-block{

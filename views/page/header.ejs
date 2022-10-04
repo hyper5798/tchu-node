@@ -12,7 +12,7 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="\"><span>計算中心</span>智慧電表</a>
+				<a class="navbar-brand" href="\"><span>慈濟</span>IOT數據監測</a>
 				<!--<a class="navbar-brand" href="\">動態數據圖表</a>
 				<a class="navbar-brand" href="\control">報表查詢</a> -->
 				<% if(user){ %>
@@ -25,10 +25,13 @@
 							<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="/changeSelfPwd"><span class="fa fa-lock"></span> 變更密碼</a></li>
-								<li><a href="/account"><span class="fa fa-user"></span>  帳號管理</a></li>
-								<li><a href="/zone"><span class="fa fa-clone"></span>分區管理</a></li>
-								<li><a href="/device"><span class="fa fa-tachometer"></span>裝置管理</a></li>
-								<li><a href="/map"><span class="fa fa-eye"></span>  裝置類型管理</a></li>
+								<% if(user.role=='superAdmin') {%>
+									<li><a href="/account"><span class="fa fa-user"></span>  帳號管理</a></li>
+									<li><a href="/zone"><span class="fa fa-clone"></span>分區管理</a></li>
+									<li><a href="/device"><span class="fa fa-tachometer"></span>裝置管理</a></li>
+									<li><a href="/map"><span class="fa fa-eye"></span>  裝置類型管理</a></li>
+								<% } %>
+								
 								<li><a href="/logout"><span class="fa fa-hand-paper-o"></span> 登出</a></li>
 							</ul>
 						</li>
