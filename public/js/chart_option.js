@@ -44,7 +44,7 @@ var gauge_option2 = {
 		},
 		pointer: {
 		  itemStyle: {
-			color: 'auto'
+			color: 'inherit'
 		  }
 		},
 		axisTick: {
@@ -64,24 +64,22 @@ var gauge_option2 = {
 		  }
 		},
 		axisLabel: {
-		  color: 'auto',
+		  color: 'inherit',
 		  distance: 20,
 		  fontSize: 20
 		},
 		title : {
 			offsetCenter: [0, '60%'],       // x, y，单位px
-			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-				fontWeight: 'bolder',
-				fontSize: 15,
-				fontStyle: 'italic',
-				color: 'auto'
-			}
+			fontWeight: 'bolder',
+			fontSize: 15,
+			fontStyle: 'italic',
+			color: 'inherit'
 		},
 		detail: {
 		  offsetCenter: [0, '40%'],
 		  valueAnimation: true,
 		  formatter: '{value}',
-		  color: 'auto',
+		  color: 'inherit',
 		  fontSize: 20
 		},
 		data: [
@@ -108,7 +106,7 @@ var gauge_option2 = {
 		},
 		pointer: {
 		  itemStyle: {
-			color: 'auto'
+			color: 'inherit'
 		  }
 		},
 		axisTick: {
@@ -128,27 +126,25 @@ var gauge_option2 = {
 		  }
 		},
 		axisLabel: {
-		  color: 'auto',
+		  color: 'inherit',
 		  distance: 20,
 		  fontSize: 20
 		},
 		title : {
 			offsetCenter: [0, '60%'],       // x, y，单位px
-			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-				fontWeight: 'bolder',
-				fontSize: 15,
-				fontStyle: 'italic',
-				color: 'auto'
-			}
+			fontWeight: 'bolder',
+			fontSize: 15,
+			fontStyle: 'italic',
+			color: 'inherit'
 		},
 		detail: {
 		  offsetCenter: [0, '40%'],
 		  valueAnimation: true,
 		  formatter: '{value}',
-		  color: 'auto',
+		  color: 'inherit',
 		  fontSize: 20
 		},
-		data:[{value: 24, name: set.unit}]
+		data:[{value: 0, name: set.unit}]
 	  };
 	return {
 		series: [set]
@@ -187,28 +183,24 @@ var gauge_option2 = {
 			  }
 		  },
 		  axisLabel: {
-			color: 'auto',
+			color: 'inherit',
 			distance: 10,
 			fontSize: 10
 		  },
 		  title : {
 			offsetCenter: [0, '90%'],       // x, y，单位px
-			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-				fontWeight: 'bolder',
-				fontSize: 15,
-				fontStyle: 'italic',
-				color: 'auto'
-			}
+			fontWeight: 'bolder',
+			fontSize: 15,
+			fontStyle: 'italic',
+			color: 'inherit'
 		},
 		detail : {
 			offsetCenter: [0, '70%'],
-			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-				fontWeight: 'bolder',
-				fontSize: 20,
-				color: 'auto'
-			}
+			fontWeight: 'bolder',
+			fontSize: 20,
+			color: 'inherit'
 		},
-		  data:[{value: 2400, name: 'mg/l'}]
+		  data:[{value: 0, name: 'mg/l'}]
 	  }
 	]
   };
@@ -240,28 +232,24 @@ var gauge_option2 = {
 			}
 		},
 		axisLabel: {
-		  color: 'auto',
+		  color: 'inherit',
 		  distance: 10,
 		  fontSize: 10
 		},
 		title : {
 		  offsetCenter: [0, '90%'],       // x, y，单位px
-		  textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-			  fontWeight: 'bolder',
-			  fontSize: 15,
-			  fontStyle: 'italic',
-			  color: 'auto'
-		  }
+		  fontWeight: 'bolder',
+		  fontSize: 15,
+		  fontStyle: 'italic',
+		  color: 'inherit'
 	  },
 	  detail : {
 		  offsetCenter: [0, '70%'],
-		  textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-			  fontWeight: 'bolder',
-			  fontSize: 20,
-			  color: 'auto'
-		  }
+		  fontWeight: 'bolder',
+		  fontSize: 20,
+		  color: 'inherit'
 	  },
-		data:[{value: 2400, name: set.unit}]
+		data:[{value: 0, name: set.unit}]
 	};
 	return {
 		series: [set]
@@ -296,28 +284,24 @@ var gauge_option2 = {
 			}
 		},
 		axisLabel: {
-			color: 'auto',
+			color: 'inherit',
 			distance: 10,
 			fontSize: 10
 		  },
 		title : {
 			offsetCenter: [0, '90%'],       // x, y，单位px
-			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-				fontWeight: 'bolder',
-				fontSize: 15,
-				fontStyle: 'italic',
-				color: '#FFFFFF'
-			}
+			fontWeight: 'bolder',
+			fontSize: 15,
+			fontStyle: 'italic',
+			color: '#FFFFFF'
 		},
 		detail : {
 			offsetCenter: [0, '70%'],
-			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-				fontWeight: 'bolder',
-				fontSize: 25,
-				color: '#FFFFFF'
-			}
+			fontWeight: 'bolder',
+			fontSize: 25,
+			color: '#FFFFFF'
 		},
-		data:[{value: 400, name: 'μS/cm'}]
+		data:[{value: 0, name: 'μS/cm'}]
 	}]
 };
 
@@ -348,28 +332,24 @@ function get_option4(set, colors) {
 			}
 		},
 		axisLabel: {
-			color: 'auto',
+			color: 'inherit',
 			distance: 10,
 			fontSize: 10
 		  },
 		title : {
 			offsetCenter: [0, '90%'],       // x, y，单位px
-			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-				fontWeight: 'bolder',
-				fontSize: 15,
-				fontStyle: 'italic',
-				color: '#FFFFFF'
-			}
+			fontWeight: 'bolder',
+			fontSize: 15,
+			fontStyle: 'italic',
+			color: '#FFFFFF'
 		},
 		detail : {
 			offsetCenter: [0, '70%'],
-			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-				fontWeight: 'bolder',
-				fontSize: 25,
-				color: '#FFFFFF'
-			}
+			fontWeight: 'bolder',
+			fontSize: 25,
+			color: '#FFFFFF'
 		},
-		data:[{value: 400, name: set.unit}]
+		data:[{value: 0, name: set.unit}]
 	};
 	return {
 		series: [set]
@@ -398,43 +378,37 @@ var gauge_option5 = {
 		axisTick: {            // 坐标轴小标记
 			length :12,        // 属性length控制线长
 			lineStyle: {       // 属性lineStyle控制线条样式
-				color: 'auto'
+				color: 'inherit'
 			},
-			textStyle: {
-				color: '#FFFFFF'
-				}
+			color: '#FFFFFF'
 		},
 		splitLine: {           // 分隔线
 			length :15,         // 属性length控制线长
 			lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
-				color: 'auto'
+				color: 'inherit'
 			}
 		},
 		pointer: {
 			width:5
 		},
 		axisLabel: {
-			color: 'auto',
+			color: 'inherit',
 			distance: 10,
 			fontSize: 10
 		  },
 		title : {
 			fontSize: 10,
 			offsetCenter: [20, '60%'],       // x, y，单位px
-			textStyle: {
-				color: 'auto',
-				fontSize: 15,
-				}
+			color: 'inherit',
+			fontSize: 15,
 		},
 		detail : {
 			offsetCenter: [20, '40%'],
-			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-				fontWeight: 'bolder',
-				fontSize: 25,
-				color: 'auto'
-			}
+			fontWeight: 'bolder',
+			fontSize: 25,
+			color: 'inherit'
 		},
-		data:[{value: 0.3, name:'mg/L'}]
+		data:[{value: 0, name:'mg/L'}]
 	}]
 	
 };
@@ -459,43 +433,37 @@ function get_option5(set, colors) {
 		axisTick: {            // 坐标轴小标记
 			length :12,        // 属性length控制线长
 			lineStyle: {       // 属性lineStyle控制线条样式
-				color: 'auto'
+				color: 'inherit'
 			},
-			textStyle: {
-				color: '#FFFFFF'
-				}
+			color: '#FFFFFF'
 		},
 		splitLine: {           // 分隔线
 			length :15,         // 属性length控制线长
 			lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
-				color: 'auto'
+				color: 'inherit'
 			}
 		},
 		pointer: {
 			width:5
 		},
 		axisLabel: {
-			color: 'auto',
+			color: 'inherit',
 			distance: 10,
 			fontSize: 10
 		  },
 		title : {
 			fontSize: 10,
 			offsetCenter: [20, '60%'],       // x, y，单位px
-			textStyle: {
-				color: 'auto',
-				fontSize: 15,
-				}
+			color: 'inherit',
+			fontSize: 15,
 		},
 		detail : {
 			offsetCenter: [20, '40%'],
-			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-				fontWeight: 'bolder',
-				fontSize: 25,
-				color: 'auto'
-			}
+			fontWeight: 'bolder',
+			fontSize: 25,
+			color: 'inherit'
 		},
-		data:[{value: 0.3, name: set.unit}]
+		data:[{value: 0, name: set.unit}]
 	};
 	return {
 		series: [set]
@@ -533,40 +501,36 @@ function get_option6(set, colors) {
 		axisTick: {            // 坐标轴小标记
 			length :12,        // 属性length控制线长
 			lineStyle: {       // 属性lineStyle控制线条样式
-				color: 'auto'
+				color: 'inherit'
 			}
 		},
 		splitLine: {           // 分隔线
 			length :20,         // 属性length控制线长
 			lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
-				color: 'auto'
+				color: 'inherit'
 			}
 		},
 		pointer: {
 			width:5
 		},
 		axisLabel: {
-			color: 'auto',
+			color: 'inherit',
 			distance: 10,
 			fontSize: 10
 		},
 		title : {
 			fontSize: 10,
 			offsetCenter: [-20, '60%'],       // x, y，单位px
-			textStyle: {
-				color: 'auto',
-				fontSize: 15,
-			}
+			color: 'inherit',
+			fontSize: 15,
 		},
 		detail : {
 			offsetCenter: [-20, '40%'],
-			textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-				fontWeight: 'bolder',
-				fontSize: 25,
-				color: 'auto'
-			}
+			fontWeight: 'bolder',
+			fontSize: 25,
+			color: 'inherit'
 		},
-		data:[{value: 6.7, name: set.unit}]
+		data:[{value: 0, name: set.unit}]
 	};
 
 	return {
@@ -596,40 +560,36 @@ var gauge_option6 = {
 	axisTick: {            // 坐标轴小标记
 		length :12,        // 属性length控制线长
 		lineStyle: {       // 属性lineStyle控制线条样式
-			color: 'auto'
+			color: 'inherit'
 		}
 	},
 	splitLine: {           // 分隔线
 		length :20,         // 属性length控制线长
 		lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
-			color: 'auto'
+			color: 'inherit'
 		}
 	},
 	pointer: {
 		width:5
 	},
 	axisLabel: {
-		color: 'auto',
+		color: 'inherit',
 		distance: 10,
 		fontSize: 10
 	  },
 	title : {
 		fontSize: 10,
 		offsetCenter: [-20, '60%'],       // x, y，单位px
-		textStyle: {
-			color: 'auto',
-			fontSize: 15,
-			}
+		color: 'inherit',
+		fontSize: 15,
 	},
 	detail : {
 		offsetCenter: [-20, '40%'],
-		textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-			fontWeight: 'bolder',
-			fontSize: 25,
-			color: 'auto'
-		}
+		fontWeight: 'bolder',
+		fontSize: 25,
+		color: 'inherit'
 	},
-	data:[{value: 6.7, name: 'ph'}]
+	data:[{value: 0, name: 'ph'}]
 }]
 };
 
