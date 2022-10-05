@@ -3,16 +3,16 @@ var zoneName =  JSON.parse(document.getElementById("zoneName").value);
 var set =  JSON.parse(document.getElementById("set").value);
 var defaultOption =  JSON.parse(document.getElementById("defaultOption").value);
 var colors =  JSON.parse(document.getElementById("colors").value);
-console.log('set:');
-console.log(JSON.stringify(set));
+//console.log('set:');
+//console.log(JSON.stringify(set));
 
 //key:zone id
 var keys = Object.keys(zoneObj);
 for(let i=0; i<keys.length;i++) {
   let key = keys[i];
   let zone = zoneObj[key];
-  console.log('zone:');
-  console.log(JSON.stringify(zone));
+  //console.log('zone:');
+  //console.log(JSON.stringify(zone));
 }
 
 function updateGaugeValue(id, value) {

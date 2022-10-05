@@ -5,8 +5,12 @@
 
  # server : http://localhost:8080/
 
- #npm install
+ # npm install
 
- #run pm2 start nodeIndex.js
+ # run pm2 start nodeIndex.js
 
- #建資料夾 public/data : #important
+ # 建資料夾
+   public/data : #important
+
+ # Gauge設定，可直接刪除為預設值
+ public/data/set.json
