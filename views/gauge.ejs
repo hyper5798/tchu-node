@@ -39,10 +39,7 @@
     var colors = JSON.parse(document.getElementById("colors").value);
     var optionSet = JSON.parse(document.getElementById("optionSet").value);
     var dom = document.getElementById('container');
-    var myChart = echarts.init(dom, null, {
-      renderer: 'canvas',
-      useDirtyRect: false
-    });
+   
     var app = {};
     
     var option;
@@ -59,12 +56,8 @@
 		option = get_option6(optionSet, colors);
 	} 	
 
-	if(field && field>0) {
-		option = getGaugeFieldOption(option, field);
-	}
-
     if (option && typeof option === 'object') {
-	  let Theme = 'dark';
+	  let Theme = 'light';
 	  myChart = echarts.init(document.getElementById('container'), Theme);
       myChart.setOption(option);
     }
