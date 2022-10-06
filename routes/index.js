@@ -44,11 +44,35 @@ module.exports = function(app) {
 
 	app.get('/chart', function (req, res) {
 		var query = require('url').parse(req.url,true).query;
-		var gauge = parseInt(query.gauge);
+		var mac = query.mac;
 		var gauge = 'gauge';
+		var maps, devices, type , title, fieldName;
+		try {
+			maps = JsonFileTools.getJsonFromFile(mapPath);
+		} catch (error) {
+			return res.redirect('/map');
+		}
+		try {
+			devices = JsonFileTools.getJsonFromFile(deviceListPath);
+		} catch (error) {
+			return res.redirect('/device');
+		}
+		devices.forEach(device => {
+			if(device.device_mac===mac) {
+				type = device.fport;
+				title = device.device_name;
+			}
+		});
+
+        maps.forEach(map => {
+			if(map.deviceType === type) {
+				fieldName = map.fieldName;
+			}
+		});
 
 		res.render('chart', { title: 'Chart',
-			gauge: gauge
+			fieldName: fieldName,
+			title:title
 		});
 	});
 
@@ -679,23 +703,18 @@ function getCloudData(name, callback) {
 
 function getFieldOption(field) {
 	
-	var options = {
+	var options;
+
+	if(field === "temperature") {
+		options = {
 			gauge:1,unit:'℃',
 			field:field,
 			min:0,max:40,
 			area1:0,color1: 'blue',
 			area2:50,color2: 'green',
 			area3:70,color3: 'red',
-			width: 240, height: 180,
-			redFrom: 28, redTo: 40,
-			greenFrom:20,greenTo:28,
-			greenColor:'#7AF018',
-			yellowFrom:0, yellowTo: 20,
-			yellowColor:'#18F0E0',
-			minorTicks: 5
 	};
-
-	if(field === "o2") {
+	} else if(field === "o2") {
 		options = {
 			gauge:1,unit:'mg/L',
 			field:field,
@@ -703,13 +722,6 @@ function getFieldOption(field) {
 			area1:0,color1: 'blue',
 			area2:25,color2: 'green',
 			area3:50,color3: 'red',
-			width: 240, height: 180,
-			redFrom: 10, redTo: 20,
-			greenFrom:5,greenTo:10,
-			greenColor:'#7AF018',
-			yellowFrom:0, yellowTo: 5,
-			yellowColor:'#18F0E0',
-			minorTicks: 5
 		};
 	} else if(field === "nh") {
 		options = {
@@ -720,12 +732,6 @@ function getFieldOption(field) {
 			area2:20,color2: 'orange',
 			area3:50,color3: 'red',
 			width: 240, height: 180,
-			redFrom: 0.5, redTo: 1,
-			greenFrom:0,greenTo:0.2,
-			greenColor:'#2ECC71',
-			yellowFrom:0.2, yellowTo: 0.5,
-			yellowColor:'#F39C12',
-			minorTicks: 5
 		};
 	}  else if(field === "ec") {
 		options = {
@@ -735,11 +741,6 @@ function getFieldOption(field) {
 			area1:0,color1: 'gray',
 			area2:75,color2: 'orange',
 			area3:85,color3: 'red',
-			width: 240, height: 180,
-			redFrom: 3500, redTo: 4000,
-			yellowFrom:3000, yellowTo: 3500,
-			yellowColor:'#F39C12',
-			minorTicks: 5
 		};
 	}  else if(field === "ph") {
 		options = {
@@ -749,13 +750,6 @@ function getFieldOption(field) {
 			area1:0,color1: 'orange',
 			area2:25,color2: 'green',
 			area3:75,color3: 'red',
-			width: 240, height: 180,
-			redFrom: 11, redTo: 14,
-			greenFrom:3,greenTo:11,
-			greenColor:'#2ECC71',
-			yellowFrom:0, yellowTo: 3,
-			yellowColor:'#F39C12',
-			minorTicks: 5
 		};
 	} 
 	return options

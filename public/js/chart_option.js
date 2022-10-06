@@ -664,19 +664,66 @@ function getGaugeFieldUnit(field) {
 }
 
 let lineOption = {
-    xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  title: {
+    text: 'Stacked Line'
+  },
+  tooltip: {
+    trigger: 'axis'
+  },
+  legend: {
+    data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
+  },
+  grid: {
+    left: '3%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+  toolbox: {
+    feature: {
+      saveAsImage: {}
+    }
+  },
+  xAxis: {
+    type: 'category',
+    boundaryGap: false,
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  },
+  yAxis: {
+    type: 'value'
+  },
+  series: [
+    {
+      name: 'Email',
+      type: 'line',
+      stack: 'Total',
+      data: [120, 132, 101, 134, 90, 230, 210]
     },
-    yAxis: {
-        type: 'value'
+    {
+      name: 'Union Ads',
+      type: 'line',
+      stack: 'Total',
+      data: [220, 182, 191, 234, 290, 330, 310]
     },
-    series: [{
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
-        type: 'line',//線性圖
-        //areaStyle: {} ,//線性圖轉區塊圖
-        smooth: true,//平順線性圖
-    }]
+    {
+      name: 'Video Ads',
+      type: 'line',
+      stack: 'Total',
+      data: [150, 232, 201, 154, 190, 330, 410]
+    },
+    {
+      name: 'Direct',
+      type: 'line',
+      stack: 'Total',
+      data: [320, 332, 301, 334, 390, 330, 320]
+    },
+    {
+      name: 'Search Engine',
+      type: 'line',
+      stack: 'Total',
+      data: [820, 932, 901, 934, 1290, 1330, 1320]
+    }
+  ]
 };
 
 let areaOption = {
@@ -751,10 +798,62 @@ let appOption = {
     series: []
 };
 
+/*getLineOption: report lint option for lora format
+* @param title: line title
+* @param fields : field key list
+* @param titles : field name list
+* @param list: report list
+*
+*/
 function getLineOption(title, fields,titles, list) {
     let mData = {time:[]};
     let serials = [];
-    let tmp = JSON.parse(JSON.stringify(appOption));
+    let option = JSON.parse(JSON.stringify(appOption));
+    option.title.text = title;
+    option.legend.data = titles;
+
+    //Get serial data
+    list.forEach(function(report) {
+        mData['time'].push(report['recv']);
+        for(let i=0; i < fields.length; ++i) {
+            let key =  fields[i];
+            ;
+            if(mData[key] == undefined) {
+                mData[key] = [];
+            }
+            mData[key].push(report[key])
+        }
+    });
+    option.xAxis.data = mData.time;
+
+    for(let j=0; j < fields.length; ++j) {
+        let key = fields[j];
+        let title = titles[j];
+        let serial = {
+            name: key, // field name
+            type: 'line',
+            data: mData[key]
+        };
+        option.series.push(serial);
+    }
+    
+    
+    return option;
+}
+
+/*getLineOption: report lint option for lora format
+* @param title: line title
+* @param fields : field key list
+* @param titles : field name list
+* @param list: report list
+* {"macAddr":"0000000005010c20","data":"fb010694021a060110032a7b250000","timestamp":1555382382000,
+  "recv":"2019-04-16T02:39:42Z","date":"2019-04-16 10:39:42","information":{"voltage":538,"temperature":27.2,"o2":81}}
+*/
+function getLoraLineOption(title, fields,titles, list=null) {
+    let mData = {time:[]};
+    let serials = [];
+	let tmp = JSON.parse(JSON.stringify(appOption));
+	
     tmp.title.text = title;
     tmp.legend.data = titles;
     //Get serial
@@ -770,18 +869,32 @@ function getLineOption(title, fields,titles, list) {
 
     tmp.series = serials;
 
-    //Get serial data
-    list.forEach(function(report) {
-        mData['time'].push(report['recv']);
-        for(let i=0; i < fields.length; ++i) {
-            let key =  fields[i];
-            ;
-            if(mData[key] == undefined) {
-                mData[key] = [];
-            }
-            mData[key].push(report[key])
-        }
-    });
+	//Get serial data
+	if(list && list.length>0) {
+		list.forEach(function(report) {
+			mData['time'].push(report['recv']);
+			for(let i=0; i < fields.length; ++i) {
+				let key =  fields[i];
+				;
+				if(mData[key] == undefined) {
+					mData[key] = [];
+				}
+				mData[key].push(report['information'][key])
+			}
+		});
+	} else {
+		mData['time'].push(new Date().toLocaleString());
+			for(let i=0; i < fields.length; ++i) {
+				let key =  fields[i];
+				;
+				if(mData[key] == undefined) {
+					mData[key] = [];
+				}
+				mData[key].push(0)
+			}
+
+	}
+   
 
     tmp.xAxis.data = mData.time;
 
@@ -792,17 +905,20 @@ function getLineOption(title, fields,titles, list) {
     return tmp;
 }
 
+
 function refreshLineData(myChart, fields, data){
     //刷新数据
     let origin_option = myChart.getOption();
     for(let j=0; j < fields.length; ++j) {
         let key = fields[j];
-        origin_option.series[j].data.push(data[key]);
+		origin_option.series[j].data.push(data[key]);
+		
     }
     let date = data['recv'];
     date = new Date(date);
     date = date.toLocaleString();
-    origin_option.xAxis[0].data.push(date);
+	origin_option.xAxis[0].data.push(date);
+	
 
     myChart.setOption(origin_option, true);
 }

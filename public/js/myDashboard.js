@@ -6,35 +6,66 @@ var colors =  JSON.parse(document.getElementById("colors").value);
 //console.log('set:');
 //console.log(JSON.stringify(set));
 
+
 //key:zone id
 var keys = Object.keys(zoneObj);
+var macVoltageObject = {};
 for(let i=0; i<keys.length;i++) {
   let key = keys[i];
   let zone = zoneObj[key];
   //console.log('zone:');
   //console.log(JSON.stringify(zone));
+  var mKeys = Object.keys(zone);
+  
+  for(let j=0;j<mKeys.length;j++) {
+    let mKey = mKeys[j];
+    let item = zone[mKey];
+    macVoltageObject[mKey] = {"image": "/icons/battery/b1.png", "value": '5V'};
+  }
 }
+console.log(JSON.stringify(macVoltageObject));
 
 function updateGaugeValue(id, value) {
-    /*$(id)[0].contentWindow.changeValue(value);
-    $("#iframe2")[0].contentWindow.changeValue(value);
-    $("#iframe3")[0].contentWindow.changeValue(value);
-    $("#iframe4")[0].contentWindow.changeValue(value);
-    $("#iframe5")[0].contentWindow.changeValue(value);*/
     $(id)[0].contentWindow.changeValue(value);
-
 }
+
+function updateLineChartValue(id, message) {
+  $(id)[0].contentWindow.refreshLoraLineData(message);
+}
+
+function updateVoltage(mac, value) {
+  //alert('mac:'+mac + ' , value: '+value);
+  var check = (value+1)*3.3/4096;
+  if(check>=2.31) {
+    app.macVoltageObject[mac] =  {"image": "/icons/battery/b4.png", "value": '8V'};
+  } else if(check>=1.73) {
+    app.macVoltageObject[mac] =  {"image": "/icons/battery/b3.png", "value": '7V'};
+  } else if(check>=1.73) {
+    app.macVoltageObject[mac] =  {"image": "/icons/battery/b2.png", "value": '6V'};
+  }  else if(check>=1.66) {
+    app.macVoltageObject[mac] =  {"image": "/icons/battery/b1.png", "value": '5V'};
+  } else {
+    app.macVoltageObject[mac] =  {"image": "/icons/battery/b0.png", "value": '低於5V'};
+  }
+}
+
 
 
 function updateData(msg) {
   var mac = msg.macAddr;
   var info = msg.information;
   let keys = Object.keys(info);
+  let id2 =  "#"+mac;
+  updateLineChartValue(id2, msg);
+
   keys.forEach(field => {
     
     let id =  "#"+mac+"_"+field;
+  
     if(field !== 'voltage') {
       updateGaugeValue(id, info[field]);
+    } else {
+      updateVoltage(mac, info[field]);
     }
   });
 
@@ -62,16 +93,11 @@ var app = new Vue({
     set:set,
     setString: '',
     zoneName:zoneName,
+    macVoltageObject:macVoltageObject,
     colors:colors,
     color: colors['red'],
     optionImage: '/icons/gauge/1.png',
     selectImage: '/icons/gauge/1.png',
-    
-    url1: "http://localhost:8080/gauge?gauge=6&field=temperature",
-    url2: "http://localhost:8080/gauge?gauge=3&field=o2",
-    url3: "http://localhost:8080/gauge?gauge=4&field=ph",
-    url4: "http://localhost:8080/gauge?gauge=5&field=ec",
-    url5: "http://localhost:8080/gauge?gauge=6&field=ph",
     url11: "http://localhost:8080/chart?gauge=7",
   },
   methods: {
@@ -80,6 +106,12 @@ var app = new Vue({
     },
     getUrl(zoneId, field) {
       return "http://localhost:8080/gauge?zoneId="+zoneId+"&field="+field;
+    },
+    getLineId(mac) {
+      return mac;
+    },
+    getLineChartUrl(mac) {
+      return "http://localhost:8080/chart?mac="+mac;
     },
     change() {
       var value = document.getElementById('input2').value;

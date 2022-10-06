@@ -1060,6 +1060,11 @@ input[type=checkbox] {
 	font-weight: bold;
   }
 
+  .battery-title{
+	font-size: 10px;
+	color: #2f37ac;
+  }
+
   .battery-image {
 	width: 50%;
 	height: 80px;
@@ -1560,6 +1565,7 @@ input[type=checkbox] {
 	color: #6c757d;
 	pointer-events: none;
   }
+}
 /* logo出现动画 */
 @-webkit-keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);transform:translate3d(0,-100%,0)}100%{opacity:1;-webkit-transform:none;transform:none}}
 @keyframes fadeInDown{0%{opacity:0;-webkit-transform:translate3d(0,-100%,0);

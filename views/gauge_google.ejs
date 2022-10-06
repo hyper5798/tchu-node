@@ -58,28 +58,28 @@
 
         var data1 = [
           ['Label', 'Value'],
-          ['溫度', 24.2]
+          ['溫度', 0]
         ];
 
         if(optionSet.field === 'o2') {
             data1 = [
             ['Label', 'Value'],
-            ['溶解氧', 7.5]
+            ['溶解氧', 0]
           ];
         } else if(optionSet.field === 'nh') {
             data1 = [
             ['Label', 'Value'],
-            ['氨氮', 0.2]
+            ['氨氮', 0]
           ];
         }  else if(optionSet.field === 'ec') {
             data1 = [
             ['Label', 'Value'],
-            ['電導率', 1200]
+            ['電導率', 0]
           ];
         }  else if(optionSet.field === 'ph') {
             data1 = [
             ['Label', 'Value'],
-            ['PH值', 6.7]
+            ['PH值', 0]
           ];
         }
         data = google.visualization.arrayToDataTable(data1);

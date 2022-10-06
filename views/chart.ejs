@@ -7,8 +7,9 @@
   <meta charset="utf-8">
 </head>
 <body style="height: 100%; margin: 0">
-
+  <input id="fieldName" type="hidden" value="<%= JSON.stringify(fieldName) %>">
   <div id="container" style="height: 100%"></div>
+  <script type="text/javascript" src="js/chart_option.js" ></script>
   <script type="text/javascript" src="vendor/echarts/echarts5.3.3.min.js"></script>
   
   <!--<script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5.4.0/dist/echarts.min.js"></script>-->
@@ -32,91 +33,72 @@
 
   <script type="text/javascript">
     var dom = document.getElementById('container');
+    var fieldName = JSON.parse(document.getElementById("fieldName").value);
+    if(fieldName.hasOwnProperty('voltage')) {
+      delete fieldName.voltage;
+    }
+    var fields = Object.keys(fieldName);
+    var titles = Object.values(fieldName);
+    var isFirst = true;
+    var title = "<%= title%>";
     var myChart = echarts.init(dom, null, {
       renderer: 'canvas',
       useDirtyRect: false
     });
     var app = {};
     
-    var option;
+    var option = lineOption;
+    console.log('line option 1 :');
+    console.log(option);
 
-    option = {
-  title: {
-    text: 'Stacked Line'
-  },
-  tooltip: {
-    trigger: 'axis'
-  },
-  legend: {
-    data: ['Email', 'Union Ads', 'Video Ads', 'Direct', 'Search Engine']
-  },
-  grid: {
-    left: '3%',
-    right: '4%',
-    bottom: '3%',
-    containLabel: true
-  },
-  toolbox: {
-    feature: {
-      saveAsImage: {}
+    if(fieldName) {
+      option = getLoraLineOption(title, fields, titles, null);
     }
-  },
-  xAxis: {
-    type: 'category',
-    boundaryGap: false,
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  },
-  yAxis: {
-    type: 'value'
-  },
-  series: [
-    {
-      name: 'Email',
-      type: 'line',
-      stack: 'Total',
-      data: [120, 132, 101, 134, 90, 230, 210]
-    },
-    {
-      name: 'Union Ads',
-      type: 'line',
-      stack: 'Total',
-      data: [220, 182, 191, 234, 290, 330, 310]
-    },
-    {
-      name: 'Video Ads',
-      type: 'line',
-      stack: 'Total',
-      data: [150, 232, 201, 154, 190, 330, 410]
-    },
-    {
-      name: 'Direct',
-      type: 'line',
-      stack: 'Total',
-      data: [320, 332, 301, 334, 390, 330, 320]
-    },
-    {
-      name: 'Search Engine',
-      type: 'line',
-      stack: 'Total',
-      data: [820, 932, 901, 934, 1290, 1330, 1320]
-    }
-  ]
-};
 
-function changeTheme(check) {
-    myChart.dispose();
-	let Theme = (check==2) ? 'dark' : 'light';
-	//基于准备好的dom，初始化echarts实例
-	myChart = echarts.init(document.getElementById('container'), Theme);
-	//使用刚指定的配置项和数据显示图表
-	myChart.setOption(option);
-}
+    console.log('line option 2 :');
+    console.log(option);
+
 
     if (option && typeof option === 'object') {
       myChart.setOption(option);
     }
 
     window.addEventListener('resize', myChart.resize);
+
+    setTimeout(function () {
+      myChart.resize;
+    }, 3000);
+
+
+    function changeTheme(check) {
+      myChart.dispose();
+      let Theme = (check==2) ? 'dark' : 'light';
+      //基于准备好的dom，初始化echarts实例
+      myChart = echarts.init(document.getElementById('container'), Theme);
+      //使用刚指定的配置项和数据显示图表
+      myChart.setOption(option);
+    }
+
+    function refreshLoraLineData( data){
+        //刷新数据
+        let origin_option = myChart.getOption();
+        for(let j=0; j < fields.length; ++j) {
+            let key = fields[j];
+            origin_option.series[j].data.push(data['information'][key]);
+            if(isFirst) {
+              origin_option.series[j].data.shift();
+            }
+        }
+        let date = data['recv'];
+        date = new Date(date);
+        date = date.toLocaleString();
+        origin_option.xAxis[0].data.push(date);
+        if(isFirst) {
+          origin_option.xAxis[0].data.shift();
+          isFirst = false;
+        } 
+        myChart.setOption(origin_option, true);
+    }
   </script>
 </body>
 </html>
