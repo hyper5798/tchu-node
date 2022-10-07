@@ -86,9 +86,20 @@
 			</div>
 			<!-- level 2 mac -->
 			<!-- item : {name:device_name, field:device_fields}-->
+			
 			<div v-for="(item, mac, index1) in zoneObj[zoneId]"  class="col-xs-12 col-md-6 col-lg-6">
-				<iframe :id="getLineId(mac)" :src="getLineChartUrl(mac)" style="width: 99%; height: 290px;overflow: hidden;" ></iframe>
+				<div  class="card-header">
+					{{ item.name }} <!--{{ fieldKey }}--> 
+					<span class="float-right">
+						<button v-if="isGaugeSet" type=button class="btn btn-dark btn-sm" @click="editLineSet(mac)"><i class="fa fa-pencil"></i></button>
+					</span>
+				</div>
+				
+				<div  class="card-body2">
+					<iframe :id="getLineId(mac)" :src="getLineChartUrl(mac)" style="width: 99%; height: 290px;overflow: hidden;" ></iframe>
+				</div>
 			</div>
+				
 		</div>
 	
 		

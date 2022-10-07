@@ -57,11 +57,11 @@ function updateData(msg) {
   let keys = Object.keys(info);
   let id2 =  "#"+mac;
   updateLineChartValue(id2, msg);
-
+  
   keys.forEach(field => {
     
     let id =  "#"+mac+"_"+field;
-  
+
     if(field !== 'voltage') {
       updateGaugeValue(id, info[field]);
     } else {

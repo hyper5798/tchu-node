@@ -435,8 +435,11 @@ function getEventList(name, mac, startDate, endDate, callback) {
     var toMoment = moment(endDate,"YYYY-MM-DD").add(1,'days');
     // var toMoment = moment(endDate,"YYYY-MM-DD");
     var to = moment(toMoment,"YYYY-MM-DD").toDate();
-    to.setTime(to.getTime() - dateOffset);
+    //to.setTime(to.getTime() - dateOffset);
     form.to = to.toISOString();
+
+    var test = to.toLocaleString();
+
     var range2 = moment(endDate,"YYYYMMDD").format("YYYYMMDD");
     //console.log('to : '+timeConverter(to));
 
@@ -446,10 +449,10 @@ function getEventList(name, mac, startDate, endDate, callback) {
         //startDate = (now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate() );
     }
     var from = moment(startDate,"YYYY/MM/DD").toDate();
-    from.setTime(from.getTime() - dateOffset);
+    //from.setTime(from.getTime() - dateOffset);
     form.from = from.toISOString();
     var range1 = moment(startDate,"YYYYMMDD").format("YYYYMMDD");
-    var range = range1 + '-' + range2;
+    var range =     range1 + '-' + range2;
 
     checkAndGetToken(name, function(err, session) {
         if (err) {

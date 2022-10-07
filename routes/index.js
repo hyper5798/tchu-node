@@ -15,6 +15,7 @@ var dataPath = './public/data/data.json';
 var finalPath = './public/data/final.json';
 var async = require('async');
 var axios = require('axios');
+var moment = require('moment');
 
 module.exports = function(app) {
 
@@ -215,7 +216,30 @@ app.get('/', checkLogin);
 
   app.get('/report', checkLogin);
   app.get('/report', function (req, res) {
+	var query = require('url').parse(req.url,true).query;
+	var mac = query.mac;
+	var zoneId = query.zoneId;
+	var startDate = query.startDate;
+	var endDate = query.endDate;
+
 	var profileObj, data;
+	if(endDate === undefined){
+        endDate = (now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate() );
+	}
+	if(startDate === undefined){
+        var fromMoment = moment(endDate,"YYYY/MM/DD").subtract(30,'days');;
+        startDate =  fromMoment.format("YYYY/MM/DD");
+    }
+	try {
+		maps = JsonFileTools.getJsonFromFile(mapPath);
+        
+		if (maps == null) {
+			return res.redirect('/map');
+		}
+		
+	} catch (error) {
+		return res.redirect('/map');
+	}
 	try {
 		profileObj = JsonFileTools.getJsonFromFile(profilePath);
 		if (profileObj == null) {
@@ -235,11 +259,49 @@ app.get('/', checkLogin);
 		return res.redirect('/');
 	}
 
+	if(mac === undefined) {
+		mac = data.zoneList[0]['deviceList'][0];
+	}
+
+	if(zoneId === undefined) {
+		zoneId = data.zoneList[0]['_id'];
+	}
+
+	var macType = {};
+	var devices = data.sensorList;
+	for(let i=0;i<devices.length;i++) {
+		let device = devices[i];
+		macType[device.device_mac] = device.fport;
+	}
+
+
+	var fieldName = null;
+	var type = null;
+
+	var type = macType[mac];
+	
+	for(let i=0;i<maps.length;i++) {
+		let map = maps[i];
+		if(map.deviceType === type) {
+			fieldName = map.fieldName;
+			break;
+		}
+	}
+
+
 	res.render('report', { title: 'Report',
 		user:req.session.user,
 		sensorList: data.sensorList,
 		zoneList: data.zoneList,
-		profile: profileObj
+		profile: profileObj,
+		maps:maps,
+		fieldName:fieldName,
+		macType:macType,
+		mac: mac,
+		type:type,
+		zoneId: zoneId,
+		startDate:startDate,
+		endDate:endDate,
 	});
   });
 

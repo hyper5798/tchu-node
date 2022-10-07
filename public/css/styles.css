@@ -952,12 +952,15 @@ input[type=checkbox] {
 
 .BG-Average {
 	width: auto;
-	height: auto;
+	height: 100%;
 	border-radius: 6px;
-	background-color: #ebe5e5d8;
-	padding: 11px 16px 12px 12px;
+	background-color: #ffffffd8;
+	padding: 11px 16px 12px 17px;
 	margin-top: 10px;
+	font-size: larger;
 }
+
+
 .BG-Average-Copy {
 	width: auto;
 	height: auto;
@@ -1115,6 +1118,10 @@ input[type=checkbox] {
 	float: right !important;
   }
   
+  .reportButton{
+	display: flex; /* ★ */
+  	align-items: center;
+  }
 
 .Meter0{
 	width: auto;
