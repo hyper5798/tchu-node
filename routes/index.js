@@ -10,6 +10,7 @@ var profilePath = './public/data/profile.json';
 var zonePath = './public/data/zone.json';
 var deviceListPath = './public/data/deviceList.json';
 var mapPath = './public/data/map.json';
+var userPath = './public/data/user.json';
 var setPath = './public/data/set.json';
 var dataPath = './public/data/data.json';
 var finalPath = './public/data/final.json';
@@ -80,7 +81,34 @@ module.exports = function(app) {
 app.get('/', checkLogin);
   app.get('/', function (req, res) {
 
-	var profileObj;
+	var profileOb, users, maps;
+	try {
+		maps = JsonFileTools.getJsonFromFile(mapPath);
+		if (maps == null) {
+			return res.redirect('/map');
+		}
+		
+	} catch (error) {
+		return res.redirect('/map');
+	}
+	try {
+		users = JsonFileTools.getJsonFromFile(userPath);
+		if (users == null) {
+			return res.redirect('/account');
+		}
+		
+	} catch (error) {
+		return res.redirect('/account');
+	}
+	try {
+		users = JsonFileTools.getJsonFromFile(mapPath);
+		if (maps == null) {
+			return res.redirect('/map');
+		}
+		
+	} catch (error) {
+		return res.redirect('/map');
+	}
 	try {
 		profileObj = JsonFileTools.getJsonFromFile(profilePath);
 		if (profileObj == null) {
@@ -95,16 +123,20 @@ app.get('/', checkLogin);
 		if(err) {
 			res.render('index', { title: 'Index',
 				user:req.session.user,
+				users:users,
 				sensorList: [],
 				zoneList: [],
-				profile: profileObj
+				profile: profileObj,
+				maps:maps
 			});
 		} else {
             res.render('index', { title: 'Index',
 				user:req.session.user,
+				users:users,
 				sensorList: data.sensorList,
 				zoneList: data.zoneList,
-				profile: profileObj
+				profile: profileObj,
+				maps:maps
 			});
 		}
 	});
@@ -224,6 +256,7 @@ app.get('/', checkLogin);
 
 	var profileObj, data;
 	if(endDate === undefined){
+		var now = new Date();
         endDate = (now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate() );
 	}
 	if(startDate === undefined){
@@ -393,6 +426,7 @@ app.get('/', checkLogin);
 			} else {
 				// console.log(results);   // results = [result1, result2, result3]
 				var users = results[0];
+				JsonFileTools.saveJsonToFile(userPath, users );
 				var zoneList = results[1];//map list
 				var newUsers = [];
 				for(var i=0;i<  users.length;i++){

@@ -300,7 +300,7 @@ a.bg-danger:hover {
 }
 
 .panel-footer {
-	background: #fff;
+	background: rgb(228, 224, 224);
 	border-top: 1px solid #eee;
 }
 
@@ -1571,6 +1571,9 @@ input[type=checkbox] {
   .btn-link:disabled, .btn-link.disabled {
 	color: #6c757d;
 	pointer-events: none;
+  }
+  .index-number {
+	font-size: 30px;
   }
 }
 /* logo出现动画 */

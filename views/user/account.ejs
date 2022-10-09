@@ -122,11 +122,13 @@
         <div v-show="!isNew" class="col-md-12 column">
             <div class="BG-Average">
 	        　　<div>
+				<% if(user.role=='superAdmin') {%>
 	                <button class="btn btn-primary pull-right" type="button " @click="switchCreatUser">
 					    <span class="fa fa-plus fa-2x"></span>
 						新增帳戶
 				    </button>
-	             	<h3>帳戶管理</h3>
+					 <h3>帳戶管理</h3>
+				<% } %>
 	            </div>
 				<table id ="table1" class="table table-striped table-hover">
 					<thead>
@@ -174,6 +176,7 @@
 							         </select>
 								</td>-->
 								<td>
+								<% if(user.role=='superAdmin') {%>
 									<button v-if="editPoint!=index" type="button" name="edit" class="btn btn-primary btn-sm" @click="editCheck(index)">
 										 編輯
 									</button>
@@ -185,7 +188,8 @@
 									</button>
 									<button type="button" name="chOwd" class="btn btn-warning btn-sm" @click="pwdCheck(index)">
 										更改密碼
-								 </button>
+								 	</button>
+								 <% } %>
 								</td>
 							</tr>
 					</tbody>

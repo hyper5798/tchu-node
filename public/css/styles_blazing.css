@@ -322,7 +322,7 @@ a.bg-danger:hover {
 }
 
 .panel-footer {
-	background: #fff;
+	background: rgb(204, 195, 195);
 	border-top: 1px solid #eee;
 }
 

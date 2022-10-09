@@ -5,11 +5,13 @@
 		<div v-show="isNew" class="col-md-12 column">
             <div class="BG-Average">
                 <div>
+					<% if(user.role=='superAdmin') {%>
 	                <button class="btn btn-primary pull-right" type="button " @click="switchEditDevice">
 					    <span class="fa fa-pencil fa-2x"></span>
 						編輯裝置
 				    </button>
-                 	<h3>新增裝置</h3>
+					 <h3>新增裝置</h3>
+					 <% } %>
 	            </div>
 	            <form class="" method="post" action="#">
 						<div class="form-group">
@@ -93,6 +95,7 @@
 								</td>
 								
 								<td>
+									<% if(user.role=='superAdmin') {%>
 									<button v-if="editPoint!=index" type="button" name="edit" class="btn btn-primary btn-sm" @click="editCheck(index)">
 										 編輯
 									</button>
@@ -102,6 +105,7 @@
 									<button type="button" name="del" class="btn btn-danger btn-sm" @click="delCheck(index, device.device_mac)">
 										 刪除
 									</button>
+									<% } %>
 								</td>
 							</tr>
 					</tbody>

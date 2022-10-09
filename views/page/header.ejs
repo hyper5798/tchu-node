@@ -12,9 +12,9 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="\"><span>慈濟</span>IOT數據監測</a>
-				<!--<a class="navbar-brand" href="\">動態數據圖表</a>
-				<a class="navbar-brand" href="\control">報表查詢</a> -->
+				<a class="navbar-brand" href="\"><span>慈濟IOT</span>資訊</a>
+				<!--<a class="navbar-brand" href="/dashboard"><span class="fa gfa-line-chart"></span></a>
+				<a class="navbar-brand" href="/report"><span class="fa fa-search"></span> </a>-->
 				<% if(user){ %>
 					<ul class="user-menu">
 						<li class="dropdown pull-right">
@@ -25,12 +25,12 @@
 							<span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
 								<li><a href="/changeSelfPwd"><span class="fa fa-lock"></span> 變更密碼</a></li>
-								<% if(user.role=='superAdmin') {%>
+								
 									<li><a href="/account"><span class="fa fa-user"></span>  帳號管理</a></li>
 									<li><a href="/zone"><span class="fa fa-clone"></span>分區管理</a></li>
-									<li><a href="/device"><span class="fa fa-tachometer"></span>裝置管理</a></li>
-									<li><a href="/map"><span class="fa fa-eye"></span>  裝置類型管理</a></li>
-								<% } %>
+									<li><a href="/device"><span class="fa fa-wifi"></span>裝置管理</a></li>
+									<li><a href="/map"><span class="fa fa-tags"></span>  裝置類型管理</a></li>
+								
 								
 								<li><a href="/logout"><span class="fa fa-hand-paper-o"></span> 登出</a></li>
 							</ul>
@@ -55,13 +55,13 @@
 		<% }else{ %>
 			<li>
 		<% } %>
-				<a href="/dashboard"><span class="fa fa-tachometer"></span>  動態數據圖表</a></li>	
+				<a href="/dashboard"><span class="fa fa-line-chart"></span>  即時圖表</a></li>	
 		<% if(title ==='Report'){ %>
 			<li class="active">
 		<% }else{ %>
 			<li>
 		<% } %>
-			<a href="/report"><span class="fa fa-binoculars"></span>  報表查詢</a></li>
+			<a href="/report"><span class="fa fa-search"></span>  報表查詢</a></li>
 		</ul>
 
 	</div>
