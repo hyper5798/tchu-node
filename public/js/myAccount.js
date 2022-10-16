@@ -235,3 +235,7 @@ socket.on('connect',function(){
     console.log(JSON.stringify(m));
     updateData(m);
   });
+
+  function test() {
+    socket.emit('mqtt_sub','**** web socket test');
+  }
