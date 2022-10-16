@@ -210,9 +210,16 @@ function loadDoc(url) {
   xhttp.send();
 }
 
-//let wsUrl ='http://localhost:8000';
-const wsUrl = 'http://192.168.1.2:8000';
-const socket = io.connect(wsUrl,{reconnect: true,rejectUnauthorized: false});
+var options = {
+  rememberUpgrade:true,
+  transports: ['websocket'],
+  //secure:true, 
+  rejectUnauthorized: true
+};
+
+let wsUrl ='http://localhost:8000';
+//const wsUrl = 'http://192.168.1.2:8000';
+const socket = io.connect(wsUrl,options);
 
 socket.on('connect',function(){
 	socket.emit('mqtt_sub','**** web socket cient is ready');
