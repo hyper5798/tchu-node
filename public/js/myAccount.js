@@ -210,7 +210,8 @@ function loadDoc(url) {
   xhttp.send();
 }
 
-let wsUrl ='http://localhost:8000';
+//let wsUrl ='http://localhost:8000';
+const full = location.protocol + '//' + location.host;
 const socket = io.connect(wsUrl,{reconnect: true,rejectUnauthorized: false});
 
 socket.on('connect',function(){
