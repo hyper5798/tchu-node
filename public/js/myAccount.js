@@ -211,7 +211,7 @@ function loadDoc(url) {
 }
 
 //let wsUrl ='http://localhost:8000';
-const wsUrl = 'http://102.168.1.2:8000';
+const wsUrl = 'http://192.168.1.2:8000';
 const socket = io.connect(wsUrl,{reconnect: true,rejectUnauthorized: false});
 
 socket.on('connect',function(){
