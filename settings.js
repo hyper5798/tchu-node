@@ -6,6 +6,7 @@ module.exports = {
   api_server: "http://localhost:8000/",
   api_login: "user/v1/login/gemtek",
   api_get_device_list:"device/v1/sensor",
+  api_get_average:"device/v1/average",
   api_device: "device/v1/device",
   // api_get_map_list:"map/v1/",//For old version
   api_get_map_list:"device/v1/maps",//For new version

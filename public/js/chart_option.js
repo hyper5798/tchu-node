@@ -768,18 +768,10 @@ let appOption = {
     legend: {
         data: []
     },
-    /* dataZoom: [
-        {
-            show: true,
-            realtime: true,
-            start: 0,
-            end: 100
-        }
-    ], */
     grid: {
         left: '3%',
         right: '4%',
-        bottom: '3%',
+        bottom: '10%',
         containLabel: true
     },
     toolbox: {
@@ -797,6 +789,119 @@ let appOption = {
     },
     series: []
 };
+
+let barOption2 = {
+	title: {
+		text: 'Rainfall vs Evaporation',
+		subtext: 'Fake Data'
+	  },
+	  tooltip: {
+		trigger: 'axis'
+	  },
+	  legend: {
+		data: ['Rainfall', 'Evaporation']
+	  },
+	  /*toolbox: {
+		show: true,
+		feature: {
+		  dataView: { show: true, readOnly: false },
+		  magicType: { show: true, type: ['line', 'bar'] },
+		  restore: { show: true },
+		  saveAsImage: { show: true }
+		}
+	  },*/
+	  calculable: true,
+	  xAxis: [
+		{
+		  type: 'category',
+		  // prettier-ignore
+		  data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+		}
+	  ],
+	  yAxis: [
+		{
+		  type: 'value'
+		}
+	  ],
+	  series: [
+		{
+		  name: 'Rainfall',
+		  type: 'bar',
+		  data: [
+			2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3
+		  ],
+		  markPoint: {
+			data: [
+			  { type: 'max', name: 'Max' },
+			  { type: 'min', name: 'Min' }
+			]
+		  },
+		  markLine: {
+			data: [{ type: 'average', name: 'Avg' }]
+		  }
+		},
+		{
+		  name: 'Evaporation',
+		  type: 'bar',
+		  data: [
+			2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3
+		  ],
+		  markPoint: {
+			data: [
+			  { name: 'Max', value: 182.2, xAxis: 7, yAxis: 183 },
+			  { name: 'Min', value: 2.3, xAxis: 11, yAxis: 3 }
+			]
+		  },
+		  markLine: {
+			data: [{ type: 'average', name: 'Avg' }]
+		  }
+		}
+	  ]
+};
+
+let barOption3 =  {
+	title: {
+	text: 'Rainfall vs Evaporation',
+		subtext: 'Fake Data'
+	},
+	legend: {
+		data: ['Rainfall', 'Evaporation']
+	},
+	tooltip: {
+	  trigger: 'axis',
+	  axisPointer: {
+		type: 'shadow'
+	  }
+	},
+	grid: {
+	  left: '3%',
+	  right: '4%',
+	  bottom: '3%',
+	  containLabel: true
+	},
+	xAxis: [
+	  {
+		type: 'category',
+		data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+		axisTick: {
+		  alignWithLabel: true
+		}
+	  }
+	],
+	yAxis: [
+	  {
+		type: 'value'
+	  }
+	],
+	series: [
+	  {
+		name: 'Direct',
+		type: 'bar',
+		barWidth: '60%',
+		data: [10, 52, 200, 334, 390, 330, 220]
+	  }
+	]
+  };
 
 /*getLineOption: report lint option for lora format
 * @param title: line title
@@ -849,10 +954,22 @@ function getLineOption(title, fields,titles, list) {
 * {"macAddr":"0000000005010c20","data":"fb010694021a060110032a7b250000","timestamp":1555382382000,
   "recv":"2019-04-16T02:39:42Z","date":"2019-04-16 10:39:42","information":{"voltage":538,"temperature":27.2,"o2":81}}
 */
-function getLoraLineOption(title, fields,titles, list=null) {
+function getLoraLineOption(title, fields,titles, list=null, zoom=null) {
     let mData = {time:[]};
     let serials = [];
 	let tmp = JSON.parse(JSON.stringify(appOption));
+
+	if(zoom !=null) {
+		tmp.dataZoom = [
+			{
+			  show: true,
+			  realtime: true,
+			  start: 0,
+			  end: 100
+			}
+		  ];
+		
+	}
 	
     tmp.title.text = title;
     tmp.legend.data = titles;
@@ -904,6 +1021,63 @@ function getLoraLineOption(title, fields,titles, list=null) {
     }
     return tmp;
 }
+
+function getLoraBarOption(title, fields,titles, list=null) {
+    let mData = {time:[]};
+    let serials = [];
+	let tmp = JSON.parse(JSON.stringify(barOption3));
+	
+    tmp.title.text = title;
+    tmp.legend.data = titles;
+    //Get serial
+    titles.forEach(function(key) {
+        mData[key] = []
+        let serial = {
+            name: key,
+            type: 'bar',
+            data: []
+        };
+        serials.push(serial);
+    });
+
+    tmp.series = serials;
+
+	//Get serial data
+	if(list && list.length>0) {
+		list.forEach(function(report) {
+			mData['time'].push(report['recv']);
+			for(let i=0; i < fields.length; ++i) {
+				let key =  fields[i];
+				;
+				if(mData[key] == undefined) {
+					mData[key] = [];
+				}
+				mData[key].push(report['information'][key])
+			}
+		});
+	} else {
+		mData['time'].push(new Date().toLocaleString());
+			for(let i=0; i < fields.length; ++i) {
+				let key =  fields[i];
+				;
+				if(mData[key] == undefined) {
+					mData[key] = [];
+				}
+				mData[key].push(0)
+			}
+
+	}
+   
+
+    tmp.xAxis.data = mData.time;
+
+    for(let j=0; j < fields.length; ++j) {
+        let key = fields[j];
+        tmp.series[j].data = mData[key];
+    }
+    return tmp;
+}
+
 
 
 function refreshLineData(myChart, fields, data){

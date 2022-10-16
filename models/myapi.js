@@ -41,7 +41,8 @@ module.exports = {
     newZone,
     deleteZone,
     getMonthEvent,
-    getYearEvent
+    getYearEvent,
+    getAverage
 }
 
 function getYearEvent(name, mac, yearStr, callback) {
@@ -277,6 +278,20 @@ function sendMapListRequest(session, callback) {
     });
 }
 
+function getAverage(name, callback) {
+    var obj = JsonFileTools.getJsonFromFile(sessionPath);
+    var mySession = obj[name];
+    var url = settings.api_server + settings.api_get_average;
+    var token = mySession.token;
+
+    sendGetRequest(url, token, function(err, result){
+        if(err){
+            return callback(err, null);
+        }
+        return callback(null, result.data.data);
+    });
+}
+
 //For user API ---------------------------------------------------- start
 function newDevice (name, form, callback) {
     var url = settings.api_server + settings.api_device;
@@ -480,7 +495,11 @@ function sendEventListRequest(form, callback) {
 
     console.log('sendEventListRequest : ' + JSON.stringify(form));
     var token = form.token;
-    url = url + '?paginate=false&limit=5000&sort=desc';
+    var limit = 5000;
+    if(form.hasOwnProperty('limit')) {
+        limit = form.limit;
+    }
+    url = url + '?paginate=true&limit='+limit+'&sort=desc';
     url = url + '&macAddr=' + form.macAddr;
     url = url + '&from=' + form.from;
     url = url + '&to=' + form.to;

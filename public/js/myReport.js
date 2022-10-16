@@ -98,11 +98,12 @@ var app = new Vue({
           date: ''
     },
     startDate:startDate,
-    endDate:endDate
+    endDate:endDate,
+    countMessage: ''
   },
   computed: {
     url() {
-      return "http://localhost:8080/chart?mac="+this.selectedSensor;
+      return "http://localhost:8080/chart?mac="+this.selectedSensor+'&zoom=1';
     },
   },
   methods: {
@@ -215,6 +216,7 @@ function toQuery(){
 }
 
 function loadDoc(url) {
+  app.countMessage = '';
   console.log('loadDoc()');
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -224,13 +226,15 @@ function loadDoc(url) {
 
        var type = this.getResponseHeader("Content-Type");   // 取得回應類型
        // console.log('type  : '+type);
+       
 
        // 判斷回應類型，這裡使用 JSON
         var json = JSON.parse(this.responseText);
+        app.countMessage = '查詢範圍共: '+json.total+ ' 筆';
         table.fnClearTable();
         if(json.data && json.data.length>0){
           
-          // 
+          
           console.log('queryYeaEvent : ' + JSON.stringify(json.data.length));
           $("#ifram1")[0].contentWindow.loadLoraLineDatas(json.data);
           var data = getDataList(json.data);

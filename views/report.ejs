@@ -28,7 +28,9 @@
 			</div>
 			<div class="col-xs-10 col-md-8 col-lg-6">  
 				<div class="form-group">
-					<label for="exampleInputEmail1">選擇日期</label>
+					<label for="exampleInputEmail1">
+						選擇日期 <label class="text-info">(最多顯示5000筆，超出請變更日期範圍)</label>
+					</label>
 					<div  class="input-group input-daterange">
 						<div class="input-group-addon">從</div>
 						<input id="from" name="from" v-model="startDate" type="text" class="form-control">
@@ -60,7 +62,7 @@
 					<span class="fa fa-chart fa-1x"></span>
 					線圖
 				</button>
-				
+				<label class="ml-5">{{ countMessage }}</label>
 			</div>
 		</div>
 
@@ -81,7 +83,7 @@
 				</table>
 		</div>
 		<div v-show="isChart" class="BG-Average-Copy">
-			<iframe id="ifram1" :src="url" style="width: 99%; height: 350px;overflow: hidden;" ></iframe>
+			<iframe id="ifram1" :src="url" style="width: 99%; height: 450px;overflow: hidden;" ></iframe>
 		</div>
 		<input id="sensorList" name="sensorList" type="hidden" value="<%= JSON.stringify(sensorList) %>">
 		<input id="zoneList" name="zoneList" type="hidden" value="<%= JSON.stringify(zoneList) %>">

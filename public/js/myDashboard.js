@@ -38,7 +38,7 @@ function updateVoltage(mac, value) {
   var check = (value+1)*3.3/4096;
   if(check>=2.31) {
     app.macVoltageObject[mac] =  {"image": "/icons/battery/b4.png", "value": '8V'};
-  } else if(check>=1.73) {
+  } else if(check>=2.02) {
     app.macVoltageObject[mac] =  {"image": "/icons/battery/b3.png", "value": '7V'};
   } else if(check>=1.73) {
     app.macVoltageObject[mac] =  {"image": "/icons/battery/b2.png", "value": '6V'};
@@ -47,6 +47,8 @@ function updateVoltage(mac, value) {
   } else {
     app.macVoltageObject[mac] =  {"image": "/icons/battery/b0.png", "value": '低於5V'};
   }
+
+  app.macVoltageObject[mac]['value'] =  app.macVoltageObject[mac]['value'] + ':'+value;
 }
 
 
@@ -111,7 +113,7 @@ var app = new Vue({
       return mac;
     },
     getLineChartUrl(mac) {
-      return "http://localhost:8080/chart?mac="+mac;
+      return "http://localhost:8080/chart?mac="+mac+'&zoom=0';
     },
     change() {
       var value = document.getElementById('input2').value;

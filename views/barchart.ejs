@@ -8,7 +8,6 @@
 </head>
 <body style="height: 100%; margin: 0">
   <input id="fieldName" type="hidden" value="<%= JSON.stringify(fieldName) %>">
-  <input id="zoom" type="hidden" value="<%= zoom %>">
   <div id="container" style="height: 100%"></div>
   <script type="text/javascript" src="js/chart_option.js" ></script>
   <script type="text/javascript" src="vendor/echarts/echarts5.3.3.min.js"></script>
@@ -36,7 +35,6 @@
     var dom = document.getElementById('container');
     var max = 500;
     var fieldName = JSON.parse(document.getElementById("fieldName").value);
-    var zoom = JSON.parse(document.getElementById("zoom").value);
     if(fieldName.hasOwnProperty('voltage')) {
       delete fieldName.voltage;
     }
@@ -55,7 +53,7 @@
     console.log(option);
 
     if(fieldName) {
-      option = getLoraLineOption(title, fields, titles, null, zoom);
+      option = getLoraBarOption(title, fields, titles, null);
     }
 
     console.log('line option 2 :');
@@ -106,14 +104,15 @@
         myChart.setOption(origin_option, true);
     }
 
-    function loadLoraLineDatas(datas){
+    function loadLoraBarDatas(dataObj){
       //多筆数据
       let origin_option = myChart.getOption();
       var mData = {"time":[]};
-      var list = JSON.parse(JSON.stringify(datas));
-      for(let i=0; i < list.length; ++i) {
-        let report = list[i];
-        let time = report.date;
+      var months = Object.keys(dataObj);
+      for(let i=0; i < months.length; ++i) {
+        let month = months[i];
+        let report = dataObj[month];
+        let time = month+'月';
         mData['time'].push(time);
         for(let i=0; i < fields.length; ++i) {
             let key =  fields[i];
@@ -121,7 +120,7 @@
             if(mData[key] == undefined) {
                 mData[key] = [];
             }
-            mData[key].push(report.information[key])
+            mData[key].push(report[key])
         }
       }
       origin_option.xAxis[0].data = mData.time;

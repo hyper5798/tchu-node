@@ -47,6 +47,7 @@ module.exports = function(app) {
 	app.get('/chart', function (req, res) {
 		var query = require('url').parse(req.url,true).query;
 		var mac = query.mac;
+		var zoom = query.zoom;
 		var gauge = 'gauge';
 		var maps, devices, type , title, fieldName;
 		try {
@@ -74,6 +75,41 @@ module.exports = function(app) {
 
 		res.render('chart', { title: 'Chart',
 			fieldName: fieldName,
+			title:title,
+			zoom:zoom
+		});
+	});
+
+	app.get('/barchart', function (req, res) {
+		var query = require('url').parse(req.url,true).query;
+		var mac = query.mac;
+		var gauge = 'gauge';
+		var maps, devices, type , title, fieldName;
+		try {
+			maps = JsonFileTools.getJsonFromFile(mapPath);
+		} catch (error) {
+			return res.redirect('/map');
+		}
+		try {
+			devices = JsonFileTools.getJsonFromFile(deviceListPath);
+		} catch (error) {
+			return res.redirect('/device');
+		}
+		devices.forEach(device => {
+			if(device.device_mac===mac) {
+				type = device.fport;
+				title = device.device_name;
+			}
+		});
+
+        maps.forEach(map => {
+			if(map.deviceType === type) {
+				fieldName = map.fieldName;
+			}
+		});
+
+		res.render('barchart', { title: 'Chart',
+			fieldName: fieldName,
 			title:title
 		});
 	});
@@ -81,7 +117,7 @@ module.exports = function(app) {
 app.get('/', checkLogin);
   app.get('/', function (req, res) {
 
-	var profileOb, users, maps;
+	var profileOb, users, maps, sensorList,zoneList;
 	try {
 		maps = JsonFileTools.getJsonFromFile(mapPath);
 		if (maps == null) {
@@ -119,27 +155,78 @@ app.get('/', checkLogin);
 		profileObj = {};
 		JsonFileTools.saveJsonToFile(profilePath, profileObj);
 	}
-	getData(req.session.user.name, function(err, data){
-		if(err) {
-			res.render('index', { title: 'Index',
-				user:req.session.user,
-				users:users,
-				sensorList: [],
-				zoneList: [],
-				profile: profileObj,
-				maps:maps
-			});
-		} else {
-            res.render('index', { title: 'Index',
-				user:req.session.user,
-				users:users,
-				sensorList: data.sensorList,
-				zoneList: data.zoneList,
-				profile: profileObj,
-				maps:maps
-			});
+	try {
+		sensorList = JsonFileTools.getJsonFromFile(deviceListPath);
+		if (sensorList == null) {
+			return res.redirect('/device');
 		}
+		
+	} catch (error) {
+		return res.redirect('/device');
+	}
+	try {
+		zoneList = JsonFileTools.getJsonFromFile(zonePath);
+		if (zoneList == null) {
+			return res.redirect('/zone');
+		}
+		
+	} catch (error) {
+		return res.redirect('/zone');
+	}
+	var zoneObj = {}, zoneName = {},macObj={},mapObj={};
+	sensorList.forEach(device => {
+		macObj[device.device_mac] = device;
 	});
+
+	function getDeviceField(list) {
+		let myObj = {};
+		
+		list.forEach( mac => {
+			let device =  macObj[mac];
+			let type_field = mapObj[device.fport];
+			let name = device.device_name;
+			myObj[mac] = {"name": name,"field": type_field};
+
+		});
+		return myObj;
+	}
+
+	zoneList.forEach(zone => {
+		zoneObj[zone._id] = getDeviceField(zone.deviceList);
+		zoneName[zone._id] = zone.name;
+	});
+
+    geAverageData(req.session.user.name, function(err, data){
+		if(err) {
+			console.log(err);
+		}
+		var macDataObj = {};
+        for(let i=0; i<data.length;i++) {
+			let tmp = data[i];
+			//console.log(tmp);
+			if(macDataObj[tmp._id.macAddr] === undefined) {
+				macDataObj[tmp._id.macAddr] = {};
+			}
+			macDataObj[tmp._id.macAddr][tmp._id.month] = tmp;
+		}
+		
+		console.log(macDataObj);
+		res.render('index', { title: 'Index',
+		user:req.session.user,
+		users:users,
+		sensorList: sensorList,
+		zoneList: zoneList,
+		profile: profileObj,
+		maps:maps,
+		macDataObj:macDataObj,
+		zoneObj:zoneObj,
+		zoneName:zoneName
+	})
+		
+	});
+
+
+	
   });
 
   
@@ -285,19 +372,31 @@ app.get('/', checkLogin);
 	}
 	try {
 		data = JsonFileTools.getJsonFromFile(dataPath);
-		if (data == undefined || data == null) {
-			return res.redirect('/');
+
+		if (data == undefined || data == null || Object.keys(data).length === 0) {
+			return res.redirect('/dashboard');
 		}
 	} catch (error) {
-		return res.redirect('/');
+		return res.redirect('/dashboard');
 	}
 
+	try {
+		zoneList = JsonFileTools.getJsonFromFile(zonePath);
+		if (zoneList == null) {
+			return res.redirect('/zone');
+		}
+		
+	} catch (error) {
+		return res.redirect('/zone');
+	}
+
+
 	if(mac === undefined) {
-		mac = data.zoneList[0]['deviceList'][0];
+		mac = zoneList[0]['deviceList'][0];
 	}
 
 	if(zoneId === undefined) {
-		zoneId = data.zoneList[0]['_id'];
+		zoneId = zoneList[0]['_id'];
 	}
 
 	var macType = {};
@@ -796,6 +895,26 @@ function getCloudData(name, callback) {
 		}
 	});
 }
+
+function geAverageData(name, callback) {
+    async.series([
+		function(next){
+			myapi.getAverage(name, function(err2, result2){
+				next(err2, result2);
+			});
+		}
+	], function(errs, results){
+		if(errs) {
+			return callback(errs, null);
+		} else {
+			// console.log(results);   // results = [result1, result2, result3]
+			var data = results[0];
+			
+			return callback(null, data);
+		}
+	});
+}
+
 
 function getFieldOption(field) {
 	
