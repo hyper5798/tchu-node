@@ -53,7 +53,9 @@ function updateVoltage(mac, value) {
   app.macVoltageObject[mac]['value'] =  app.macVoltageObject[mac]['value'] + ':'+value;
 }
 
-
+function test() {
+  socket.emit('mqtt_sub','**** web socket test');
+}
 
 function updateData(msg) {
   var mac = msg.macAddr;
