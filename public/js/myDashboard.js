@@ -7,6 +7,7 @@ var colors =  JSON.parse(document.getElementById("colors").value);
 //console.log(JSON.stringify(set));
 
 
+
 //key:zone id
 var keys = Object.keys(zoneObj);
 var macVoltageObject = {};
