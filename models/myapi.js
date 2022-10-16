@@ -288,6 +288,7 @@ function getAverage(name, callback) {
         if(err){
             return callback(err, null);
         }
+        if(result === null) return callback(null, null);
         return callback(null, result.data.data);
     });
 }
