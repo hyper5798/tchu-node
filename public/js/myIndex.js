@@ -23,7 +23,8 @@ var zoneObj = JSON.parse(document.getElementById("zoneObj").value);
 var zoneName = JSON.parse(document.getElementById("zoneName").value);
 
 function updateBarChartValue(id, datas) {
-  $(id)[0].contentWindow.loadLoraBarDatas(datas);
+  //$(id)[0].contentWindow.loadLoraBarDatas(datas);
+  $(id)[0].contentWindow.postMessage(datas,'*')
 }
 
 var app = new Vue({
