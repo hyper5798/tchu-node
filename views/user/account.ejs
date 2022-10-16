@@ -52,7 +52,7 @@
 			</div>
 		</div>
 		<div v-show="isNew" class="col-md-12 column">
-			<button class="btn btn-info" onclick="test();">test</button>
+			
             <div class="BG-Average">
                 <div>
 	                <button class="btn btn-primary pull-right" type="button " @click="switchEditUser">
@@ -124,6 +124,7 @@
         <div v-show="!isNew" class="col-md-12 column">
             <div class="BG-Average">
 	        　　<div>
+				<button class="btn btn-info" onclick="test();">test</button>
 				<% if(user.role=='superAdmin') {%>
 	                <button class="btn btn-primary pull-right" type="button " @click="switchCreatUser">
 					    <span class="fa fa-plus fa-2x"></span>
