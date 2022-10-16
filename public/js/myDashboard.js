@@ -26,11 +26,13 @@ for(let i=0; i<keys.length;i++) {
 console.log(JSON.stringify(macVoltageObject));
 
 function updateGaugeValue(id, value) {
-    $(id)[0].contentWindow.changeValue(value);
+    //$(id)[0].contentWindow.changeValue(value);
+    $(id)[0].contentWindow.postMessage(value,'*')
 }
 
 function updateLineChartValue(id, message) {
-  $(id)[0].contentWindow.refreshLoraLineData(message);
+  //$(id)[0].contentWindow.refreshLoraLineData(message);
+  $(id)[0].contentWindow.postMessage(message,'*')
 }
 
 function updateVoltage(mac, value) {

@@ -90,7 +90,15 @@
 		]
 	  });
 	}
-	
+
+	function receiveMessage(e) {
+      //alert(e.origin + ' : ' + e.data);
+      changeValue(e.data);
+    }
+ 
+	// 監聽 message 事件
+	window.addEventListener('message', receiveMessage, false);
+
 	//changeTheme(2);
 
     window.addEventListener('resize', myChart.resize);

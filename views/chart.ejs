@@ -145,6 +145,14 @@
         myOption.xAxis[0].data= [date];
         myChart.setOption(myOption, true);
     }
+
+    function receiveMessage(e) {
+      //alert(e.origin + ' : ' + JSON.stringify(e.data));
+      refreshLoraLineData(e.data)
+    }
+ 
+      // 監聽 message 事件
+      window.addEventListener('message', receiveMessage, false);
   </script>
 </body>
 </html>

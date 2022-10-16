@@ -91,7 +91,15 @@
         function changeValue(value) {
           data.setValue(0, 1, value);
           chart.draw(data, options);
-	      }
+        }
+        
+        function receiveMessage(e) {
+          //alert(e.origin + ' : ' + e.data);
+          changeValue(e.data);
+        }
+      
+        // 監聽 message 事件
+        window.addEventListener('message', receiveMessage, false);
 
         /*setInterval(function() {
           data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
