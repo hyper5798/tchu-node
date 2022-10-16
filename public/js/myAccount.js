@@ -217,8 +217,8 @@ var options = {
   rejectUnauthorized: true
 };
 
-let wsUrl ='http://localhost:8000';
-//const wsUrl = 'http://192.168.1.2:8000';
+//let wsUrl ='http://localhost:8000';
+const wsUrl = 'http://192.168.1.2:8000';
 const socket = io.connect(wsUrl,options);
 
 socket.on('connect',function(){
