@@ -4,7 +4,7 @@ var set =  JSON.parse(document.getElementById("set").value);
 var defaultOption =  JSON.parse(document.getElementById("defaultOption").value);
 var colors =  JSON.parse(document.getElementById("colors").value);
 var host_url = document.getElementById("host_url").value;
-var api_url = document.getElementById("host_url").value;
+var api_url = document.getElementById("api_url").value;
 //console.log('set:');
 //console.log(JSON.stringify(set));
 
