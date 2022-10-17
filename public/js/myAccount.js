@@ -217,33 +217,3 @@ var options = {
   rejectUnauthorized: true
 };
 
-//let wsUrl ='http://localhost:8000';
-const wsUrl = 'http://192.168.1.2:8000';
-const socket = io.connect(wsUrl,options);
-
-socket.on('connect',function(){
-	socket.emit('mqtt_sub','**** web socket cient is ready');
-  });
-  
-  socket.on('disconnect',function(){
-	console.log('mqtt handller websocket disconnct');
-	if (socket.connected === false ) {
-	  //socket.close()
-	  socket.open();
-	}
-  });
-  
-  socket.on('news',function(m){
-	console.log('mqtt handller receve connection :');
-	console.log(JSON.stringify(m));
-  });
-
-  socket.on('mqtt_report_data',function(m){
-	console.log('From server mqtt_report_data :');
-    console.log(JSON.stringify(m));
-    updateData(m);
-  });
-
-  function test() {
-    socket.emit('mqtt_sub','**** web socket test');
-  }
