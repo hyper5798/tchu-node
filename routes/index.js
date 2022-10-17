@@ -318,7 +318,8 @@ app.get('/', checkLogin);
 			zoneName:zoneName,
 			defaultOption: defaultOption,
 			colors:colors,
-			host_url:settings.host_url
+			host_url:settings.host_url,
+			api_url:settings.api_server
 		});
 		
 	});

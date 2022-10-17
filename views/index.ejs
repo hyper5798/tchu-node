@@ -1,7 +1,7 @@
 <%- include page/header2 %>
 <meta http-equiv="refresh" content="600" />
 <!--<%= JSON.stringify(user) %>-->
-    <div v-if="alertMsg.length>0" class="alert alert-danger" role="alert">
+    <div v-cloak v-if="alertMsg.length>0" class="alert alert-danger" role="alert">
 	  <strong>{{alertMsg}}</strong>
 	</div>
 	<div class="BG-Average">

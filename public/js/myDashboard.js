@@ -4,6 +4,7 @@ var set =  JSON.parse(document.getElementById("set").value);
 var defaultOption =  JSON.parse(document.getElementById("defaultOption").value);
 var colors =  JSON.parse(document.getElementById("colors").value);
 var host_url = document.getElementById("host_url").value;
+var api_url = document.getElementById("host_url").value;
 //console.log('set:');
 //console.log(JSON.stringify(set));
 
@@ -192,7 +193,7 @@ var app = new Vue({
 
 
 
-let wsUrl ='http://localhost:8000';
+let wsUrl = api_url;
 const socket = io.connect(wsUrl,{reconnect: true,rejectUnauthorized: false});
 
 socket.on('connect',function(){
