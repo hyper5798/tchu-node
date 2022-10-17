@@ -3,6 +3,7 @@ var zoneName =  JSON.parse(document.getElementById("zoneName").value);
 var set =  JSON.parse(document.getElementById("set").value);
 var defaultOption =  JSON.parse(document.getElementById("defaultOption").value);
 var colors =  JSON.parse(document.getElementById("colors").value);
+var host_url = document.getElementById("host_url").value;
 //console.log('set:');
 //console.log(JSON.stringify(set));
 
@@ -105,27 +106,27 @@ var app = new Vue({
     color: colors['red'],
     optionImage: '/icons/gauge/1.png',
     selectImage: '/icons/gauge/1.png',
-    url11: "http://localhost:8080/chart?gauge=7",
+    url11: host_url+"/chart?gauge=7",
   },
   methods: {
     getId(mac, field) {
       return mac+"_"+field;
     },
     getUrl(zoneId, field) {
-      return "http://localhost:8080/gauge?zoneId="+zoneId+"&field="+field;
+      return host_url+"/gauge?zoneId="+zoneId+"&field="+field;
     },
     getLineId(mac) {
       return mac;
     },
     getLineChartUrl(mac) {
-      return "http://localhost:8080/chart?mac="+mac+'&zoom=0';
+      return host_url+"/chart?mac="+mac+'&zoom=0';
     },
     change() {
       var value = document.getElementById('input2').value;
       if(value && typeof(value)==='string') {
         value = parseInt(value);
       }
-      this.url = "http://localhost:8080/gauge?gauge"+value;;
+      this.url = host_url+"/gauge?gauge"+value;;
 
     },
     reset() {

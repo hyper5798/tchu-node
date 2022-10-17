@@ -22,6 +22,7 @@ var endDate = document.getElementById("endDate").value;
 var names = Object.values(fieldName);
 var profileObj = JSON.parse(document.getElementById("profile").value);
 var user = JSON.parse(document.getElementById("user").value);
+var host_url = document.getElementById("host_url").value;
 var userName = user.name;
 var userZone = user.zone;
 var defaultProfile = {
@@ -103,7 +104,7 @@ var app = new Vue({
   },
   computed: {
     url() {
-      return "http://localhost:8080/chart?mac="+this.selectedSensor+'&zoom=1';
+      return host_url+"/chart?mac="+this.selectedSensor+'&zoom=1';
     },
   },
   methods: {
@@ -117,7 +118,7 @@ var app = new Vue({
       var selectType = macType[ele.target.value];
       //alert(selectType);
       if(selectType !== type) {
-        let newUrl = "http://localhost:8080/report?mac="+ele.target.value+'&zoneId='+this.selectedZone;
+        let newUrl = host_url+"/report?mac="+ele.target.value+'&zoneId='+this.selectedZone;
         newUrl = newUrl + '&startDate='+startDate+'&endDate='+endDate;
         document.location.href = newUrl;
         return;
@@ -347,6 +348,9 @@ $(document).ready(function(){
     }).container().appendTo($('#buttons'));
 });
 
+function test() {
+  socket.emit('mqtt_sub','**** web socket test');
+}
 
 
 

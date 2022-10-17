@@ -220,7 +220,8 @@ app.get('/', checkLogin);
 		maps:maps,
 		macDataObj:macDataObj,
 		zoneObj:zoneObj,
-		zoneName:zoneName
+		zoneName:zoneName,
+		host_url:settings.host_url
 	})
 		
 	});
@@ -316,7 +317,8 @@ app.get('/', checkLogin);
 			set: set, 
 			zoneName:zoneName,
 			defaultOption: defaultOption,
-			colors:colors
+			colors:colors,
+			host_url:settings.host_url
 		});
 		
 	});
@@ -434,6 +436,7 @@ app.get('/', checkLogin);
 		zoneId: zoneId,
 		startDate:startDate,
 		endDate:endDate,
+		host_url:settings.host_url
 	});
   });
 

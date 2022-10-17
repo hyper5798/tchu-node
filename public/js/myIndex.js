@@ -21,7 +21,7 @@ var profileObj = JSON.parse(document.getElementById("profile").value);
 var macDataObj = JSON.parse(document.getElementById("macDataObj").value);
 var zoneObj = JSON.parse(document.getElementById("zoneObj").value);
 var zoneName = JSON.parse(document.getElementById("zoneName").value);
-
+var host_url = document.getElementById("host_url").value;
 function updateBarChartValue(id, datas) {
   //$(id)[0].contentWindow.loadLoraBarDatas(datas);
   $(id)[0].contentWindow.postMessage(datas,'*')
@@ -53,7 +53,7 @@ var app = new Vue({
       
     },
     getBarChartUrl(mac) {
-      return "http://localhost:8080/barchart?mac="+mac;
+      return host_url+"/barchart?mac="+mac;
     },
   }
 })
