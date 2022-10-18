@@ -302,14 +302,14 @@ var opt2={
          extend: 'csvHtml5',
          text: 'CSV',
          bom : true},
-       {
+       /*{
          text: 'PDF',
          extend: 'pdfHtml5',
          bom : true,
          message: '',
          exportOptions: {
          columns: ':visible'}
-   }
+        }*/
 
    ]
 };
