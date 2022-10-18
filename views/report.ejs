@@ -6,7 +6,7 @@
 	</div>
 	<div v-cloak class="BG-Average container">
 		<div class="row">
-			<div class="col-xs-6 col-md-4 col-lg-2">  
+			<div class="col-xs-6 col-md-3 col-lg-3">  
 				<div class="form-group">
 					<label for="exampleInputEmail1">選擇分區</label>
 					<select v-model="selectedZone" @change="changeZone($event)" class="form-control">
@@ -16,7 +16,7 @@
 					</select>
 				  </div>
 			</div>
-			<div class="col-xs-6 col-md-4 col-lg-2">  
+			<div class="col-xs-6 col-md-3 col-lg-3">  
 				<div class="form-group">
 					<label for="exampleInputEmail1">選擇感測盒</label>
 					<select v-model="selectedSensor" @change="selectMac" class="form-control">
@@ -26,7 +26,7 @@
 					</select>
 				</div>
 			</div>
-			<div class="col-xs-10 col-md-8 col-lg-6">  
+			<div class="col-xs-10 col-md-6 col-lg-6">  
 				<div class="form-group">
 					<label for="exampleInputEmail1">
 						選擇日期 <label class="text-info">(最多顯示5000筆，超出請變更日期範圍)</label>
@@ -39,12 +39,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-xs-2 col-md-4 col-lg-2">  
-				<button type="button" class= "btn btn-info mt-4" @click="pressQuery">
-					<span class="fa fa-search fa-1x"></span>
-					查詢
-				</button>
-			</div>
+			
 			<div class="col-xs-12 col-md-12 col-lg-12">  
 				<button v-if="!isChart" type="button" class= "btn btn-primary">
 					<span class="fa fa-chart fa-1x"></span>
@@ -63,6 +58,12 @@
 					線圖
 				</button>
 				<label class="ml-5">{{ countMessage }}</label>
+				<span class="float-right mr-3">  
+					<button type="button" class= "btn btn-info" @click="pressQuery">
+						<span class="fa fa-search fa-1x"></span>
+						查詢
+					</button>
+				</span>
 			</div>
 		</div>
 
