@@ -959,7 +959,7 @@ function getLoraLineOption(title, fields,titles, list=null, zoom=null) {
     let serials = [];
 	let tmp = JSON.parse(JSON.stringify(appOption));
 
-	if(zoom !=null) {
+	if(zoom ===1) {
 		tmp.dataZoom = [
 			{
 			  show: true,
