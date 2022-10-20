@@ -53,7 +53,7 @@
     
     var option = lineOption;
     //console.log('line option 1 :');
-    //console.log(option);
+    alert(zoom);
 
     if(fieldName) {
       option = getLoraLineOption(title, fields, titles, null, zoom);
@@ -148,8 +148,13 @@
     }
 
     function receiveMessage(e) {
-      //alert(e.origin + ' : ' + JSON.stringify(e.data));
-      refreshLoraLineData(e.data)
+      //alert(e.origin + ' : ' + Array.isArray(e.data));
+      if(Array.isArray(e.data)) {
+        loadLoraLineDatas(e.data);
+      } else {
+        refreshLoraLineData(e.data)
+      }
+      
     }
  
       // 監聽 message 事件

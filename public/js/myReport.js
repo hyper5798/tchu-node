@@ -210,7 +210,7 @@ function toQuery(){
   $('#myModal').modal('hide');
   var from = $('#from').val();
   var to = $('#to').val();
-  var url = 'http://'+host+":"+port+'/todos/query?mac='+mac+'&from='+from+'&to='+to;
+  var url = host_url+'/todos/query?mac='+mac+'&from='+from+'&to='+to;
   url = url + '&queryType=queryEvent&userName=' + userName;
   console.log(url);
   loadDoc(url);

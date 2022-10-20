@@ -116,7 +116,7 @@ module.exports = function(app) {
 
 app.get('/', checkLogin);
   app.get('/', function (req, res) {
-
+    
 	var profileOb, users, maps, sensorList,zoneList;
 	try {
 		maps = JsonFileTools.getJsonFromFile(mapPath);
@@ -196,7 +196,7 @@ app.get('/', checkLogin);
 		zoneName[zone._id] = zone.name;
 	});
 
-    geAverageData(req.session.user.name, function(err, data){
+    getAverageData(req.session.user.name, function(err, data){
 		if(err) {
 			console.log(err);
 		}
@@ -234,7 +234,8 @@ app.get('/', checkLogin);
 
   app.get('/dashboard', checkLogin);
   app.get('/dashboard', function (req, res) {
-	
+	var user = req.session.user;
+
 	var maps,defaultOption={},zoneName={};
 	try {
 		maps = JsonFileTools.getJsonFromFile(mapPath);
@@ -249,82 +250,87 @@ app.get('/', checkLogin);
 				defaultOption[key] = getFieldOption(key);
 			}
 		});
-		if (maps == null) {
+		if (maps === null) {
 			return res.redirect('/map');
 		}
 		
 	} catch (error) {
 		return res.redirect('/map');
 	}
-
-	getData(req.session.user.name, function(err, data){
-		if(err) {
-			res.render('index', { title: 'Index',
-				user:req.session.user,
-				zoneObj: {},
-				set: set, 
-				zoneName:{},
-				defaultOption: defaultOption,
-				colors:colors
-			});
-		}
-
-		var mapObj={}, macObj={},zoneObj = {};
-		var devices = data.sensorList;
-		var zones = data.zoneList;
-
-		function getDeviceField(list) {
-			let myObj = {};
-			
-			list.forEach( mac => {
-				let device =  macObj[mac];
-				let type_field = mapObj[device.fport];
-				let name = device.device_name;
-				myObj[mac] = {"name": name,"field": type_field};
-
-			});
-			return myObj;
-		}
-
-		//mapObj['18'] = {"voltage": "電壓", "temperture": "溫度", "o2": "溶解氧"}
-		maps.forEach(map => {
-			mapObj[map.deviceType] = map.fieldName;
-		});
-		//macObj['mac'] = device;
-		devices.forEach(device => {
-			macObj[device.device_mac] = device;
-		});
-
-		let defauOption = {};
-		let check = true;
-		zones.forEach(zone => {
-			zoneObj[zone._id] = getDeviceField(zone.deviceList);
-			zoneName[zone._id] = zone.name;
-		});
-
-		if(set===null) {
-			set={};
-			zones.forEach(zone => {
-				set[zone._id] = JSON.parse(JSON.stringify(defaultOption));
-			});
-			JsonFileTools.saveJsonToFile(setPath, set);
+	var devices = null;
+	var zones = null;
+	try {
+		devices = JsonFileTools.getJsonFromFile(deviceListPath);
+		if (devices === null) {
+			return res.redirect('/device');
 		}
 		
-
-		res.render('dashboard', { title: 'Dashboard',
-			user:req.session.user,
-			zoneObj : zoneObj,
-			set: set, 
-			zoneName:zoneName,
-			defaultOption: defaultOption,
-			colors:colors,
-			host_url:settings.host_url,
-			api_url:settings.api_server
-		});
+	} catch (error) {
+		return res.redirect('/device');
+	}
+	try {
+		zones = JsonFileTools.getJsonFromFile(zonePath);
+		if (zones === null) {
+			return res.redirect('/zone');
+		}
 		
+	} catch (error) {
+		return res.redirect('/zone');
+	}
+
+	var mapObj={}, macObj={},zoneObj = {};
+	var target;	
+
+	function getDeviceField(list) {
+		let myObj = {};
+		
+		list.forEach( mac => {
+			let device =  macObj[mac];
+			let type_field = mapObj[device.fport];
+			let name = device.device_name;
+			myObj[mac] = {"name": name,"field": type_field};
+			target = mac;
+		});
+		return myObj;
+	}
+
+	//mapObj['18'] = {"voltage": "電壓", "temperture": "溫度", "o2": "溶解氧"}
+	maps.forEach(map => {
+		mapObj[map.deviceType] = map.fieldName;
 	});
-	
-	
+	//macObj['mac'] = device;
+	devices.forEach(device => {
+		macObj[device.device_mac] = device;
+	});
+
+	let defauOption = {};
+	let check = true;
+	//zoneName[id] = zone_name;
+	zones.forEach(zone => {
+		zoneObj[zone._id] = getDeviceField(zone.deviceList);
+		zoneName[zone._id] = zone.name;
+	});
+
+	if(set===null) {
+		set={};
+		zones.forEach(zone => {
+			set[zone._id] = JSON.parse(JSON.stringify(defaultOption));
+		});
+		JsonFileTools.saveJsonToFile(setPath, set);
+	}
+
+	res.render('dashboard', { title: 'Dashboard',
+		user:req.session.user,
+		zoneObj : zoneObj,
+		set: set, 
+		zoneName:zoneName,
+		defaultOption: defaultOption,
+		colors:colors,
+		host_url:settings.host_url,
+		api_url:settings.api_server,
+		devices:devices,
+		host_url:settings.host_url
+	});
 	
   });
 
@@ -373,15 +379,7 @@ app.get('/', checkLogin);
 		profileObj = {};
 		JsonFileTools.saveJsonToFile(profilePath, profileObj);
 	}
-	try {
-		data = JsonFileTools.getJsonFromFile(dataPath);
-
-		if (data == undefined || data == null || Object.keys(data).length === 0) {
-			return res.redirect('/dashboard');
-		}
-	} catch (error) {
-		return res.redirect('/dashboard');
-	}
+	
 
 	try {
 		zoneList = JsonFileTools.getJsonFromFile(zonePath);
@@ -403,7 +401,7 @@ app.get('/', checkLogin);
 	}
 
 	var macType = {};
-	var devices = data.sensorList;
+	var devices = JsonFileTools.getJsonFromFile(deviceListPath);
 	for(let i=0;i<devices.length;i++) {
 		let device = devices[i];
 		macType[device.device_mac] = device.fport;
@@ -426,8 +424,8 @@ app.get('/', checkLogin);
 
 	res.render('report', { title: 'Report',
 		user:req.session.user,
-		sensorList: data.sensorList,
-		zoneList: data.zoneList,
+		sensorList: devices,
+		zoneList: zoneList,
 		profile: profileObj,
 		maps:maps,
 		fieldName:fieldName,
@@ -463,12 +461,16 @@ app.get('/', checkLogin);
 	var successMessae,errorMessae;
   	console.log('Debug login post -> name:'+post_name);
 	console.log('Debug login post -> password:'+post_password);
+	//背景取資料
+	
 	myapi.toLogin(post_name, post_password, function(err, result) {
+		
 		if(err) {
 			res.render('user/login', { title: 'Login',
 				error: err
 			});
 		} else {
+			
 			var sessionObj;
 			try {
 				sessionObj = JsonFileTools.getJsonFromFile(mysessionPath);
@@ -900,7 +902,7 @@ function getCloudData(name, callback) {
 	});
 }
 
-function geAverageData(name, callback) {
+function getAverageData(name, callback) {
     async.series([
 		function(next){
 			myapi.getAverage(name, function(err2, result2){
@@ -917,6 +919,44 @@ function geAverageData(name, callback) {
 			return callback(null, data);
 		}
 	});
+}
+
+function getMacEvents(name,deviceList, callback) {
+	var now = new Date();
+    
+	var endDate = (now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate() );
+	var fromMoment = moment(endDate,"YYYY/MM/DD").subtract(100,'days');;
+	var startDate =  fromMoment.format("YYYY/MM/DD");
+    let promises = [];
+	deviceList.forEach(function(device){
+		try {
+			let mac = device.device_mac;
+			console.log('mac : ' + mac);
+			
+			let url = settings.api_server +'/device/v1/event/';
+			promises.push(axios.get(url, {headers : { 'test' : true }}));
+		} catch (error) {
+			console.log('???? getMacEvents err: ' + error);
+		}
+
+	});
+
+	axios.all(promises)
+    .then(axios.spread((acct, perms) => {
+      // axios 回傳的資料在 data 屬性
+      console.table('FuncA 回傳結果', acct.data)
+      // fetch 資料可以先在 function 內作 json()
+	  console.table('FuncB 回傳結果', perms)
+	  return callback(null, acct.data.data);
+    }))
+    .catch((err) => { console.error(err) })
+    
+    /*myapi.getEventList(name, mac, startDate, endDate, function(err,result){
+        if(err) {
+            return callback(err, null);
+        }
+        return callback(null, result);
+    })*/
 }
 
 

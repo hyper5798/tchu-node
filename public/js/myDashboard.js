@@ -5,6 +5,11 @@ var defaultOption =  JSON.parse(document.getElementById("defaultOption").value);
 var colors =  JSON.parse(document.getElementById("colors").value);
 var host_url = document.getElementById("host_url").value;
 var api_url = document.getElementById("api_url").value;
+var user = JSON.parse(document.getElementById("user").value);
+var host_url = document.getElementById("host_url").value;
+var userName = user.name;
+var userZone = user.zone;
+var devices =  JSON.parse(document.getElementById("devices").value);
 //console.log('set:');
 //console.log(JSON.stringify(set));
 
@@ -30,12 +35,21 @@ for(let i=0; i<keys.length;i++) {
 
 function updateGaugeValue(id, value) {
     //$(id)[0].contentWindow.changeValue(value);
-    $(id)[0].contentWindow.postMessage(value,'*')
+    var element = $(id);
+    if(element !== undefined) {
+      element[0].contentWindow.postMessage(value,'*');
+    }
+  
 }
 
-function updateLineChartValue(id, message) {
+function updateLineChartWithValue(id, message) {
   //$(id)[0].contentWindow.refreshLoraLineData(message);
   $(id)[0].contentWindow.postMessage(message,'*')
+}
+
+function updateLineChartWithList(id, list) {
+  //$(id)[0].contentWindow.refreshLoraLineData(message);
+  $(id)[0].contentWindow.postMessage(list,'*')
 }
 
 function updateVoltage(mac, value) {
@@ -65,7 +79,7 @@ function updateData(msg) {
   var info = msg.information;
   let keys = Object.keys(info);
   let id2 =  "#"+mac;
-  updateLineChartValue(id2, msg);
+  updateLineChartWithValue(id2, msg);
   
   keys.forEach(field => {
     
@@ -189,8 +203,71 @@ var app = new Vue({
   }
 })
 
+$(document).ready(function(){
+  setTimeout(function () {
+    devices.forEach(function(device){
+      toQuery(device.device_mac);
+    });
+  }, 3000);
+  
+});
 
 
+function toQuery(mac){
+ 
+  // alert('mac : ' + mac);
+  // removeDataset();
+  //$.LoadingOverlay("show");
+  var now = new Date();
+  var to = (now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate() );
+	var fromMoment = moment(to,"YYYY/MM/DD").subtract(1,'days');;
+	var from =  fromMoment.format("YYYY/MM/DD");
+  var url = host_url+'/todos/query?mac='+mac+'&from='+from+'&to='+to;
+  url = url + '&queryType=queryEvent&userName=' + userName;
+  console.log(url);
+  loadDoc(url);
+}
+
+function loadDoc(url) {
+  app.countMessage = '';
+  console.log('loadDoc()');
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+       //document.getElementById("alert").innerHTML = this.responseText;
+       $.LoadingOverlay("hide");
+
+       var type = this.getResponseHeader("Content-Type");   // 取得回應類型
+       // console.log('type  : '+type);
+
+       // 判斷回應類型，這裡使用 JSON
+        var json = JSON.parse(this.responseText);
+        if(json.data && json.data.length>0){
+          console.log('queryYeaEvent : ' + JSON.stringify(json.data.length));
+          toUpdateQueryData(json.data);
+        }
+        
+    }
+  };
+  xhttp.open("GET", url, true);
+  xhttp.send();
+}
+
+function toUpdateQueryData(datas) {
+  var data = datas[datas.length-1];
+  var mac = data.macAddr;
+  var fiels = Object.keys(data.information);
+  fiels.forEach(function(field){
+    var id =  "#"+mac+"_"+field;
+    if(field !== 'voltage') {
+      updateGaugeValue(id, data.information[field]);
+    } else {
+      updateVoltage(mac, data.information[field]);
+    }
+  });
+  let id2 =  "#"+mac;
+  updateLineChartWithList(id2, datas)
+}
 
 
 let wsUrl = api_url;

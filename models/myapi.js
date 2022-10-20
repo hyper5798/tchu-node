@@ -500,7 +500,7 @@ function sendEventListRequest(form, callback) {
     if(form.hasOwnProperty('limit')) {
         limit = form.limit;
     }
-    url = url + '?paginate=true&limit='+limit+'&sort=desc';
+    url = url + '?paginate=false&limit='+limit+'&sort=desc';
     url = url + '&macAddr=' + form.macAddr;
     url = url + '&from=' + form.from;
     url = url + '&to=' + form.to;
