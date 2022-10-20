@@ -229,7 +229,7 @@ function toQuery(mac){
 }
 
 function loadDoc(url) {
-  app.countMessage = '';
+  
   console.log('loadDoc()');
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
