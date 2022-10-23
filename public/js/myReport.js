@@ -209,7 +209,9 @@ function toQuery(){
   $.LoadingOverlay("show");
   $('#myModal').modal('hide');
   var from = $('#from').val();
+  app.startDate = from;
   var to = $('#to').val();
+  app.endDate = to;
   var url = host_url+'/todos/query?mac='+mac+'&from='+from+'&to='+to;
   url = url + '&queryType=queryEvent&userName=' + userName;
   console.log(url);
