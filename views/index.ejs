@@ -111,49 +111,58 @@
 				</div>
 			</div>
 
-			<div class="col-lg-6 col-md-6 col-sm-12">
+			<div class="col-lg-6 col-md-6 col-sm-12 index-font">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<i class="fa fa-info-circle"></i>系統資訊
+						<i class="fa fa-info-circle mr-3"></i>系統資訊
 					</div>
 				
 					<div class="panel-footer">
 						<div class="mb-3">
 							<label for="formFile" class="form-label">操作系统名</label>
-							<label class="form-control"><%= os.platform() %></label>
-							</div>
-							<div class="mb-3">
+							<label class="form-control "><%= os.platform() %></label>
+						</div>
+						<div class="mb-3">
 							<label for="formFileMultiple" class="form-label">系统版本</label>
 							<label class="form-control"><%= os.release() %></label>
-							</div>
-							<div class="mb-3">
+						</div>
+						<div class="mb-3">
+							<label for="formFileMultiple" class="form-label">總記憶體</label>
+							<label class="form-control"><%= os.totalmem()/(1024*1024*1000) %> G</label>
+						</div>
+						<div class="mb-3">
 							<label for="formFileMultiple" class="form-label">剩餘記憶體</label>
-							<label class="form-control"><%= os.freemem()/(1024*1024*1000) %> M</label>
-							</div>
+							<label class="form-control"><%= os.freemem()/(1024*1024*1000) %> G</label>
+						</div>
 						
 					</div>
 				</div>
 			</div>
 
-			<div class="col-lg-6 col-md-6 col-sm-12">
+			<div class="col-lg-6 col-md-6 col-sm-12 index-font">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<i class="fa fa-info-circle"></i>系統資訊
+						<i class="fa fa-info-circle mr-3"></i>硬體資訊
 					</div>
 				
 					<div class="panel-footer">
+						
 						<div class="mb-3">
-							<label for="formFile" class="form-label">操作系统名</label>
-							<label class="form-control"><%= os.platform() %></label>
-							</div>
-							<div class="mb-3">
-							<label for="formFileMultiple" class="form-label">系统版本</label>
-							<label class="form-control"><%= os.release() %></label>
-							</div>
-							<div class="mb-3">
-							<label for="formFileMultiple" class="form-label">剩餘記憶體</label>
-							<label class="form-control"><%= os.freemem()/(1024*1024*1000) %> M</label>
-							</div>
+							<label for="formFile" class="form-label">處理器</label>
+							<label class="form-control "><%= cpu.brand %></label>
+						</div>
+						<div class="mb-3">
+							<label for="formFileMultiple" class="form-label">核心</label>
+							<label class="form-control"><%= cpu.physicalCores %></label>
+						</div>
+						<div class="mb-3">
+							<label for="formFileMultiple" class="form-label">執行序</label>
+							<label class="form-control"><%= cpu.cores %> </label>
+						</div>
+						<div class="mb-3">
+							<label for="formFileMultiple" class="form-label">速度</label>
+							<label class="form-control"><%= cpu.speed %> G</label>
+						</div>
 						
 					</div>
 				</div>
@@ -198,7 +207,7 @@
 		<input id="zoneList" name="zoneList" type="hidden" value="<%= JSON.stringify(zoneList) %>">
 		<input id="profile" name="profile" type="hidden" value="<%= JSON.stringify(profile) %>">
 		<input id="user" name="user" type="hidden" value="<%= JSON.stringify(user) %>">
-		<input id="macDataObj" name="user" type="hidden" value="<%= JSON.stringify(macDataObj) %>">
+		
 		<input id="zoneObj" name="user" type="hidden" value="<%= JSON.stringify(zoneObj) %>">
 		<input id="zoneName" name="user" type="hidden" value="<%= JSON.stringify(zoneName) %>">
 		<input id="host_url" name="user" type="hidden" value="<%= host_url %>">

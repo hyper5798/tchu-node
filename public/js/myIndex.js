@@ -18,7 +18,7 @@ if (document.getElementById("zoneList").value !== '') {
   allZoneList =  JSON.parse(document.getElementById("zoneList").value);
 }
 var profileObj = JSON.parse(document.getElementById("profile").value);
-var macDataObj = JSON.parse(document.getElementById("macDataObj").value);
+//var macDataObj = JSON.parse(document.getElementById("macDataObj").value);
 var zoneObj = JSON.parse(document.getElementById("zoneObj").value);
 var zoneName = JSON.parse(document.getElementById("zoneName").value);
 var host_url = document.getElementById("host_url").value;
@@ -34,7 +34,7 @@ var app = new Vue({
     zoneList: allZoneList,
     zoneObj:zoneObj,
     zoneName:zoneName,
-    macDataObj:macDataObj,
+    //macDataObj:macDataObj,
     isIndex: false,
     isSetting: false,
     alertMsg: '',
@@ -42,7 +42,7 @@ var app = new Vue({
   },
   mounted () {
     setTimeout(function () {
-      loadData();
+      //loadData();
     }, 3000);
     
   },
