@@ -118,6 +118,8 @@ app.get('/', checkLogin);
   app.get('/', function (req, res) {
     
 	var profileOb, users, maps, sensorList,zoneList;
+	var os = require("os");
+
 	try {
 		maps = JsonFileTools.getJsonFromFile(mapPath);
 		if (maps == null) {
@@ -183,10 +185,11 @@ app.get('/', checkLogin);
 		
 		list.forEach( mac => {
 			let device =  macObj[mac];
-			let type_field = mapObj[device.fport];
-			let name = device.device_name;
-			myObj[mac] = {"name": name,"field": type_field};
-
+			if(device) {
+				let type_field = mapObj[device.fport];
+				let name = device.device_name;
+				myObj[mac] = {"name": name,"field": type_field};
+			}
 		});
 		return myObj;
 	}
@@ -221,7 +224,8 @@ app.get('/', checkLogin);
 		macDataObj:macDataObj,
 		zoneObj:zoneObj,
 		zoneName:zoneName,
-		host_url:settings.host_url
+		host_url:settings.host_url,
+		os:os
 	})
 		
 	});

@@ -6,7 +6,7 @@
 	</div>
 	<div class="BG-Average">
     	<div class="row">
-			<div class="col-lg-3 col-md-3 col-xs-6">
+			<div class="col-lg-3 col-md-3 col-sm-6">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<div class="row">
@@ -23,7 +23,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="http://localhost:8080/account">
+					<a href="<%=host_url+'/account'%>">
 						<div class="panel-footer">
 							<span class="pull-left">View Details</span>
 							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -32,7 +32,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="col-lg-3 col-md-3 col-xs-6">
+			<div class="col-lg-3 col-md-3 col-sm-6">
 				<div class="panel panel-green">
 					<div class="panel-heading">
 						<div class="row">
@@ -49,7 +49,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="http://localhost:8080/zone">
+					<a href="<%=host_url+'/zone'%>">
 						<div class="panel-footer">
 							<span class="pull-left">View Details</span>
 							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -58,7 +58,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="col-lg-3 col-md-3 col-xs-6">
+			<div class="col-lg-3 col-md-3 col-sm-6">
 				<div class="panel panel-yellow">
 					<div class="panel-heading">
 						<div class="row">
@@ -75,7 +75,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="http://localhost:8080/device">
+					<a href="<%=host_url+'/device'%>">
 						<div class="panel-footer">
 							<span class="pull-left">View Details</span>
 							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -84,7 +84,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="col-lg-3 col-md-3 col-xs-6">
+			<div class="col-lg-3 col-md-3 col-sm-6">
 				<div class="panel panel-green">
 					<div class="panel-heading">
 						<div class="row">
@@ -101,7 +101,7 @@
 							</div>
 						</div>
 					</div>
-					<a href="http://localhost:8080/map">
+					<a href="<%=host_url+'/map'%>">
 						<div class="panel-footer">
 							<span class="pull-left">View Details</span>
 							<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -110,21 +110,76 @@
 					</a>
 				</div>
 			</div>
+
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<i class="fa fa-info-circle"></i>系統資訊
+					</div>
+				
+					<div class="panel-footer">
+						<div class="mb-3">
+							<label for="formFile" class="form-label">操作系统名</label>
+							<label class="form-control"><%= os.platform() %></label>
+							</div>
+							<div class="mb-3">
+							<label for="formFileMultiple" class="form-label">系统版本</label>
+							<label class="form-control"><%= os.release() %></label>
+							</div>
+							<div class="mb-3">
+							<label for="formFileMultiple" class="form-label">剩餘記憶體</label>
+							<label class="form-control"><%= os.freemem()/(1024*1024*1000) %> M</label>
+							</div>
+						
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-6 col-md-6 col-sm-12">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<i class="fa fa-info-circle"></i>系統資訊
+					</div>
+				
+					<div class="panel-footer">
+						<div class="mb-3">
+							<label for="formFile" class="form-label">操作系统名</label>
+							<label class="form-control"><%= os.platform() %></label>
+							</div>
+							<div class="mb-3">
+							<label for="formFileMultiple" class="form-label">系统版本</label>
+							<label class="form-control"><%= os.release() %></label>
+							</div>
+							<div class="mb-3">
+							<label for="formFileMultiple" class="form-label">剩餘記憶體</label>
+							<label class="form-control"><%= os.freemem()/(1024*1024*1000) %> M</label>
+							</div>
+						
+					</div>
+				</div>
+			</div>
+			
 		</div>
-    </div>
-    <div v-for="(zone, zoneId, index) in zoneObj" >
+	</div>
+
+	
+	
+		
+	
+	
+	
+    <!--<div v-for="(zone, zoneId, index) in zoneObj" >
 		<div class="block-title col-xs-12 col-md-12 col-lg-12">
 			<span >
 				{{ zoneName[zoneId] }} bar chart
 			</span>
 		</div>
-		<!-- level 2 mac -->
-		<!-- item : {name:device_name, field:device_fields}-->
+		
+		
 		
 		<div v-for="(item, mac, index1) in zoneObj[zoneId]"  class="col-xs-12 col-md-6 col-lg-6">
 			<div  class="card-header2">
-				{{ item.name }} <!--{{ fieldKey }}--> 
-				<span class="float-right">
+				{{ item.name }} 
 					
 				</span>
 			</div>
@@ -136,7 +191,7 @@
 			
 		</div>
 			
-	</div>
+	</div>-->
 	<div>
 	    
 		<input id="sensorList" name="sensorList" type="hidden" value="<%= JSON.stringify(sensorList) %>">
