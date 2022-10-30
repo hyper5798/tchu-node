@@ -96,7 +96,11 @@
 					</span>
 				</div>
 				
-				<div  class="card-body2">
+				<div v-if="index%2==0" class="chart-body">
+					<iframe :id="getLineId(mac)" :src="getLineChartUrl(mac)" style="width: 95%; height: 100%;overflow: hidden;" ></iframe>
+				</div>
+
+				<div v-if="index%2==1" class="chart-body1">
 					<iframe :id="getLineId(mac)" :src="getLineChartUrl(mac)" style="width: 95%; height: 100%;overflow: hidden;" ></iframe>
 				</div>
 			</div>
