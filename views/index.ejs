@@ -111,7 +111,7 @@
 				</div>
 			</div>
 
-			<div class="col-lg-6 col-md-6 col-sm-12 index-font">
+			<div class="col-lg-4 col-md-4 col-sm-12 index-font">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<i class="fa fa-info-circle mr-3"></i>系統資訊
@@ -139,29 +139,58 @@
 				</div>
 			</div>
 
-			<div class="col-lg-6 col-md-6 col-sm-12 index-font">
+			<div class="col-lg-4 col-md-4 col-sm-12 index-font">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<i class="fa fa-info-circle mr-3"></i>硬體資訊
+						<i class="fa fa-info-circle mr-3"></i>處理器
 					</div>
 				
 					<div class="panel-footer">
 						
 						<div class="mb-3">
-							<label for="formFile" class="form-label">處理器</label>
-							<label class="form-control "><%= cpu.brand %></label>
+							<label for="formFile" class="form-label">CPU</label>
+							<label class="form-control ">{{ cpu.brand }} </label>
 						</div>
 						<div class="mb-3">
 							<label for="formFileMultiple" class="form-label">核心</label>
-							<label class="form-control"><%= cpu.physicalCores %></label>
+							<label class="form-control">{{ cpu.physicalCores }}</label>
 						</div>
 						<div class="mb-3">
 							<label for="formFileMultiple" class="form-label">執行序</label>
-							<label class="form-control"><%= cpu.cores %> </label>
+							<label class="form-control">{{ cpu.cores }} </label>
 						</div>
 						<div class="mb-3">
 							<label for="formFileMultiple" class="form-label">速度</label>
-							<label class="form-control"><%= cpu.speed %> G</label>
+							<label class="form-control">{{ cpu.speed }} G</label>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-4 col-md-4 col-sm-12 index-font">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<i class="fa fa-info-circle mr-3"></i>硬碟
+					</div>
+				
+					<div class="panel-footer">
+						
+						<div class="mb-3">
+							<label for="formFile" class="form-label">廠商</label>
+							<label class="form-control ">{{ disk.vendor }} </label>
+						</div>
+						<div class="mb-3">
+							<label for="formFileMultiple" class="form-label">類型</label>
+							<label class="form-control">{{ disk.type }}</label>
+						</div>
+						<div class="mb-3">
+							<label for="formFileMultiple" class="form-label">容量</label>
+							<label class="form-control">{{ disk.size }} </label>
+						</div>
+						<div class="mb-3">
+							<label for="formFileMultiple" class="form-label">溫度</label>
+							<label class="form-control">{{ disk.temperature }} G</label>
 						</div>
 						
 					</div>

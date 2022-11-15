@@ -58,6 +58,41 @@ router.route('/query')
 		}
 	});
 
+	router.route('/queryHardway')
+	.get(function(req, res) {
+		const si = require('systeminformation');
+		async.series([
+			function(next){
+				si.diskLayout( function(result2){
+					next(null ,result2);
+				});
+			},
+			function(next){
+				si.cpu( function(result3){
+					next(null, result3);
+				});
+			}
+		], function(errs, results){
+			if(errs) {
+				return callback(errs, null);
+			} else {
+				
+				console.log(results);   // results = [result1, result2, result3]
+				return res.json({"query": "cpu", "cpu": results[1], "disk":results[0][0]});
+			}
+		});
+		/*si.cpu(function(data) {
+			console.log('CPU Information:');
+			console.log('- manufacturer: ' + data.manufacturer);
+			console.log('- brand: ' + data.brand);
+			console.log('- speed: ' + data.speed);
+			console.log('- cores: ' + data.cores);
+			console.log('- physical cores: ' + data.physicalCores);
+			console.log('...');
+			return res.json({"query": "cpu", "data": data});
+		});*/
+});
+
 router.route('/setting')
 
 	// get all the bears (accessed at GET http://localhost:8080/api/bears)

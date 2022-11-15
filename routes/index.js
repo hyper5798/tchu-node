@@ -199,41 +199,18 @@ app.get('/', checkLogin);
 		zoneName[zone._id] = zone.name;
 	});
 
-	const si = require('systeminformation');
-
-	// promises style - new since version 3
-	async.series([
-		function(next){
-			si.diskLayout( function(result2){
-				next(null ,result2);
-			});
-		},
-		function(next){
-			si.cpu( function(result3){
-				next(null, result3);
-			});
-		}
-	], function(errs, results){
-		if(errs) {
-			return callback(errs, null);
-		} else {
-			// console.log(results);   // results = [result1, result2, result3]
-			res.render('index', { title: 'Index',
-				user:req.session.user,
-				users:users,
-				sensorList: sensorList,
-				zoneList: zoneList,
-				profile: profileObj,
-				maps:maps,
-				//macDataObj:macDataObj,
-				zoneObj:zoneObj,
-				zoneName:zoneName,
-				host_url:settings.host_url,
-				os:os,
-				disk: results[0][0],
-				cpu: results[1]
-			})
-		}
+	res.render('index', { title: 'Index',
+		user:req.session.user,
+		users:users,
+		sensorList: sensorList,
+		zoneList: zoneList,
+		profile: profileObj,
+		maps:maps,
+		//macDataObj:macDataObj,
+		zoneObj:zoneObj,
+		zoneName:zoneName,
+		host_url:settings.host_url,
+		os:os,
 	});
 
     /*getAverageData(req.session.user.name, function(err, data){

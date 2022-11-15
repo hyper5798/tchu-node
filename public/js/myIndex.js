@@ -37,13 +37,23 @@ var app = new Vue({
     //macDataObj:macDataObj,
     isIndex: false,
     isSetting: false,
-    alertMsg: '',
+    alertMsg: "",
     items: [],
+    cpu: {
+      "brand": "",
+      "physicalCores": "",
+      "cores": 6,
+      "speed": 3
+    },
+    disk: {
+      "vender":"",
+      "type": "",
+      "size": 512,
+      "temperature": null
+    }
   },
   mounted () {
-    setTimeout(function () {
-      //loadData();
-    }, 3000);
+    toQueryCPU();
     
   },
   methods: {
@@ -59,16 +69,35 @@ var app = new Vue({
 })
 
 
-function loadData() {
-  var keys = Object.keys(macDataObj);
-    for(let i=0;i<keys.length;i++) {
-      let mac = keys[i];
-      let macData = macDataObj[mac];
-      let id = '#'+mac;
-      updateBarChartValue(id, macData);
-    }
+function toQueryCPU(){
+  var url = host_url+'/todos/queryHardway';
+  console.log(url);
+  loadDoc(url);
 }
 
+function loadDoc(url) {
+  
+  console.log('loadDoc()');
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+       //document.getElementById("alert").innerHTML = this.responseText;
+       $.LoadingOverlay("hide");
 
+       var type = this.getResponseHeader("Content-Type");   // 取得回應類型
+       console.log('type  : '+type);
+       
 
-
+       // 判斷回應類型，這裡使用 JSON
+        var json = JSON.parse(this.responseText);
+        console.log('json:'+ JSON.stringify(json));
+        if(json.query='cpu') {
+          app.cpu = json.cpu;
+          app.disk = json.disk;
+          app.disk.size = Math.floor(app.disk.size/1000000000);
+        }
+    }
+  };
+  xhttp.open("GET", url, true);
+  xhttp.send();
+}
