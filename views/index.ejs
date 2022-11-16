@@ -132,7 +132,7 @@
 						</div>
 						<div class="mb-3">
 							<label for="formFileMultiple" class="form-label">剩餘記憶體</label>
-							<label class="form-control"><%= os.freemem()/(1024*1024*1000) %> G</label>
+							<label class="form-control"><%= os.freemem()/(1024*1024*1000) %></label>
 						</div>
 						
 					</div>
@@ -186,11 +186,11 @@
 						</div>
 						<div class="mb-3">
 							<label for="formFileMultiple" class="form-label">容量</label>
-							<label class="form-control">{{ disk.size }} </label>
+							<label class="form-control">{{ disk.size }} G</label>
 						</div>
 						<div class="mb-3">
 							<label for="formFileMultiple" class="form-label">溫度</label>
-							<label class="form-control">{{ disk.temperature }} G</label>
+							<label class="form-control">{{ disk.temperature }}</label>
 						</div>
 						
 					</div>

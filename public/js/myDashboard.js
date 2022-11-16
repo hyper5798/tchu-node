@@ -56,15 +56,15 @@ function updateVoltage(mac, value) {
   //alert('mac:'+mac + ' , value: '+value);
   var check = (value+1)*3.3/4096;
   if(check>=2.31) {
-    app.macVoltageObject[mac] =  {"image": "/icons/battery/b4.png", "value": '8V'};
+    app.macVoltageObject[mac] =  {"image": "/icons/battery/b4.png", "value": value};
   } else if(check>=2.02) {
-    app.macVoltageObject[mac] =  {"image": "/icons/battery/b3.png", "value": '7V'};
+    app.macVoltageObject[mac] =  {"image": "/icons/battery/b3.png", "value": value};
   } else if(check>=1.73) {
-    app.macVoltageObject[mac] =  {"image": "/icons/battery/b2.png", "value": '6V'};
+    app.macVoltageObject[mac] =  {"image": "/icons/battery/b2.png", "value": value};
   }  else if(check>=1.66) {
-    app.macVoltageObject[mac] =  {"image": "/icons/battery/b1.png", "value": '5V'};
+    app.macVoltageObject[mac] =  {"image": "/icons/battery/b1.png", "value": value};
   } else {
-    app.macVoltageObject[mac] =  {"image": "/icons/battery/b0.png", "value": '低於5V'};
+    app.macVoltageObject[mac] =  {"image": "/icons/battery/b0.png", "value": value};
   }
 
   app.macVoltageObject[mac]['value'] =  app.macVoltageObject[mac]['value'] + ':'+value;

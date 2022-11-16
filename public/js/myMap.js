@@ -303,7 +303,11 @@ function getIntData(arrRange,initData){
     }
     var data = parseInt(str,16);
 
-    return eval(diff);
+    //return eval(diff);
+    var value = eval(diff);
+    value = Math.round((value + Number.EPSILON) * 100) / 100;
+    
+    return value;
 }
 
 function changePlace(str) {
