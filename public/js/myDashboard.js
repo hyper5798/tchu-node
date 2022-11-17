@@ -28,7 +28,7 @@ for(let i=0; i<keys.length;i++) {
   for(let j=0;j<mKeys.length;j++) {
     let mKey = mKeys[j];
     let item = zone[mKey];
-    macVoltageObject[mKey] = {"image": "/icons/battery/b1.png", "value": '5V'};
+    macVoltageObject[mKey] = {"image": "/icons/battery/b1.png", "value": 1880};
   }
 }
 //console.log(JSON.stringify(macVoltageObject));
@@ -54,20 +54,23 @@ function updateLineChartWithList(id, list) {
 
 function updateVoltage(mac, value) {
   //alert('mac:'+mac + ' , value: '+value);
-  var check = (value+1)*3.3/4096;
-  if(check>=2.31) {
+  //var check = (value+1)*3.3/4096;
+  var check = value;
+
+  if(check>=1800) {
     app.macVoltageObject[mac] =  {"image": "/icons/battery/b4.png", "value": value};
-  } else if(check>=2.02) {
+  } else if(check>=1700) {
     app.macVoltageObject[mac] =  {"image": "/icons/battery/b3.png", "value": value};
-  } else if(check>=1.73) {
+  } else if(check>=1600) {
     app.macVoltageObject[mac] =  {"image": "/icons/battery/b2.png", "value": value};
-  }  else if(check>=1.66) {
+  }  else if(check>=1500) {
     app.macVoltageObject[mac] =  {"image": "/icons/battery/b1.png", "value": value};
   } else {
     app.macVoltageObject[mac] =  {"image": "/icons/battery/b0.png", "value": value};
   }
 
-  app.macVoltageObject[mac]['value'] =  app.macVoltageObject[mac]['value'] + ':'+value;
+  //app.macVoltageObject[mac]['value'] =  app.macVoltageObject[mac]['value'] + ':'+value;
+  app.macVoltageObject[mac]['value'] = value;
 }
 
 function test() {

@@ -212,40 +212,6 @@ app.get('/', checkLogin);
 		host_url:settings.host_url,
 		os:os,
 	});
-
-    /*getAverageData(req.session.user.name, function(err, data){
-		if(err) {
-			console.log(err);
-		}
-		var macDataObj = {};
-        for(let i=0; i<data.length;i++) {
-			let tmp = data[i];
-			//console.log(tmp);
-			if(macDataObj[tmp._id.macAddr] === undefined) {
-				macDataObj[tmp._id.macAddr] = {};
-			}
-			macDataObj[tmp._id.macAddr][tmp._id.month] = tmp;
-		}
-		
-		console.log(macDataObj);
-		res.render('index', { title: 'Index',
-		user:req.session.user,
-		users:users,
-		sensorList: sensorList,
-		zoneList: zoneList,
-		profile: profileObj,
-		maps:maps,
-		macDataObj:macDataObj,
-		zoneObj:zoneObj,
-		zoneName:zoneName,
-		host_url:settings.host_url,
-		os:os
-	})
-		
-	});*/
-
-
-	
   });
 
   
