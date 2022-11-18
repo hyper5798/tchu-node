@@ -436,7 +436,7 @@ function addDays(date, days) {
     return result;
   }
 
-function getEventList(name, mac, startDate, endDate, callback) {
+function getEventList(name, mac, startDate, endDate, limit, callback) {
     var form = {macAddr:mac};
     var now = new Date();
     if(endDate == ''){
@@ -469,6 +469,8 @@ function getEventList(name, mac, startDate, endDate, callback) {
     form.from = from.toISOString();
     var range1 = moment(startDate,"YYYYMMDD").format("YYYYMMDD");
     var range =     range1 + '-' + range2;
+    if(limit)
+        form.limit = limit;
 
     checkAndGetToken(name, function(err, session) {
         if (err) {
@@ -504,7 +506,7 @@ function sendEventListRequest(form, callback) {
     url = url + '&macAddr=' + form.macAddr;
     url = url + '&from=' + form.from;
     url = url + '&to=' + form.to;
-    // url = url + '&sort=asc';
+    //url = url + '&sort=asc';
 
     sendGetRequest(url, token, function(err, result){
         if(err){

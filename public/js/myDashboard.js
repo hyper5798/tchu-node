@@ -1,3 +1,5 @@
+
+
 var zoneObj =  JSON.parse(document.getElementById("zoneObj").value);
 var zoneName =  JSON.parse(document.getElementById("zoneName").value);
 var set =  JSON.parse(document.getElementById("set").value);
@@ -223,9 +225,9 @@ function toQuery(mac){
   //$.LoadingOverlay("show");
   var now = new Date();
   var to = (now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate() );
-	var fromMoment = moment(to,"YYYY/MM/DD").subtract(1,'days');;
+	var fromMoment = moment(to,"YYYY/MM/DD").subtract(2,'days');;
 	var from =  fromMoment.format("YYYY/MM/DD");
-  var url = host_url+'/todos/query?mac='+mac+'&from='+from+'&to='+to;
+  var url = host_url+'/todos/query?mac='+mac+'&from='+from+'&to='+to+'&limit=500';
   url = url + '&queryType=queryEvent&userName=' + userName;
   console.log(url);
   loadDoc(url);
@@ -247,13 +249,23 @@ function loadDoc(url) {
         var json = JSON.parse(this.responseText);
         if(json.data && json.data.length>0){
           console.log('queryYeaEvent : ' + JSON.stringify(json.data.length));
-          toUpdateQueryData(json.data);
+          let arr =  sortArray(json.data);
+          toUpdateQueryData(arr);
         }
         
     }
   };
   xhttp.open("GET", url, true);
   xhttp.send();
+}
+
+function sortArray(list) {
+  var arr = [];
+  for(let i=list.length-1;i>=0;i--) {
+    let tmp = JSON.parse(JSON.stringify(list[i]));
+    arr.push(tmp);
+  }
+  return arr;
 }
 
 function toUpdateQueryData(datas) {

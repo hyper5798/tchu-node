@@ -237,9 +237,9 @@ function loadDoc(url) {
         table.fnClearTable();
         if(json.data && json.data.length>0){
           
-          
-          console.log('queryYeaEvent : ' + JSON.stringify(json.data.length));
-          $("#ifram1")[0].contentWindow.loadLoraLineDatas(json.data);
+          var arr = sortArray(json.data);
+          console.log('queryYeaEvent : ' + arr.length);
+          $("#ifram1")[0].contentWindow.loadLoraLineDatas(arr);
           var data = getDataList(json.data);
           table.fnAddData(data);
         }
@@ -248,6 +248,15 @@ function loadDoc(url) {
   };
   xhttp.open("GET", url, true);
   xhttp.send();
+}
+
+function sortArray(list) {
+  var arr = [];
+  for(let i=list.length-1;i>=0;i--) {
+    let tmp = JSON.parse(JSON.stringify(list[i]));
+    arr.push(tmp);
+  }
+  return arr;
 }
 
 function getDataList(list){

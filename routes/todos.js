@@ -38,6 +38,10 @@ router.route('/query')
 		var from = req.query.from;
 		var userName = req.query.userName;
 		var queryType = req.query.queryType;
+		var limit = req.query.limit;
+		if(limit) {
+			limit = parseInt(limit);
+		}
 		
 		mac = mac.toLowerCase();
 
@@ -52,7 +56,7 @@ router.route('/query')
 				returnEventData(res, queryType, err, result);
 			});
 		} else {
-			myapi.getEventList(userName, mac, from, to, function(err,result){
+			myapi.getEventList(userName, mac, from, to, limit, function(err,result){
 				returnEventData(res, queryType, err, result);
 			});
 		}
