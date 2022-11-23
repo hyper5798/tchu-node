@@ -227,7 +227,7 @@ function toQuery(mac){
   var to = (now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate() );
 	var fromMoment = moment(to,"YYYY/MM/DD").subtract(14,'days');;
 	var from =  fromMoment.format("YYYY/MM/DD");
-  var url = host_url+'/todos/query?mac='+mac+'&from='+from+'&to='+to+'&limit=500';
+  var url = host_url+'/todos/query?mac='+mac+'&from='+from+'&to='+to+'&limit=2000';
   url = url + '&queryType=queryEvent&userName=' + userName;
   console.log(url);
   loadDoc(url);
